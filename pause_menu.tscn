@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://ExitButton.gd" id="2_itcdp"]
 
 [node name="PauseMenu" type="CanvasLayer"]
-process_mode = 2
+process_mode = 3
 script = ExtResource("1_5he3s")
 
 [node name="UnpauseButton" type="Button" parent="."]
@@ -28,10 +28,10 @@ anchor_left = 0.502
 anchor_top = 0.651
 anchor_right = 0.502
 anchor_bottom = 0.651
-offset_left = -51.8401
-offset_top = -143.08
-offset_right = 35.1599
-offset_bottom = -112.08
+offset_left = -42.84
+offset_top = -14.08
+offset_right = 44.16
+offset_bottom = 16.92
 text = "Exit Game"
 script = ExtResource("2_itcdp")
 

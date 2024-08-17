@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bpuc2pa2o764y"]
+[gd_scene load_steps=24 format=3 uid="uid://bpuc2pa2o764y"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_vj5vx"]
 [ext_resource type="Texture2D" uid="uid://cdk0eryhbgu4p" path="res://assets/images/lilguyanimations/run_down_animation/run_down_1.png" id="2_e40ux"]
@@ -14,6 +14,12 @@
 [ext_resource type="Texture2D" uid="uid://dxjycyiabsppp" path="res://assets/images/lilguyanimations/run_up_animation/run_up_1.png" id="12_pebgh"]
 [ext_resource type="Texture2D" uid="uid://bap8jvr66tx4x" path="res://assets/images/lilguyanimations/run_up_animation/run_up_2.png" id="13_42uwb"]
 [ext_resource type="Texture2D" uid="uid://b7cnhey6gssx2" path="res://assets/images/lilguyanimations/run_up_animation/run_up_3.png" id="14_fb4e8"]
+[ext_resource type="Texture2D" uid="uid://dddbup0ceuw2r" path="res://assets/images/lilguyanimations/stamina_animation/regen0.png" id="15_8wwy1"]
+[ext_resource type="Texture2D" uid="uid://chmsq3yle1npk" path="res://assets/images/lilguyanimations/stamina_animation/regen1.png" id="16_s204i"]
+[ext_resource type="Texture2D" uid="uid://cyv0bd2wr476m" path="res://assets/images/lilguyanimations/stamina_animation/regen2.png" id="17_vh0q1"]
+[ext_resource type="Texture2D" uid="uid://b3arm2vkgr1v5" path="res://assets/images/lilguyanimations/stamina_animation/regen3.png" id="18_mpujh"]
+[ext_resource type="Texture2D" uid="uid://g0utufv88ovu" path="res://assets/images/lilguyanimations/stamina_animation/regen4.png" id="19_hpnhf"]
+[ext_resource type="Texture2D" uid="uid://buy8gu3ufpiar" path="res://assets/images/lilguyanimations/stamina_animation/regen5.png" id="20_f5fpc"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_x2dw2"]
 animations = [{
@@ -86,15 +92,56 @@ animations = [{
 radius = 5.0
 height = 14.0
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_aqquo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_8wwy1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_s204i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_vh0q1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_mpujh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_hpnhf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_f5fpc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_8wwy1")
+}],
+"loop": false,
+"name": &"default",
+"speed": 2.0
+}]
+
 [node name="Player" type="CharacterBody2D" groups=["littleguy"]]
+position = Vector2(4, 0)
 script = ExtResource("1_vj5vx")
 SPEED = 100.0
-metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_x2dw2")
 animation = &"up"
+frame_progress = 0.273118
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ujmsp")
+
+[node name="AnimatedStamina" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-5, -4)
+sprite_frames = SubResource("SpriteFrames_aqquo")
+frame = 6
+frame_progress = 1.0
+
+[node name="DashingTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="DashingTimer" to="." method="_on_dashing_timer_timeout"]

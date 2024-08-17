@@ -5,18 +5,22 @@ signal hit
 @export var SPEED = 300.0
 @export var player_id = 0
 var screen_size
+var dashing = false
+var dashing_delay = 500
+var has_dashed = false
 
 func _ready():
 	# Set the initial velocity to zero.
 	velocity = Vector2.ZERO
 	screen_size = get_viewport_rect().size
+	$DashingTimer.process_callback = $AnimatedStamina.frame
+	#print($AnimatedStamina.frame)
 	hide()
 
 func start(pos, player_num):
 	position = pos
 	player_id = player_num
 	show()
-	
 
 func _physics_process(delta):
 	# Get the input velocity and handle the movement/deceleration.
@@ -37,10 +41,15 @@ func _physics_process(delta):
 		$AnimatedSprite2D.stop()
 		
 	if Input.is_action_just_pressed("action%s" % [player_id]) and velocity.length() > 0:
-		position += velocity*10* delta
-		position = position.clamp(
-			Vector2.ZERO, screen_size
-			)
+		if not has_dashed:
+			position += velocity*10* delta
+			position = position.clamp(
+				Vector2.ZERO, screen_size
+				)
+			$AnimatedStamina.play()
+			has_dashed = true
+			dashing = true
+			$DashingTimer.start()
 	elif Input.is_action_just_pressed("action%s" % [player_id]) and velocity.length() <= 0:
 		print("action")
 
@@ -52,3 +61,7 @@ func _physics_process(delta):
 
 func _process(delta):
 	pass
+
+func _on_dashing_timer_timeout():
+	dashing = false
+	has_dashed = false
