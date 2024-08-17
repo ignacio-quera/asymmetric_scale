@@ -11,29 +11,43 @@ script = ExtResource("1_5he3s")
 [node name="UnpauseButton" type="Button" parent="."]
 process_mode = 2
 anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.807
-anchor_right = 0.5
-anchor_bottom = 0.807
-offset_left = -40.0
-offset_top = -15.5601
-offset_right = 37.0
-offset_bottom = 15.4399
+anchor_left = 0.503
+anchor_top = 0.734
+anchor_right = 0.503
+anchor_bottom = 0.734
+offset_left = -38.76
+offset_top = -15.72
+offset_right = 38.24
+offset_bottom = 15.28
 text = "Unpause"
 script = ExtResource("1_32ewl")
 
 [node name="ExitButton" type="Button" parent="."]
 anchors_preset = -1
-anchor_left = 0.502
-anchor_top = 0.651
-anchor_right = 0.502
-anchor_bottom = 0.651
-offset_left = -42.84
-offset_top = -14.08
-offset_right = 44.16
-offset_bottom = 16.92
+anchor_left = 0.5
+anchor_top = 0.418
+anchor_right = 0.5
+anchor_bottom = 0.418
+offset_left = -39.0
+offset_top = -15.44
+offset_right = 48.0
+offset_bottom = 15.56
 text = "Exit Game"
 script = ExtResource("2_itcdp")
 
+[node name="ResetButton" type="Button" parent="."]
+visible = false
+anchors_preset = -1
+anchor_left = 0.501
+anchor_top = 0.582
+anchor_right = 0.501
+anchor_bottom = 0.582
+offset_left = -49.9201
+offset_top = -15.56
+offset_right = 51.0799
+offset_bottom = 15.44
+text = "Reset Game"
+
 [connection signal="pressed" from="UnpauseButton" to="." method="_on_unpause_button_pressed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="ResetButton" to="." method="_on_reset_button_pressed"]

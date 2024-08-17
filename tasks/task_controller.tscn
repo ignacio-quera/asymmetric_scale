@@ -11,7 +11,7 @@ script = ExtResource("1_41e21")
 magic_circle = ExtResource("2_gulvl")
 
 [node name="task_spawn_timer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 20.0
 
 [node name="Marker2D" type="Marker2D" parent="."]
 

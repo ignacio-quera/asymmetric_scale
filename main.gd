@@ -1,6 +1,7 @@
 extends Node
 @export var player_scene: PackedScene
 var started = false;
+var number_of_players: int;
 signal paused
 
 func new_player(player_num):
@@ -13,11 +14,15 @@ func new_player(player_num):
 
 func restart_game():
 	get_tree().call_group("littleguy", "queue_free")
+	get_tree().paused = false
+	for player in number_of_players:
+		print(player)
+		new_player(player)
 	pass
 
-func new_game(number_of_players):
-	restart_game()
-	for player in number_of_players:
+func new_game(num):
+	number_of_players = num
+	for player in num:
 		print(player)
 		new_player(player)
 	started = true

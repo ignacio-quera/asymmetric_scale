@@ -65,7 +65,7 @@ animations = [{
 "duration": 0.6,
 "texture": ExtResource("10_u7xga")
 }, {
-"duration": 1.5,
+"duration": 0.5,
 "texture": ExtResource("5_x5pfg")
 }],
 "loop": true,
@@ -116,8 +116,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ujmsp"]
-radius = 4.0
-height = 8.0
+radius = 2.0
+height = 5.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_aqquo"]
 animations = [{
@@ -136,9 +136,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("19_hpnhf")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_f5fpc")
 }],
 "loop": false,
 "name": &"default",
@@ -149,26 +146,33 @@ animations = [{
 collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_vj5vx")
-SPEED = 100.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_wfhkl")
 sprite_frames = SubResource("SpriteFrames_x2dw2")
-animation = &"idle"
-frame_progress = 0.345788
+animation = &"right"
+frame_progress = 0.0531549
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
 shape = SubResource("CapsuleShape2D_ujmsp")
 
 [node name="AnimatedStamina" type="AnimatedSprite2D" parent="."]
+visible = false
 texture_filter = 1
 position = Vector2(-5, -4)
 sprite_frames = SubResource("SpriteFrames_aqquo")
+frame = 4
+frame_progress = 1.0
 
 [node name="DashingResetTimer" type="Timer" parent="."]
 wait_time = 3.0
 
 [node name="Line2D" type="Line2D" parent="."]
+
+[node name="DashStatus" type="Sprite2D" parent="."]
+position = Vector2(-5.25, -3.75)
+texture = ExtResource("20_f5fpc")
 
 [connection signal="timeout" from="DashingResetTimer" to="." method="_on_dashing_timer_timeout"]
