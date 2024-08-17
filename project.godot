@@ -127,6 +127,13 @@ menu={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="walls"
+2d_physics/layer_2="players"
+2d_physics/layer_3="enemies"
+2d_physics/layer_4="actions"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
