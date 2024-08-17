@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bt27d6qh4in8a"]
+
+[ext_resource type="Texture2D" uid="uid://ctdc01kljald4" path="res://assets/images/hand.png" id="1_cyknd"]
+[ext_resource type="Script" path="res://hand.gd" id="1_lnp1f"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e0lcu"]
+radius = 14.0
+height = 50.0
+
+[node name="Hand" type="Area2D"]
+texture_filter = 1
+script = ExtResource("1_lnp1f")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_cyknd")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_e0lcu")
+metadata/_edit_lock_ = true
