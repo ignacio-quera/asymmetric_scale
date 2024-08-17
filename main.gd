@@ -3,6 +3,7 @@ extends Node
 var started = false;
 var number_of_players: int;
 signal paused
+var camera;
 
 func new_player(player_num):
 	var player = player_scene.instantiate()

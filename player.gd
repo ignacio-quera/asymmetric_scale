@@ -35,7 +35,6 @@ func _physics_process(delta):
 	if Input.is_action_pressed("down%s" % [player_id]):
 		velocity.y += 1
 
-
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * SPEED
 		var direction_x = velocity.x
@@ -50,8 +49,8 @@ func _physics_process(delta):
 			$AnimatedSprite2D.play("down")
 	else:
 		$AnimatedSprite2D.play("idle")
-		
-		
+
+	$InteractArea/CollisionShape2D.disabled = true
 	if Input.is_action_just_pressed("action%s" % [player_id]) and velocity.length() > 0:
 		if not has_dashed:
 			$DashingResetTimer.start()
@@ -66,7 +65,7 @@ func _physics_process(delta):
 			has_dashed = true
 			dashing = true
 	elif Input.is_action_just_pressed("action%s" % [player_id]) and velocity.length() <= 0:
-		print("action")
+		$InteractArea/CollisionShape2D.disabled = false
 
 	# Move the player.
 	position += velocity * delta
@@ -79,8 +78,7 @@ func _process(delta):
 		dash_path = null
 		reset_scale()
 	if dash_path != null:
-		time += delta		
-		print(time)
+		time += delta
 		if time < 0:
 			position = dash_path.sample(0, 1 + time / 1)
 		else:
@@ -90,8 +88,8 @@ func _process(delta):
 func dashing_stretch(vel):
 	var direction_x = vel.x
 	var direction_y = vel.y
-	print("X:", direction_x)
-	print("Y:", direction_y)
+	# print("X:", direction_x)
+	# print("Y:", direction_y)
 	if direction_x > 0 or direction_x < 0:
 		$AnimatedSprite2D.scale.x *= 1.5
 	elif direction_y < 0 or direction_y > 0:
