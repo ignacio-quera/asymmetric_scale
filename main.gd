@@ -3,6 +3,7 @@ extends Node
 var started = false;
 var number_of_players: int;
 signal paused
+var camera;
 
 func new_player(player_num):
 	var player = player_scene.instantiate()
@@ -28,7 +29,9 @@ func new_game(num):
 	started = true
 
 func _ready():
-	pass
+	camera = get_node("Camera2D")
+	var timer = get_node("Shake")
+	timer.timeout.connect(_on_timer_shake())
 
 
 func _on_hud_start_game():
@@ -53,3 +56,6 @@ func pause():
 
 func unpause():
 	get_tree().paused = false
+
+func _on_timer_shake():
+	camera
