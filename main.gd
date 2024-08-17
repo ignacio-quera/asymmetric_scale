@@ -29,9 +29,7 @@ func new_game(num):
 	started = true
 
 func _ready():
-	camera = get_node("Camera2D")
-	var timer = get_node("Shake")
-	timer.timeout.connect(_on_timer_shake())
+	pass
 
 
 func _on_hud_start_game():
@@ -56,6 +54,3 @@ func pause():
 
 func unpause():
 	get_tree().paused = false
-
-func _on_timer_shake():
-	camera

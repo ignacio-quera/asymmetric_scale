@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=15 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
 [ext_resource type="PackedScene" uid="uid://bpuc2pa2o764y" path="res://player.tscn" id="2_4n720"]
@@ -18,6 +18,10 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 256, 64, 0, 0, 0, 0, 192, 64, 0, 0, 0, 0, 192, 128, 0, 0, 0, 0, 256, 128, 0, 0, 0, 0, 256, 64)
 }
 point_count = 5
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vtf6u"]
+noise_type = 3
+frequency = 0.1
 
 [node name="Main" type="Node"]
 script = ExtResource("1_ognb3")
@@ -84,8 +88,12 @@ position = Vector2(240, 180)
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(240, 135)
 script = ExtResource("12_qlfb1")
+max_offset = Vector2(25, 25)
+noise = SubResource("FastNoiseLite_vtf6u")
 
 [node name="Shake" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
 
 [connection signal="paused" from="." to="PauseMenu" method="_on_pause"]
 [connection signal="start_game" from="StartMenu" to="." method="new_game"]
