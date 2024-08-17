@@ -1,13 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=13 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
 [ext_resource type="PackedScene" uid="uid://bpuc2pa2o764y" path="res://player.tscn" id="2_4n720"]
-[ext_resource type="PackedScene" path="res://hud.tscn" id="3_0co1d"]
+[ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
 [ext_resource type="PackedScene" uid="uid://dgh4u0trlvmpf" path="res://hand_controller.tscn" id="4_j51c6"]
 [ext_resource type="Texture2D" uid="uid://b66ykbaxk1382" path="res://assets/images/stage/blackground_prototype.png" id="5_8ai88"]
 [ext_resource type="Texture2D" uid="uid://cs6mmjlai34ie" path="res://assets/images/stage/arena_prototype.png" id="5_in1k4"]
-[ext_resource type="Texture2D" uid="uid://bs8e0f68g2odq" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
-[ext_resource type="Texture2D" uid="uid://b6guu7hftkdt0" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
+[ext_resource type="Texture2D" uid="uid://urny1m1c0yqf" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
+[ext_resource type="Texture2D" uid="uid://w7opisttso2t" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
+[ext_resource type="PackedScene" uid="uid://drdnhbqbs1ack" path="res://pause_menu.tscn" id="9_jkarc"]
 
 [sub_resource type="Curve2D" id="Curve2D_dg3t6"]
 _data = {
@@ -25,7 +26,7 @@ colors = PackedColorArray(0.5, 0.95, 1, 1, 0.22, 0.519, 1, 1)
 script = ExtResource("1_ognb3")
 player_scene = ExtResource("2_4n720")
 
-[node name="HUD" parent="." instance=ExtResource("3_0co1d")]
+[node name="StartMenu" parent="." instance=ExtResource("3_0co1d")]
 
 [node name="PlayerPath" type="Path2D" parent="."]
 position = Vector2(16, 80)
@@ -70,4 +71,8 @@ texture = ExtResource("7_t25bi")
 texture = ExtResource("5_in1k4")
 centered = false
 
-[connection signal="start_game" from="HUD" to="." method="new_game"]
+[node name="PauseMenu" parent="." instance=ExtResource("9_jkarc")]
+
+[connection signal="paused" from="." to="PauseMenu" method="_on_pause"]
+[connection signal="start_game" from="StartMenu" to="." method="new_game"]
+[connection signal="exit_game" from="PauseMenu" to="." method="quit"]
