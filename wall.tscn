@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2u6scfv4pp56"]
+
+[ext_resource type="Texture2D" uid="uid://b80xkcics0ayu" path="res://assets/images/stage/wall_prototype.png" id="1_nakut"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_mq82f"]
+b = Vector2(0, 16)
+
+[node name="Wall" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_nakut")
+centered = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(15, 0)
+shape = SubResource("SegmentShape2D_mq82f")

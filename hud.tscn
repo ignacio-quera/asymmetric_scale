@@ -1,10 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://4ej8qga1tafm"]
+[gd_scene load_steps=2 format=3 uid="uid://4ej8qga1tafm"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_vhgnj"]
-[ext_resource type="Script" path="res://UnpauseButton.gd" id="2_grwuf"]
-[ext_resource type="Script" path="res://ExitButton.gd" id="3_kendu"]
 
-[node name="HUD" type="CanvasLayer"]
+[node name="StartMenu" type="CanvasLayer"]
 script = ExtResource("1_vhgnj")
 
 [node name="StartButton" type="Button" parent="."]
@@ -40,34 +38,5 @@ popup/item_1/id = 1
 popup/item_2/text = "3"
 popup/item_2/id = 2
 
-[node name="UnpauseButton" type="Button" parent="."]
-process_mode = 2
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.807
-anchor_right = 0.5
-anchor_bottom = 0.807
-offset_left = -40.0
-offset_top = -15.5601
-offset_right = 37.0
-offset_bottom = 15.4399
-text = "Unpause"
-script = ExtResource("2_grwuf")
-
-[node name="ExitButton" type="Button" parent="."]
-anchors_preset = -1
-anchor_left = 0.502
-anchor_top = 0.651
-anchor_right = 0.502
-anchor_bottom = 0.651
-offset_left = -51.8401
-offset_top = -143.08
-offset_right = 35.1599
-offset_bottom = -112.08
-text = "Exit Game"
-script = ExtResource("3_kendu")
-
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="item_selected" from="NumberOfPlayers" to="." method="_on_number_of_players_item_selected"]
-[connection signal="pressed" from="UnpauseButton" to="." method="_on_unpause_button_pressed"]
-[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

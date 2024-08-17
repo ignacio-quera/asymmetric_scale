@@ -1,5 +1,6 @@
 extends Node
 @export var player_scene: PackedScene
+var started = false;
 signal paused
 
 func new_player(player_num):
@@ -10,10 +11,16 @@ func new_player(player_num):
 	player.start(spawn_pos, player_num)
 	#$Player.start($StartPosition.position+Vector2(player_num*10, player_num*10), player_num)
 
+func restart_game():
+	get_tree().call_group("littleguy", "queue_free")
+	pass
+
 func new_game(number_of_players):
+	restart_game()
 	for player in number_of_players:
 		print(player)
 		new_player(player)
+	started = true
 
 func _ready():
 	pass
@@ -24,16 +31,20 @@ func _on_hud_start_game():
 
 
 func _input(event):
-	if event.is_action_pressed("ui_cancel"):
-		get_tree().quit()
+	#if event.is_action_pressed("ui_cancel"):
+		#get_tree().quit()
 	if event.is_action_pressed("ui_home"):
 		new_game(2)
 	if event.is_action_pressed("menu"):
 		pause()
 		
+func quit():
+	get_tree().quit()
+		
 func pause():
-	get_tree().paused = true
-	paused.emit()
+	if started:
+		get_tree().paused = true
+		paused.emit()
 
 func unpause():
 	get_tree().paused = false
