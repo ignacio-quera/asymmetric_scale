@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=10 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
 [ext_resource type="PackedScene" uid="uid://bpuc2pa2o764y" path="res://player.tscn" id="2_4n720"]
@@ -15,12 +15,6 @@ _data = {
 }
 point_count = 5
 
-[sub_resource type="Gradient" id="Gradient_b4dpc"]
-colors = PackedColorArray(0.91, 0.583917, 0.1274, 1, 0.84, 0.3304, 0.0756, 1)
-
-[sub_resource type="Gradient" id="Gradient_qh6rd"]
-colors = PackedColorArray(0.5, 0.95, 1, 1, 0.22, 0.519, 1, 1)
-
 [node name="Main" type="Node"]
 script = ExtResource("1_ognb3")
 player_scene = ExtResource("2_4n720")
@@ -31,14 +25,7 @@ player_scene = ExtResource("2_4n720")
 position = Vector2(16, 80)
 curve = SubResource("Curve2D_dg3t6")
 
-[node name="HandControllerLeft" parent="." instance=ExtResource("4_j51c6")]
-action_button = "drag_left"
-is_left = true
-trail_gradient = SubResource("Gradient_b4dpc")
-
-[node name="HandControllerRight" parent="." instance=ExtResource("4_j51c6")]
-action_button = "drag_right"
-trail_gradient = SubResource("Gradient_qh6rd")
+[node name="HandController" parent="." instance=ExtResource("4_j51c6")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 

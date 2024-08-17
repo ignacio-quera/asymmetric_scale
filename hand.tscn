@@ -11,12 +11,12 @@ texture_filter = 1
 script = ExtResource("1_lnp1f")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(-1, 1)
 texture = ExtResource("2_832tc")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_nhcnw")
+disabled = true
 metadata/_edit_lock_ = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
