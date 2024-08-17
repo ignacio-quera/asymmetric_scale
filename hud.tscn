@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://4ej8qga1tafm"]
+
+[ext_resource type="Script" path="res://hud.gd" id="1_vhgnj"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_vhgnj")
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -77.0
+offset_right = 23.0
+offset_bottom = -46.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Start"
+
+[node name="NumberOfPlayers" type="OptionButton" parent="."]
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.885
+anchor_right = 0.502
+anchor_bottom = 0.885
+offset_left = -27.64
+offset_top = -15.4
+offset_right = 27.36
+offset_bottom = 15.6
+item_count = 3
+selected = 1
+popup/item_0/text = "1"
+popup/item_0/id = 0
+popup/item_1/text = "2"
+popup/item_1/id = 1
+popup/item_2/text = "3"
+popup/item_2/id = 2
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="item_selected" from="NumberOfPlayers" to="." method="_on_number_of_players_item_selected"]
