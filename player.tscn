@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://40rgog1gct3b"]
+[gd_scene load_steps=17 format=3 uid="uid://dqafon4ud270k"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_vj5vx"]
 [ext_resource type="Texture2D" uid="uid://cdk0eryhbgu4p" path="res://assets/images/lilguyanimations/run_down_animation/run_down_1.png" id="2_e40ux"]
@@ -92,6 +92,7 @@ SPEED = 50.0
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_x2dw2")
 animation = &"left"
 
