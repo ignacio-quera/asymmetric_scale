@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bpuc2pa2o764y"]
+[gd_scene load_steps=30 format=3 uid="uid://bpuc2pa2o764y"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_vj5vx"]
 [ext_resource type="Texture2D" uid="uid://cdk0eryhbgu4p" path="res://assets/images/lilguyanimations/run_down_animation/run_down_1.png" id="2_e40ux"]
@@ -148,6 +148,9 @@ animations = [{
 "speed": 2.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_iquhm"]
+radius = 12.0
+
 [node name="Player" type="CharacterBody2D" groups=["littleguy"]]
 collision_layer = 2
 collision_mask = 13
@@ -179,5 +182,12 @@ wait_time = 3.0
 [node name="DashStatus" type="Sprite2D" parent="."]
 position = Vector2(-5.25, -3.75)
 texture = ExtResource("20_f5fpc")
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource("CircleShape2D_iquhm")
 
 [connection signal="timeout" from="DashingResetTimer" to="." method="_on_dashing_timer_timeout"]
