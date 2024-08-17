@@ -72,6 +72,7 @@ func _physics_process(delta):
 	position += velocity * delta
 	move_and_slide()
 
+
 func _process(delta):
 	if time >= DASH_INVUL:
 		time = 0
