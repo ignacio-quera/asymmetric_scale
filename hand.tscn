@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bt27d6qh4in8a"]
 
 [ext_resource type="Script" path="res://hand.gd" id="1_lnp1f"]
-[ext_resource type="Texture2D" uid="uid://cue64dgyig6h6" path="res://assets/images/bigfellasprites/left_hand.png" id="2_832tc"]
+[ext_resource type="Texture2D" uid="uid://ctrkx5e1fufbo" path="res://assets/images/bigfellasprites/hand_gold.png" id="2_qfidn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nhcnw"]
 radius = 32.0
@@ -13,7 +13,9 @@ collision_mask = 2
 script = ExtResource("1_lnp1f")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_832tc")
+position = Vector2(19, -12)
+scale = Vector2(2, 2)
+texture = ExtResource("2_qfidn")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

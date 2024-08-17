@@ -73,28 +73,34 @@ animations = [{
 "speed": 7.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": ExtResource("6_d0erp")
-}, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("7_lipxk")
 }, {
-"duration": 1.0,
+"duration": 0.5,
+"texture": ExtResource("6_d0erp")
+}, {
+"duration": 0.5,
 "texture": ExtResource("8_cs7uj")
+}, {
+"duration": 0.5,
+"texture": ExtResource("6_d0erp")
 }],
 "loop": true,
 "name": &"left",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("9_jdors")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("10_qrm8j")
 }, {
-"duration": 1.0,
+"duration": 0.5,
 "texture": ExtResource("11_17s57")
+}, {
+"duration": 0.5,
+"texture": ExtResource("10_qrm8j")
 }],
 "loop": true,
 "name": &"right",
@@ -155,8 +161,7 @@ SPEED = 100.0
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_wfhkl")
 sprite_frames = SubResource("SpriteFrames_x2dw2")
-animation = &"idle"
-frame_progress = 0.345788
+animation = &"left"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ujmsp")
