@@ -1,23 +1,25 @@
-[gd_scene load_steps=6 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=6 format=3 uid="uid://b7p2i7i0666e8"]
 
-[ext_resource type="Script" path="res://Main.gd" id="1_ve20i"]
+[ext_resource type="Script" path="res://main.gd" id="1_l8edo"]
 [ext_resource type="PackedScene" uid="uid://40rgog1gct3b" path="res://player.tscn" id="2_4n720"]
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
 [ext_resource type="PackedScene" uid="uid://b7whqpjxhyae2" path="res://hand_controller.tscn" id="4_j51c6"]
 
 [sub_resource type="Curve2D" id="Curve2D_dg3t6"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 256, 64, 0, 0, 0, 0, 192, 64, 0, 0, 0, 0, 192, 128, 0, 0, 0, 0, 256, 128, 0, 0, 0, 0, 256, 64)
+"points": PackedVector2Array(0, 0, 0, 0, 256, 64, 0, 0, 0, 0, 192, 64, 0, 0, 0, 0, 192, 128, 0, 0, 0, 0, 256, 128, 0, 0, 0, 0, 256, 64, 0, 0, 0, 0, 228.667, 63.2)
 }
-point_count = 5
+point_count = 6
 
 [node name="Main" type="Node"]
-script = ExtResource("1_ve20i")
+script = ExtResource("1_l8edo")
 player_scene = ExtResource("2_4n720")
 
 [node name="HUD" parent="." instance=ExtResource("3_0co1d")]
 
 [node name="PlayerPath" type="Path2D" parent="."]
+position = Vector2(625, 617)
+scale = Vector2(1.5, 1.25)
 curve = SubResource("Curve2D_dg3t6")
 
 [node name="PathPathLocation" type="PathFollow2D" parent="PlayerPath"]
@@ -26,4 +28,5 @@ rotation = 3.14159
 
 [node name="HandController" parent="." instance=ExtResource("4_j51c6")]
 
+[connection signal="paused" from="." to="HUD" method="_on_pause"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]

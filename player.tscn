@@ -88,12 +88,13 @@ height = 14.0
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_vj5vx")
-SPEED = 50.0
+SPEED = 100.0
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_x2dw2")
-animation = &"left"
+animation = &"up"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ujmsp")

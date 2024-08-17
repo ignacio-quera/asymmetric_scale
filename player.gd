@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+signal hit
 
 @export var SPEED = 300.0
 @export var player_id = 0

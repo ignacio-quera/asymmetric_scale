@@ -1,5 +1,7 @@
 extends Node
 @export var player_scene: PackedScene
+signal paused
+
 func new_player(player_num):
 	var Player = player_scene.instantiate()
 	var player_spawn_location = $PlayerPath/PathPathLocation
@@ -23,4 +25,12 @@ func _on_hud_start_game():
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
+	if event.is_action_pressed("menu"):
+		pause()
+		
+func pause():
+	get_tree().paused = true
+	paused.emit()
 
+func unpause():
+	get_tree().paused = false
