@@ -97,4 +97,4 @@ func _process(delta):
 			else:
 				var t = time / COOLDOWN_DURATION
 				$Hand.position = follow_curve.sample(follow_curve.point_count, t)
-	$Hand.deadly = (state == State.REPLAYING)
+	$Hand/CollisionShape2D.disabled = (state != State.REPLAYING)

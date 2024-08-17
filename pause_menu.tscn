@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://drdnhbqbs1ack"]
+
+[ext_resource type="Script" path="res://pause_menu.gd" id="1_5he3s"]
+[ext_resource type="Script" path="res://UnpauseButton.gd" id="1_32ewl"]
+[ext_resource type="Script" path="res://ExitButton.gd" id="2_itcdp"]
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_5he3s")
+
+[node name="UnpauseButton" type="Button" parent="."]
+process_mode = 2
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.807
+anchor_right = 0.5
+anchor_bottom = 0.807
+offset_left = -40.0
+offset_top = -15.5601
+offset_right = 37.0
+offset_bottom = 15.4399
+text = "Unpause"
+script = ExtResource("1_32ewl")
+
+[node name="ExitButton" type="Button" parent="."]
+anchors_preset = -1
+anchor_left = 0.502
+anchor_top = 0.651
+anchor_right = 0.502
+anchor_bottom = 0.651
+offset_left = -42.84
+offset_top = -14.08
+offset_right = 44.16
+offset_bottom = 16.92
+text = "Exit Game"
+script = ExtResource("2_itcdp")
+
+[connection signal="pressed" from="UnpauseButton" to="." method="_on_unpause_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
