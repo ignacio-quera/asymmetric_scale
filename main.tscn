@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7p2i7i0666e8"]
+[gd_scene load_steps=6 format=3 uid="uid://b7p2i7i0666e8"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_ve20i"]
 [ext_resource type="PackedScene" uid="uid://40rgog1gct3b" path="res://player.tscn" id="2_4n720"]
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
+[ext_resource type="PackedScene" path="res://hand_controller.tscn" id="4_j51c6"]
 
 [sub_resource type="Curve2D" id="Curve2D_dg3t6"]
 _data = {
@@ -22,5 +23,7 @@ curve = SubResource("Curve2D_dg3t6")
 [node name="PathPathLocation" type="PathFollow2D" parent="PlayerPath"]
 position = Vector2(256, 64)
 rotation = 3.14159
+
+[node name="HandController" parent="." instance=ExtResource("4_j51c6")]
 
 [connection signal="start_game" from="HUD" to="." method="new_game"]
