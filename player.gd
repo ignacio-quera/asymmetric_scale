@@ -46,9 +46,7 @@ func _physics_process(delta):
 
 	# Move the player.
 	position += velocity * delta
-	position = position.clamp(
-		Vector2.ZERO, screen_size
-		)
+	move_and_slide()
 
 func _process(delta):
 	pass

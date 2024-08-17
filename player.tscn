@@ -83,10 +83,12 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ujmsp"]
-radius = 5.0
-height = 14.0
+radius = 4.0
+height = 8.0
 
 [node name="Player" type="CharacterBody2D" groups=["littleguy"]]
+collision_layer = 2
+collision_mask = 13
 script = ExtResource("1_vj5vx")
 SPEED = 100.0
 metadata/_edit_group_ = true
