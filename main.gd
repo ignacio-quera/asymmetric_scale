@@ -3,11 +3,11 @@ extends Node
 signal paused
 
 func new_player(player_num):
-	var Player = player_scene.instantiate()
-	var player_spawn_location = $PlayerPath/PathPathLocation
-	player_spawn_location.progress_ratio = player_num / 4
-	add_child(Player)
-	Player.start(player_spawn_location.global_position, player_num)
+	var player = player_scene.instantiate()
+	var spawner = $PlayerPath
+	var spawn_pos = spawner.position + spawner.curve.sample_baked(player_num * 20)
+	add_child(player)
+	player.start(spawn_pos, player_num)
 	#$Player.start($StartPosition.position+Vector2(player_num*10, player_num*10), player_num)
 
 func new_game(number_of_players):
