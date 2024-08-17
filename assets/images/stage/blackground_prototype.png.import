@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cue64dgyig6h6"
-path="res://.godot/imported/left_hand.png-4df97161d236092fd605449dacc6c7f7.ctex"
+uid="uid://b66ykbaxk1382"
+path="res://.godot/imported/blackground_prototype.png-565045c9ab0766bb6d354b551b968686.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/bigfellasprites/left_hand.png"
-dest_files=["res://.godot/imported/left_hand.png-4df97161d236092fd605449dacc6c7f7.ctex"]
+source_file="res://assets/images/stage/blackground_prototype.png"
+dest_files=["res://.godot/imported/blackground_prototype.png-565045c9ab0766bb6d354b551b968686.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cue64dgyig6h6"
-path="res://.godot/imported/left_hand.png-4df97161d236092fd605449dacc6c7f7.ctex"
+uid="uid://cs6mmjlai34ie"
+path="res://.godot/imported/arena_prototype.png-fd79799a4c669b00d04d2730f600cc33.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/bigfellasprites/left_hand.png"
-dest_files=["res://.godot/imported/left_hand.png-4df97161d236092fd605449dacc6c7f7.ctex"]
+source_file="res://assets/images/stage/arena_prototype.png"
+dest_files=["res://.godot/imported/arena_prototype.png-fd79799a4c669b00d04d2730f600cc33.ctex"]
 
 [params]
 

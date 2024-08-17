@@ -3,11 +3,13 @@ extends Node
 
 var RECORD_DISTANCE: float = 10
 var MAX_RECORD_DIST: int = 200
-var MAX_RECORD_DURATION: float = 1
+var MAX_RECORD_DURATION: float = 0.5
 var DELAY: float = 1
 var COOLDOWN_DURATION: float = 0.5
 
-@export var action_button: String = "drag_left"
+@export var action_button: String
+@export var is_left: bool
+@export var trail_gradient: Gradient
 
 enum State {IDLE, RECORDING, WAITING, REPLAYING, COOLDOWN}
 
@@ -18,7 +20,8 @@ var follow_curve: Curve2D = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$Hand/Sprite2D.flip_h = is_left
+	$Line2D.gradient = trail_gradient
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -43,15 +46,19 @@ func _process(delta):
 				var a = $Line2D.get_point_position(i-1)
 				var b = $Line2D.get_point_position(i)
 				total_dist += (b - a).length()
-			if n >= 2 and (time >= MAX_RECORD_DURATION
+			if (time >= MAX_RECORD_DURATION
 					or total_dist >= MAX_RECORD_DIST
-					or not Input.is_action_pressed(action_button)
-					):
-				state = State.WAITING
-				time -= MAX_RECORD_DURATION
-				follow_curve = Curve2D.new()
-				follow_curve.add_point($Hand.position, Vector2.ZERO, $Line2D.get_point_position(0) - $Hand.position)
-				follow_curve.add_point($Line2D.get_point_position(0), Vector2.UP*100)
+					or not Input.is_action_pressed(action_button)):
+				if n <= 2:
+					state = State.IDLE
+					time = 0
+					$Line2D.clear_points()
+				else:
+					state = State.WAITING
+					time -= MAX_RECORD_DURATION
+					follow_curve = Curve2D.new()
+					follow_curve.add_point($Hand.position, Vector2.ZERO, $Line2D.get_point_position(0) - $Hand.position)
+					follow_curve.add_point($Line2D.get_point_position(0), Vector2.UP*100)
 		State.WAITING:
 			if time >= DELAY:
 				state = State.REPLAYING
@@ -90,3 +97,4 @@ func _process(delta):
 			else:
 				var t = time / COOLDOWN_DURATION
 				$Hand.position = follow_curve.sample(follow_curve.point_count, t)
+	$Hand.deadly = (state == State.REPLAYING)

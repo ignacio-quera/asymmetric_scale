@@ -3,18 +3,20 @@
 [ext_resource type="Texture2D" uid="uid://ctdc01kljald4" path="res://assets/images/hand.png" id="1_cyknd"]
 [ext_resource type="Script" path="res://hand.gd" id="1_lnp1f"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e0lcu"]
-radius = 14.0
-height = 50.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_nhcnw"]
+radius = 32.0
 
 [node name="Hand" type="Area2D"]
 texture_filter = 1
 script = ExtResource("1_lnp1f")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(-1, 1)
 texture = ExtResource("1_cyknd")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_e0lcu")
+shape = SubResource("CircleShape2D_nhcnw")
 metadata/_edit_lock_ = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

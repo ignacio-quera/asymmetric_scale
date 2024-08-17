@@ -5,8 +5,9 @@ signal paused
 func new_player(player_num):
 	var Player = player_scene.instantiate()
 	var player_spawn_location = $PlayerPath/PathPathLocation
+	player_spawn_location.progress_ratio = player_num / 4
 	add_child(Player)
-	Player.start(Vector2(player_num*10, player_num*10), player_num)
+	Player.start(player_spawn_location.global_position, player_num)
 	#$Player.start($StartPosition.position+Vector2(player_num*10, player_num*10), player_num)
 
 func new_game(number_of_players):
@@ -25,6 +26,8 @@ func _on_hud_start_game():
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().quit()
+	if event.is_action_pressed("ui_home"):
+		new_game(2)
 	if event.is_action_pressed("menu"):
 		pause()
 		
