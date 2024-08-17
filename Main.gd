@@ -18,3 +18,9 @@ func _ready():
 
 func _on_hud_start_game():
 	pass # Replace with function body.
+
+
+func _input(event):
+	if event.is_action_pressed("ui_cancel"):
+		get_tree().quit()
+
