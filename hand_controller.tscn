@@ -1,7 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dgh4u0trlvmpf"]
+[gd_scene load_steps=4 format=3 uid="uid://b7whqpjxhyae2"]
 
 [ext_resource type="Script" path="res://HandController.gd" id="1_0iu6m"]
-[ext_resource type="PackedScene" uid="uid://bt27d6qh4in8a" path="res://hand.tscn" id="2_l7t1c"]
+[ext_resource type="PackedScene" path="res://hand.tscn" id="2_l7t1c"]
 
 [sub_resource type="Gradient" id="Gradient_i1r4q"]
 colors = PackedColorArray(1, 0.685, 0.1, 1, 1, 0.396078, 0.141176, 1)
@@ -10,6 +10,7 @@ colors = PackedColorArray(1, 0.685, 0.1, 1, 1, 0.396078, 0.141176, 1)
 script = ExtResource("1_0iu6m")
 
 [node name="Hand" parent="." instance=ExtResource("2_l7t1c")]
+z_index = 3
 
 [node name="Line2D" type="Line2D" parent="."]
 gradient = SubResource("Gradient_i1r4q")
