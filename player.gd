@@ -6,17 +6,15 @@ signal hit
 @export var player_id = 0
 var screen_size
 var dashing = false
-var dashing_delay = 500
 var has_dashed = false
+var dash_invulenarability = 30
 
 func _ready():
 	# Set the initial velocity to zero.
 	velocity = Vector2.ZERO
 	screen_size = get_viewport_rect().size
-	$DashingTimer.process_callback = $AnimatedStamina.frame
-	#print($AnimatedStamina.frame)
 	hide()
-
+	
 func start(pos, player_num):
 	position = pos
 	player_id = player_num
@@ -34,22 +32,35 @@ func _physics_process(delta):
 	if Input.is_action_pressed("down%s" % [player_id]):
 		velocity.y += 1
 
+
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * SPEED
-		$AnimatedSprite2D.play()
+		var direction_x = velocity.x
+		var direction_y = velocity.y
+		if direction_x > 0:
+			$AnimatedSprite2D.play("right")
+		elif direction_x < 0:
+			$AnimatedSprite2D.play("left")
+		elif direction_y < 0:
+			$AnimatedSprite2D.play("up")
+		elif direction_y > 0:
+			$AnimatedSprite2D.play("down")
 	else:
-		$AnimatedSprite2D.stop()
+		$AnimatedSprite2D.play("idle")
+		
 		
 	if Input.is_action_just_pressed("action%s" % [player_id]) and velocity.length() > 0:
 		if not has_dashed:
+			$DashingResetTimer.start()
+			dashing_stretch(velocity)
+			$AnimatedStamina.play()
 			position += velocity*10* delta
 			position = position.clamp(
 				Vector2.ZERO, screen_size
 				)
-			$AnimatedStamina.play()
+			reset_scale()
 			has_dashed = true
 			dashing = true
-			$DashingTimer.start()
 	elif Input.is_action_just_pressed("action%s" % [player_id]) and velocity.length() <= 0:
 		print("action")
 
@@ -61,7 +72,24 @@ func _physics_process(delta):
 
 func _process(delta):
 	pass
+	
+func dashing_stretch(vel):
+	var direction_x = vel.x
+	var direction_y = vel.y
+	print("X:", direction_x)
+	print("Y:", direction_y)
+	if direction_x > 0:
+		scale.x += 1
+	#elif direction_x < 0:
+	#elif direction_y < 0:
+	#elif direction_y > 0:
+	pass
+
+func reset_scale():
+	scale.x = 1
+	scale.y = 1
 
 func _on_dashing_timer_timeout():
-	dashing = false
 	has_dashed = false
+	dashing = false
+	$AnimatedStamina.stop()

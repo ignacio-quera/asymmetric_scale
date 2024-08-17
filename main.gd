@@ -11,7 +11,12 @@ func new_player(player_num):
 	player.start(spawn_pos, player_num)
 	#$Player.start($StartPosition.position+Vector2(player_num*10, player_num*10), player_num)
 
+func restart_game():
+	get_tree().call_group("littleguy", "queue_free")
+	pass
+
 func new_game(number_of_players):
+	restart_game()
 	for player in number_of_players:
 		print(player)
 		new_player(player)
