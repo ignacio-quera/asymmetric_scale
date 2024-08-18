@@ -1,14 +1,44 @@
 [gd_scene load_steps=3 format=3 uid="uid://cqiob0oqg0jao"]
 
-[ext_resource type="Texture2D" uid="uid://lbuet6fobe71" path="res://assets/images/stage/background.png" id="1_0qcw1"]
-[ext_resource type="Texture2D" uid="uid://n4ay8np85bry" path="res://assets/images/stage/mountains.png" id="2_6kxrx"]
+[ext_resource type="Script" path="res://spawn_on_timer.gd" id="1_57pb4"]
+[ext_resource type="Script" path="res://post_game.gd" id="1_u7vlv"]
 
 [node name="PostGame" type="Node2D"]
+script = ExtResource("1_u7vlv")
 
-[node name="BackgroundSky" type="Sprite2D" parent="."]
-position = Vector2(260, 120)
-texture = ExtResource("1_0qcw1")
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Mountains" type="Sprite2D" parent="."]
-position = Vector2(220, 270)
-texture = ExtResource("2_6kxrx")
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="GameOver" type="Label" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.25
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 0
+grow_vertical = 2
+text = "Game Over"
+horizontal_alignment = 1
+script = ExtResource("1_57pb4")
+delay = 1.0
+
+[node name="Winner" type="Label" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.25
+anchor_right = 0.9
+anchor_bottom = 0.9
+offset_top = 30.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Big Fella Wins"
+horizontal_alignment = 1
+script = ExtResource("1_57pb4")
+delay = 2.0
