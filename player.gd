@@ -78,7 +78,7 @@ func _physics_process(delta):
 					obj = obj.get_parent()
 				if not obj.has_method("player_interact"):
 					continue
-				var d = (obj.position - position).length()
+				var d = (obj.global_position - global_position).length()
 				if d < max_dist:
 					max_dist = d
 					closest = obj
