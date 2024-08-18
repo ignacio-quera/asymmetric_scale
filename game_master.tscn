@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://jsp2qogxc2ry"]
+
+[ext_resource type="Script" path="res://GameMaster.gd" id="1_ysuk8"]
+
+[node name="GameMaster" type="Node" groups=["gamemaster"]]
+script = ExtResource("1_ysuk8")
+
+[node name="FadeToBlack" type="ColorRect" parent="."]
+visible = false
+z_index = 1000
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)

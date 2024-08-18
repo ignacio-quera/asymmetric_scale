@@ -5,8 +5,58 @@
 [sub_resource type="GDScript" id="GDScript_f36f7"]
 script/source = "extends Node2D
 
+const Player = preload(\"res://player.gd\")
+
+const SETUP_TIME = 1
+const DISAPPEAR_TIME = 1
+
+var launching: Player = null
+var launch_curve: Curve2D = null
+var time: float = 0
+var last_t: float = 0
+
+func _process(delta):
+	if launching != null:
+		var len = launch_curve.get_baked_length()
+		time += delta
+		var t = time / 1.5
+		rotation = (time + SETUP_TIME)**2 * 3
+		var d = 0
+		if t >= 0:
+			var mid = 0.76
+			if t < mid:
+				d = t / mid
+				d = d**2
+				d *= 0.5 * len
+			else:
+				d = (t - mid) / (1 - mid)
+				d = lerp(d, d**2, 0.3)
+				d = (d/2+0.5)*len
+			if last_t < mid and t >= mid:
+				get_tree().call_group(\"gamemaster\", \"_hurt_bigfella\")
+		last_t = t
+		if launching.helpless:
+			launching.position = launch_curve.sample_baked(d)
+		if t >= 1:
+			# Terminó la animación de daño
+			launching.helpless = false
+			var t2 = (t-1) / DISAPPEAR_TIME
+			$Sprite2D.modulate.a = 1 - t2
+			if t2 >= 1:
+				queue_free()
+
 func player_interact(player):
-	print(\"activated by \", player)
+	if not launching:
+		player.helpless = true
+		launching = player
+		var guy = get_viewport_rect().size / 2
+		guy.y /= 3
+		var endpos = Vector2(2*guy.x - player.position.x, player.position.y)
+		launch_curve = Curve2D.new()
+		launch_curve.add_point(player.position, Vector2.ZERO, Vector2.UP*100)
+		launch_curve.add_point(guy)
+		launch_curve.add_point(endpos, guy-endpos)
+		time = -SETUP_TIME
 
 func player_interact_enter(player):
 	# print(\"player can activate \", player)

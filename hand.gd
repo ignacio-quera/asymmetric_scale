@@ -1,7 +1,5 @@
 extends Area2D
 
-signal shake_camera(float)
-
 @export var is_left: bool
 @export var recover_pos: Marker2D
 @export var hand_texture: Texture2D
@@ -77,10 +75,10 @@ func _process(delta):
 			var n = follow_curve.point_count - 2
 			position = follow_curve.samplef(1 + time / max_time * n)
 			if constant_shake > 0:
-				shake_camera.emit(constant_shake)
+				get_viewport().get_camera_2d().apply_shake(constant_shake)
 		if time >= max_time:
 			if shake_hit > 0:
-				shake_camera.emit(shake_hit)
+				get_viewport().get_camera_2d().apply_shake(shake_hit)
 				shake_hit = 0
 			constant_shake = 0
 			if recovering:

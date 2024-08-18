@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=17 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
 [ext_resource type="PackedScene" uid="uid://bpuc2pa2o764y" path="res://player.tscn" id="2_4n720"]
@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://drdnhbqbs1ack" path="res://pause_menu.tscn" id="9_jkarc"]
 [ext_resource type="PackedScene" uid="uid://3jq2vjcu6vdq" path="res://tasks/task_controller.tscn" id="10_crd63"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="12_qlfb1"]
+[ext_resource type="PackedScene" uid="uid://daux8l3mlpo1b" path="res://tasks/magic_circle.tscn" id="13_vi4ml"]
+[ext_resource type="PackedScene" uid="uid://jsp2qogxc2ry" path="res://game_master.tscn" id="14_d1hmp"]
 
 [sub_resource type="Curve2D" id="Curve2D_dg3t6"]
 _data = {
@@ -20,8 +22,9 @@ _data = {
 point_count = 5
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vtf6u"]
-noise_type = 3
-frequency = 0.1104
+noise_type = 4
+seed = 123456
+frequency = 0.209
 fractal_octaves = 3
 
 [node name="Main" type="Node"]
@@ -90,14 +93,16 @@ position = Vector2(240, 180)
 position = Vector2(240, 135)
 script = ExtResource("12_qlfb1")
 decay = 0.75
-max_offset = Vector2(20, 20)
+offset_ampl = Vector2(20, 20)
 noise = SubResource("FastNoiseLite_vtf6u")
+
+[node name="magic_circle" parent="." instance=ExtResource("13_vi4ml")]
+position = Vector2(369, 182)
+
+[node name="GameMaster" parent="." node_paths=PackedStringArray("bigfella_sprites") instance=ExtResource("14_d1hmp")]
+bigfella_sprites = [NodePath("../ParallaxBackground/BigFellaHelm/Sprite2D"), NodePath("../ParallaxBackground/BigFellaHead/Sprite2D")]
 
 [connection signal="paused" from="." to="PauseMenu" method="_on_pause"]
 [connection signal="start_game" from="StartMenu" to="." method="new_game"]
-[connection signal="shake_camera" from="HandController/HandL" to="Camera2D" method="apply_shake"]
-[connection signal="shake_camera" from="HandController/HandR" to="Camera2D" method="apply_shake"]
 [connection signal="exit_game" from="PauseMenu" to="." method="quit"]
 [connection signal="reset_game" from="PauseMenu" to="." method="restart_game"]
-
-[editable path="HandController"]

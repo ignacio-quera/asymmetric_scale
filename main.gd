@@ -35,16 +35,12 @@ func _on_hud_start_game():
 
 
 func _input(event):
-	#if event.is_action_pressed("ui_cancel"):
-		#get_tree().quit()
-	if event.is_action_pressed("ui_home"):
-		new_game(2)
 	if event.is_action_pressed("menu"):
 		pause()
-		
+
 func quit():
 	get_tree().quit()
-		
+
 func pause():
 	if started:
 		get_tree().paused = true
