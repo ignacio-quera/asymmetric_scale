@@ -9,7 +9,6 @@ const RECOVER_TIME: float = 1
 const RECOVER_GRACE: float = 0.7
 
 enum Action {SWIPE, BACKHAND, FIST, CLAW, PUNCH}
-
 var follow_curve: Curve2D = null
 var recovering: bool = false
 var time: float = 0
