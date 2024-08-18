@@ -63,7 +63,6 @@ func _ready():
 		scale.x *= -1
 	position = recover_pos.position
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if follow_curve != null:
