@@ -11,7 +11,7 @@ var screen_size
 var dashing = false
 var has_dashed = false
 var objects_in_contact: Dictionary = {}
-var encumbered:bool = false
+var carrying: WeakRef = WeakRef.new()
 var helpless: bool = false
 
 func _ready():
@@ -85,8 +85,8 @@ func _physics_process(delta):
 			if closest != null:
 				closest.player_interact(self)
 
-		if encumbered:
-				vel /= 2
+		if carrying.get_ref() != null:
+			vel /= 2
 
 	# Move the player.
 	position += vel * delta
@@ -129,12 +129,16 @@ func reset_scale():
 	$AnimatedSprite2D.scale.y = 1
 
 func unencumber():
-	encumbered = false
+	var item = carrying.get_ref()
+	if item != null:
+		item.picked_by = WeakRef.new()
+	carrying = WeakRef.new()
 	has_dashed = false
 	#carrying_unsquish()
 	
-func encumber():
-	encumbered = true
+func encumber(item):
+	item.picked_by = weakref(self)
+	carrying = weakref(item)
 	#has_dashed = true
 	#carrying_squish()
 	

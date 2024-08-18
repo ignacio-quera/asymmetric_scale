@@ -21,10 +21,10 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if $\"Sprite\":
-		var multiplier = 6.5-abs(global_position.y-$\"../SpritePath/SpritePathFollow/Sprite2D\".global_position.y)
-		scale = Vector2(2.75,1.875) + multiplier*Vector2(0.05,0.05)  
+	var multiplier = 6.5-abs(global_position.y-$\"../SpritePath/SpritePathFollow/Sprite2D\".global_position.y)
+	scale = Vector2(2.75,1.875) + multiplier*Vector2(0.05,0.05)  
 	pass
+
 "
 
 [sub_resource type="Curve2D" id="Curve2D_d2jon"]
