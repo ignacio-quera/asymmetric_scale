@@ -6,6 +6,7 @@ extends Node
 @export var player_scene: PackedScene
 @export var player_spawner: Path2D
 @export var player_hud_scene: PackedScene
+@export var player_huds: BoxContainer
 
 const Player := preload("res://player.gd")
 
@@ -41,14 +42,14 @@ func new_player(player_num):
 	spawn_player(player_num)
 	
 	var hud = player_hud_scene.instantiate()
-	$CanvasLayer/PlayerHUDs.add_child(hud)
+	player_huds.add_child(hud)
 
 func spawn_players(pnum):
 	player_count = pnum
 	for player in player_count:
 		new_player(player)
 	update_lives_indicator()
-	$CanvasLayer/PlayerHUDs.visible = true
+	player_huds.visible = true
 
 func finish_game():
 	print("finished game")
@@ -93,7 +94,7 @@ func _hurt_bigfella(amount: int = 1):
 
 func update_lives_indicator():
 	for i in player_count:
-		$CanvasLayer/PlayerHUDs.get_child(i)._update_lives_left(lives_left[i])
+		player_huds.get_child(i)._update_lives_left(lives_left[i])
 
 func _player_died(player_num: int):
 	lives_left[player_num] -= 1
