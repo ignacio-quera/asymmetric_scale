@@ -176,8 +176,8 @@ animations = [{
 radius = 6.08276
 
 [node name="Player" type="CharacterBody2D" groups=["littleguy"]]
-collision_layer = 2
-collision_mask = 13
+collision_layer = 130
+collision_mask = 141
 script = ExtResource("1_vj5vx")
 dash_curve = SubResource("Curve_a7ngd")
 
@@ -185,7 +185,7 @@ dash_curve = SubResource("Curve_a7ngd")
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_wfhkl")
 sprite_frames = SubResource("SpriteFrames_x2dw2")
-animation = &"stun"
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)

@@ -16,3 +16,7 @@ func player_interact(player_area):
 		player_area.encumber($"..")
 		$CollisionShape2D.disabled = true
 		z_index = 1
+	else:
+		picked_by.get_ref().unencumber()
+		$CollisionShape2D.disabled = false
+		z_index = 0

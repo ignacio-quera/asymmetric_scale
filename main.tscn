@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=22 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
@@ -6,14 +6,14 @@
 [ext_resource type="Texture2D" uid="uid://lbuet6fobe71" path="res://assets/images/stage/background.png" id="5_pq2fe"]
 [ext_resource type="Texture2D" uid="uid://urny1m1c0yqf" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
 [ext_resource type="Texture2D" uid="uid://n4ay8np85bry" path="res://assets/images/stage/mountains.png" id="6_osgxv"]
-[ext_resource type="Texture2D" uid="uid://b6guu7hftkdt0" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
-[ext_resource type="PackedScene" path="res://side_wall.tscn" id="9_a4p07"]
+[ext_resource type="Texture2D" uid="uid://w7opisttso2t" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
+[ext_resource type="PackedScene" uid="uid://b2u6scfv4pp56" path="res://side_wall.tscn" id="9_a4p07"]
 [ext_resource type="Texture2D" uid="uid://j2yegkj8bi4u" path="res://assets/images/bigfellasprites/hand_fist_red.png" id="9_a5dsx"]
 [ext_resource type="Texture2D" uid="uid://ber8xj2amlj32" path="res://assets/images/stage/arena.png" id="9_dsp7g"]
 [ext_resource type="PackedScene" uid="uid://drdnhbqbs1ack" path="res://pause_menu.tscn" id="9_jkarc"]
 [ext_resource type="Texture2D" uid="uid://cm61vso26wgvu" path="res://assets/images/bigfellasprites/hand_fist_blue.png" id="10_fme4l"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="12_qlfb1"]
-[ext_resource type="PackedScene" path="res://up_wall.tscn" id="13_rmgko"]
+[ext_resource type="PackedScene" uid="uid://dne4hxwuc2ngi" path="res://up_wall.tscn" id="13_rmgko"]
 [ext_resource type="PackedScene" uid="uid://jsp2qogxc2ry" path="res://game_master.tscn" id="14_d1hmp"]
 
 [sub_resource type="Curve2D" id="Curve2D_dg3t6"]
@@ -35,6 +35,10 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 0, 150, 0, 10, 0, 0, 0, 50, 0, -30, 0, 0, 0, 80)
 }
 point_count = 3
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5s2nh"]
+radius = 56.0
+height = 124.0
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vtf6u"]
 noise_type = 4
@@ -125,6 +129,14 @@ texture_filter = 1
 position = Vector2(1, 90)
 texture = ExtResource("9_dsp7g")
 centered = false
+
+[node name="BigFellaCollision" type="Area2D" parent="ParallaxBackground"]
+position = Vector2(240, 50)
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ParallaxBackground/BigFellaCollision"]
+shape = SubResource("CapsuleShape2D_5s2nh")
 
 [node name="PauseMenu" parent="." instance=ExtResource("9_jkarc")]
 

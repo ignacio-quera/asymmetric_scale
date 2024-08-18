@@ -10,6 +10,7 @@ var max_rotation = 20
 var picked_by:WeakRef = WeakRef.new()
 var launching: Player = null
 var aiming: Player = null
+var leaving = false;
 var holder
 var rope_state = 2
 var cranked = false
@@ -17,10 +18,11 @@ var current_load_time = 0
 # Called when the node enters the scene tree for the first time.
 func start():
 	$CrankSpawnTimer.start()
-	pass
+	
 func _process(delta):
 	if picked_by.get_ref():
-		global_position = Vector2(picked_by.get_ref().position.x, picked_by.get_ref().position.y-10)
+		global_position = picked_by.get_ref().position - holder.position
+		#global_position = Vector2(picked_by.get_ref().position.x, picked_by.get_ref().position.y) - holder.position
 	if aiming != null:
 		aiming.global_position = $"shooter/LaunchingNode".global_position
 		aiming.z_index = 6
@@ -43,11 +45,23 @@ func _process(delta):
 			aiming.helpless = false
 			aiming = null
 	if launching != null:
+		var raycast = $"shooter/RayCast2D"
+		raycast.target_position = $"shooter/Line2D".points[1]
 		#var len = launch_curve.get_baked_length()
 		#time += delta
 		#var t = time / 1.5
 		#rotation = (time + SETUP_TIME)**2 * 3
-		var d = 0
+		#var d = 0
+		launching.helpless = false
+		launching = null	
+		cranked = false
+		rope_state = 2
+		$shooter/String.texture = load("res://assets/images/tasks/strings/string1.png")
+		if raycast.get_collider() != null:
+			get_tree().call_group("gamemaster", "_hurt_bigfella")
+				#leaving = true#
+		#$"shooter/Line2D".hide()
+		#$"shooter".z_index = 1
 		#if t >= 0:
 			#var mid = 0.76
 			#if t < mid:
@@ -71,6 +85,16 @@ func _process(delta):
 			#if t2 >= 1:
 				#queue_free()
 
+func _physics_process(delta):
+	if leaving:
+		if position.x > -100:
+			position.x -= 1
+			$"CrankItem".position.x -= 1
+			$"Wheel".rotation -= 0.05
+			$"Wheel2".rotation -= 0.05
+			$"Wheel3".rotation -= 0.05
+			$"Wheel4".rotation -= 0.05
+
 func _ready():
 	pass # Replace with function body.cranked
 
@@ -79,13 +103,18 @@ func spawn_crank():
 	item.name = "CrankItem"
 	item.get_node("SpritePath/SpritePathFollow/Sprite2D").texture = load("res://assets/images/tasks/crank.png")
 	add_child(item)
-	item.position = get_item_spawn_position()
-	pass
+	var gotten = get_item_spawn_position()
+	item.position = gotten
+	item.top_level = true
+	item.global_position = gotten
+	
 
 func get_item_spawn_position():
 	var centerpos = $item_spawn_area/CollisionShape2D.position + $item_spawn_area.position
 	var size = $item_spawn_area/CollisionShape2D.shape.size
 	var position_in_area = Vector2()
+	print(centerpos)
+	print(size)
 	position_in_area.x = (randf() * size.x) - (size.x/2) + centerpos.x 
 	position_in_area.y = (randf() * size.y) - (size.y/2) + centerpos.y
 	return position_in_area
@@ -100,9 +129,3 @@ func crank():
 		cranked = true
 		$shooter/String.texture = load("res://assets/images/tasks/strings/string8.png")
 		$shoot
-		
-
-
-func launch(player):
-	print(player)
-	

@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://jsp2qogxc2ry"]
+[gd_scene load_steps=9 format=3 uid="uid://jsp2qogxc2ry"]
 
 [ext_resource type="Script" path="res://GameMaster.gd" id="1_ysuk8"]
 [ext_resource type="Script" path="res://tasks/task_controller.gd" id="2_lvv2n"]
 [ext_resource type="PackedScene" uid="uid://cqiob0oqg0jao" path="res://post_game.tscn" id="2_qe1fn"]
 [ext_resource type="PackedScene" uid="uid://bpuc2pa2o764y" path="res://player.tscn" id="3_rm3w5"]
-[ext_resource type="PackedScene" uid="uid://daux8l3mlpo1b" path="res://tasks/magic_circle.tscn" id="3_uosvk"]
 [ext_resource type="PackedScene" uid="uid://cqci7noyna0on" path="res://player_hud.tscn" id="4_ddhtm"]
 [ext_resource type="PackedScene" uid="uid://q87lwpgvr60v" path="res://tasks/ballista.tscn" id="7_3byl6"]
 
@@ -36,7 +35,7 @@ player_huds = NodePath("CanvasLayer/PanelContainer/PlayerHUDs")
 
 [node name="task_controller" type="Node2D" parent="."]
 script = ExtResource("2_lvv2n")
-task_scenes = Array[PackedScene]([ExtResource("3_uosvk"), ExtResource("7_3byl6")])
+task_scenes = Array[PackedScene]([ExtResource("7_3byl6")])
 
 [node name="task_spawn_timer" type="Timer" parent="task_controller"]
 one_shot = true
