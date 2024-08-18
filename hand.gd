@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var is_left: bool
+@export var color: String
 @export var recover_pos: Marker2D
 @export var hand_texture: Texture2D
 @export var shockwave_scene: PackedScene
@@ -25,7 +25,7 @@ func ready_to_attack():
 
 func do_action(act: Action, pos: Vector2):
 	var scrsize = get_viewport_rect().size
-	var forward = (1 if is_left else -1)
+	var forward = (1 if color == 'red' else -1)
 	const MARGIN = 70
 	follow_curve = Curve2D.new()
 	follow_curve.add_point(position)
@@ -64,18 +64,26 @@ func do_action(act: Action, pos: Vector2):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Sprite2D.texture = hand_texture
-	if is_left:
+	$AnimatedSprite2D.play('fist_%s' % color)
+	if color == 'red':
 		scale.x *= -1
 	position = recover_pos.position
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	var idle_anim := true
 	if follow_curve != null:
 		time += delta
 		if time < 0:
 			position = follow_curve.sample(0, 1 + time / setup_time)
+			if not recovering and doing_action == Action.FLICK:
+				$AnimatedSprite2D.play('flick_1_%s' % color)
+				$AnimatedSprite2D.offset.y = -50
+				idle_anim = false
 		else:
+			if doing_action == Action.FLICK:
+				$AnimatedSprite2D.play('flick_2_%s' % color)
+				idle_anim = false
 			var n = follow_curve.point_count - 2
 			position = follow_curve.samplef(1 + time / max_time * n)
 			if constant_shake > 0:
@@ -85,6 +93,7 @@ func _process(delta):
 				get_viewport().get_camera_2d().apply_shake(shake_hit)
 				shake_hit = 0
 			constant_shake = 0
+			#$AnimatedSprite2D.play('fist_%s' % color)
 			if recovering:
 				follow_curve = null
 				recovering = false
@@ -107,6 +116,9 @@ func _process(delta):
 				recovering = true
 				deadly = false
 	$CollisionShape2D.disabled = not deadly or time < 0
+	if idle_anim:
+		$AnimatedSprite2D.play('fist_%s' % color)
+		$AnimatedSprite2D.offset = Vector2.ZERO
 
 
 func _on_body_entered(body):
