@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bpuc2pa2o764y"]
+[gd_scene load_steps=35 format=3 uid="uid://bpuc2pa2o764y"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_vj5vx"]
 [ext_resource type="Texture2D" uid="uid://cdk0eryhbgu4p" path="res://assets/images/lilguyanimations/run_down_animation/run_down_1.png" id="2_e40ux"]
@@ -25,8 +25,13 @@
 [ext_resource type="Texture2D" uid="uid://cyv0bd2wr476m" path="res://assets/images/lilguyanimations/stamina_animation/regen2.png" id="17_vh0q1"]
 [ext_resource type="Texture2D" uid="uid://b3arm2vkgr1v5" path="res://assets/images/lilguyanimations/stamina_animation/regen3.png" id="18_mpujh"]
 [ext_resource type="Texture2D" uid="uid://g0utufv88ovu" path="res://assets/images/lilguyanimations/stamina_animation/regen4.png" id="19_hpnhf"]
+[ext_resource type="Texture2D" uid="uid://dx4omq7mt16eb" path="res://assets/images/lilguyanimations/hurt_animation/hurt.png" id="19_r0tio"]
 [ext_resource type="Texture2D" uid="uid://buy8gu3ufpiar" path="res://assets/images/lilguyanimations/stamina_animation/regen5.png" id="20_f5fpc"]
 [ext_resource type="Texture2D" uid="uid://cn8aweal258sr" path="res://assets/images/lilguyanimations/idle_animation/shadow.png" id="25_8nck2"]
+
+[sub_resource type="Curve" id="Curve_a7ngd"]
+_data = [Vector2(0, 0), 0.0, 2.24852, 0, 0, Vector2(1, 1), 0.546834, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wfhkl"]
 
@@ -122,6 +127,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("19_r0tio")
+}],
+"loop": true,
+"name": &"stun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("12_pebgh")
 }, {
 "duration": 1.0,
@@ -143,9 +156,6 @@ height = 5.0
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
 "texture": ExtResource("16_s204i")
 }, {
 "duration": 1.0,
@@ -156,16 +166,10 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("19_hpnhf")
-}, {
-"duration": 1.0,
-"texture": null
-}, {
-"duration": 1.0,
-"texture": ExtResource("19_hpnhf")
 }],
 "loop": false,
 "name": &"default",
-"speed": 2.0
+"speed": 1.33
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_iquhm"]
@@ -175,13 +179,13 @@ radius = 6.08276
 collision_layer = 2
 collision_mask = 13
 script = ExtResource("1_vj5vx")
+dash_curve = SubResource("Curve_a7ngd")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_wfhkl")
 sprite_frames = SubResource("SpriteFrames_x2dw2")
-animation = &"celebrate"
-frame_progress = 0.621804
+animation = &"stun"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
@@ -192,8 +196,6 @@ visible = false
 texture_filter = 1
 position = Vector2(-5, -4)
 sprite_frames = SubResource("SpriteFrames_aqquo")
-frame = 4
-frame_progress = 1.0
 
 [node name="DashingResetTimer" type="Timer" parent="."]
 wait_time = 3.0

@@ -13,6 +13,8 @@ const Player := preload("res://player.gd")
 const FINISH_ANIM_TIME: float = 5
 const RESPAWN_TIME: float = 5
 
+var player_default_lives := 3
+
 var player_count: int
 var playing: bool = true
 var time: float = 0
@@ -30,7 +32,6 @@ func spawn_player(player_num):
 	var player = player_scene.instantiate()
 	var spawn_pos = player_spawner.position + player_spawner.curve.sample_baked(player_num * 20)
 	get_parent().add_child(player)
-	player.player_num = player_num
 	var player_num_name = player_num+1
 	player.name = "Player%s" % player_num_name
 	player.start(spawn_pos, player_num)
@@ -38,7 +39,7 @@ func spawn_player(player_num):
 
 func new_player(player_num):
 	players.append(null)
-	lives_left.append(1)
+	lives_left.append(player_default_lives)
 	spawn_player(player_num)
 	
 	var hud = player_hud_scene.instantiate()
