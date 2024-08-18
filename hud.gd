@@ -14,13 +14,10 @@ func ask_how_many_players():
 func _process(delta):
 	pass
 
-
-
 func _on_start_button_pressed():
 	$StartButton.hide()
 	$NumberOfPlayers.hide()
 	start_game.emit(number_of_players)
-
 
 func _on_number_of_players_item_selected(index):
 	number_of_players = index + 1

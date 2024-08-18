@@ -16,7 +16,7 @@ func _input(event):
 	if event.is_action_pressed("menu"):
 		hide_buttons()
 		get_tree().paused = false
-		
+
 func _on_pause():
 	$UnpauseButton.show()
 	$ExitButton.show()
@@ -25,7 +25,6 @@ func _on_pause():
 func _on_unpause_button_pressed():
 	hide_buttons()
 	get_tree().paused = false
-	pass # Replace with function body.
 
 func _on_exit_button_pressed():
 	exit_game.emit() 

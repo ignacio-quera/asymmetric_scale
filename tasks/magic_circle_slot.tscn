@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bw7bdc13pmlbj"]
+
+[ext_resource type="Script" path="res://tasks/magic_circle_slot.gd" id="1_b5i84"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wm15d"]
+radius = 20.0
+
+[node name="MagicCircleSlot" type="Area2D"]
+z_index = -1
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("1_b5i84")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_wm15d")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[connection signal="area_shape_entered" from="." to="." method="_on_area_shape_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=23 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
 [ext_resource type="PackedScene" uid="uid://bpuc2pa2o764y" path="res://player.tscn" id="2_4n720"]
@@ -6,23 +6,31 @@
 [ext_resource type="PackedScene" uid="uid://dgh4u0trlvmpf" path="res://hand_controller.tscn" id="4_j51c6"]
 [ext_resource type="Texture2D" uid="uid://lbuet6fobe71" path="res://assets/images/stage/background.png" id="5_pq2fe"]
 [ext_resource type="Texture2D" uid="uid://bs8e0f68g2odq" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
+[ext_resource type="Texture2D" uid="uid://bs8e0f68g2odq" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
 [ext_resource type="Texture2D" uid="uid://n4ay8np85bry" path="res://assets/images/stage/mountains.png" id="6_osgxv"]
 [ext_resource type="Texture2D" uid="uid://b6guu7hftkdt0" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
 [ext_resource type="PackedScene" uid="uid://b2u6scfv4pp56" path="res://side_wall.tscn" id="9_a4p07"]
 [ext_resource type="Texture2D" uid="uid://ber8xj2amlj32" path="res://assets/images/stage/arena.png" id="9_dsp7g"]
 [ext_resource type="PackedScene" uid="uid://drdnhbqbs1ack" path="res://pause_menu.tscn" id="9_jkarc"]
-[ext_resource type="PackedScene" uid="uid://3jq2vjcu6vdq" path="res://tasks/task_controller.tscn" id="10_crd63"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="12_qlfb1"]
 [ext_resource type="PackedScene" uid="uid://cmb3q44xx1byi" path="res://items/item.tscn" id="13_56dmc"]
-[ext_resource type="PackedScene" uid="uid://dne4hxwuc2ngi" path="res://up_wall.tscn" id="13_rmgko"]
+[ext_resource type="PackedScene" path="res://up_wall.tscn" id="13_rmgko"]
 [ext_resource type="PackedScene" uid="uid://daux8l3mlpo1b" path="res://tasks/magic_circle.tscn" id="13_vi4ml"]
-[ext_resource type="PackedScene" path="res://game_master.tscn" id="14_d1hmp"]
+[ext_resource type="PackedScene" uid="uid://jsp2qogxc2ry" path="res://game_master.tscn" id="14_d1hmp"]
+[ext_resource type="Texture2D" uid="uid://c58rbgr1xhytf" path="res://assets/images/bigfellasprites/hand_red.png" id="17_gsuup"]
+[ext_resource type="Texture2D" uid="uid://byvsy7n1tim1v" path="res://assets/images/bigfellasprites/hand_blue.png" id="18_bnhdu"]
 
 [sub_resource type="Curve2D" id="Curve2D_dg3t6"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 256, 64, 0, 0, 0, 0, 192, 64, 0, 0, 0, 0, 192, 128, 0, 0, 0, 0, 256, 128, 0, 0, 0, 0, 256, 64)
 }
 point_count = 5
+
+[sub_resource type="Curve2D" id="Curve2D_iiqsw"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 150, 0, 10, 0, 0, 0, 50, 0, -30, 0, 0, 0, 80)
+}
+point_count = 3
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vtf6u"]
 noise_type = 4
@@ -33,6 +41,7 @@ fractal_octaves = 3
 [node name="Main" type="Node"]
 script = ExtResource("1_ognb3")
 player_scene = ExtResource("2_4n720")
+hand_controller_scene = ExtResource("4_j51c6")
 
 [node name="StartMenu" parent="." instance=ExtResource("3_0co1d")]
 
@@ -40,12 +49,11 @@ player_scene = ExtResource("2_4n720")
 position = Vector2(16, 80)
 curve = SubResource("Curve2D_dg3t6")
 
-[node name="HandController" parent="." instance=ExtResource("4_j51c6")]
-
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = -1
 
 [node name="Background_Sky" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.1, 0.1)
+motion_scale = Vector2(0.3, 0.3)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Background_Sky"]
 texture_filter = 1
@@ -53,7 +61,7 @@ position = Vector2(240, 108)
 texture = ExtResource("5_pq2fe")
 
 [node name="Background_mountains" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.2, 0.2)
+motion_scale = Vector2(0.6, 0.6)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Background_mountains"]
 texture_filter = 1
@@ -61,7 +69,7 @@ position = Vector2(240, 134)
 texture = ExtResource("6_osgxv")
 
 [node name="BigFellaHead" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.3, 0.3)
+motion_offset = Vector2(0, 500)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BigFellaHead"]
 texture_filter = 1
@@ -69,12 +77,39 @@ position = Vector2(240, 60)
 texture = ExtResource("6_8f447")
 
 [node name="BigFellaHelm" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_scale = Vector2(0.4, 0.4)
+motion_offset = Vector2(0, 500)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BigFellaHelm"]
 texture_filter = 1
 position = Vector2(240, 60)
 texture = ExtResource("7_t25bi")
+
+[node name="HandSpawnL" type="Node2D" parent="ParallaxBackground"]
+scale = Vector2(-1, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/HandSpawnL"]
+visible = false
+texture_filter = 1
+position = Vector2(19, -12)
+scale = Vector2(2, 2)
+texture = ExtResource("17_gsuup")
+
+[node name="Path" type="Path2D" parent="ParallaxBackground/HandSpawnL"]
+position = Vector2(100, 0)
+curve = SubResource("Curve2D_iiqsw")
+
+[node name="HandSpawnR" type="Node2D" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/HandSpawnR"]
+visible = false
+texture_filter = 1
+position = Vector2(19, -12)
+scale = Vector2(2, 2)
+texture = ExtResource("18_bnhdu")
+
+[node name="Path" type="Path2D" parent="ParallaxBackground/HandSpawnR"]
+position = Vector2(380, 0)
+curve = SubResource("Curve2D_iiqsw")
 
 [node name="Stage" type="ParallaxLayer" parent="ParallaxBackground"]
 
@@ -84,27 +119,21 @@ position = Vector2(1, 90)
 texture = ExtResource("9_dsp7g")
 centered = false
 
-[node name="task_controller" parent="." instance=ExtResource("10_crd63")]
-position = Vector2(240, 180)
-
 [node name="PauseMenu" parent="." instance=ExtResource("9_jkarc")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(240, 135)
+offset = Vector2(0, -200)
 script = ExtResource("12_qlfb1")
 decay = 0.75
 offset_ampl = Vector2(20, 20)
 noise = SubResource("FastNoiseLite_vtf6u")
 
-[node name="CarryItem" parent="." instance=ExtResource("13_56dmc")]
-
-[node name="magic_circle" parent="." instance=ExtResource("13_vi4ml")]
-position = Vector2(369, 182)
-
 [node name="GameMaster" parent="." node_paths=PackedStringArray("bigfella_sprites") instance=ExtResource("14_d1hmp")]
 bigfella_sprites = [NodePath("../ParallaxBackground/BigFellaHelm/Sprite2D"), NodePath("../ParallaxBackground/BigFellaHead/Sprite2D")]
 
 [node name="UpWall" parent="." instance=ExtResource("13_rmgko")]
+z_index = -3
 position = Vector2(0, 82)
 scale = Vector2(0.99, 1.035)
 

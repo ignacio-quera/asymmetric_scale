@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqiob0oqg0jao"]
+
+[ext_resource type="Texture2D" uid="uid://lbuet6fobe71" path="res://assets/images/stage/background.png" id="1_0qcw1"]
+[ext_resource type="Texture2D" uid="uid://n4ay8np85bry" path="res://assets/images/stage/mountains.png" id="2_6kxrx"]
+
+[node name="PostGame" type="Node2D"]
+
+[node name="BackgroundSky" type="Sprite2D" parent="."]
+position = Vector2(260, 120)
+texture = ExtResource("1_0qcw1")
+
+[node name="Mountains" type="Sprite2D" parent="."]
+position = Vector2(220, 270)
+texture = ExtResource("2_6kxrx")

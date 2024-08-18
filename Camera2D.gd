@@ -19,7 +19,7 @@ func _process(delta):
 	noise_y += delta * 60
 	rotation = roll_ampl * amt * noise.get_noise_2d(1234, noise_y)
 	offset.x = offset_ampl.x * amt * noise.get_noise_2d(2345, noise_y)
-	offset.y = offset_ampl.y * amt * noise.get_noise_2d(3456, noise_y)
+	# offset.y = offset_ampl.y * amt * noise.get_noise_2d(3456, noise_y)
 
 # Llamar a esta funcion para agregar shake a la camara
 func apply_shake(shake: float):

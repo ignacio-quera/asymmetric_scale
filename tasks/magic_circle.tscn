@@ -1,21 +1,32 @@
-[gd_scene load_steps=5 format=3 uid="uid://daux8l3mlpo1b"]
+[gd_scene load_steps=8 format=3 uid="uid://daux8l3mlpo1b"]
 
+[ext_resource type="PackedScene" uid="uid://bw7bdc13pmlbj" path="res://tasks/magic_circle_slot.tscn" id="1_h7ug1"]
 [ext_resource type="Texture2D" uid="uid://bshdqwyj10j3v" path="res://assets/images/tasks/magic_circle.png" id="1_ompek"]
+[ext_resource type="PackedScene" uid="uid://cmb3q44xx1byi" path="res://items/item.tscn" id="2_cdf5b"]
 
 [sub_resource type="GDScript" id="GDScript_f36f7"]
 script/source = "extends Node2D
-@export var item_spawn_scene: PackedScene
+@export var slot_scene: PackedScene
+@export var item_scene: PackedScene
 
-enum Shapes {CUBE, OCTA, PYRAMID, SPHERE}
+var slots = [\"circle\", \"rombus\", \"square\", \"triangle\"]
+var shapes = [\"cube\", \"octahedron\", \"pyramid\", \"sphere\"]
+var shape_dir = {\"cube\": \"square\", \"sphere\": \"circle\", \"octahedron\": \"rombus\", \"pyramid\": \"triangle\"}
+var item_order
 func start():
-	spawn_item_locations()
-
+	randomize()
+	item_order = [0,1,2,3]
+	item_order.shuffle()
+	spawn_slot()
+	$ItemSpawnerTimer.start()
+	
 const Player = preload(\"res://player.gd\")
 
 const SETUP_TIME = 1
 const DISAPPEAR_TIME = 1
 
 var launching: Player = null
+var completed: bool = false
 var launch_curve: Curve2D = null
 var time: float = 0
 var last_t: float = 0
@@ -51,7 +62,8 @@ func _process(delta):
 				queue_free()
 
 func player_interact(player):
-	if not launching:
+	print(\"test\")
+	if not launching and completed:
 		player.helpless = true
 		launching = player
 		var guy = get_viewport_rect().size / 2
@@ -71,13 +83,45 @@ func player_interact_exit(player):
 	# print(\"player cannot activate \", player)
 	pass
 
-func spawn_item_locations():
+func spawn_slot():
 	randomize()
-	var order = [0,1,2,3]
-	order.shuffle()
-	var item_spawn_location =$\"ItemPath/ItemSpawnLocation\"
+	var slot_order = [0,1,2,3]
+	slot_order.shuffle()
+	var slot_spawn_location = $\"SlotPath/SlotSpawnLocation\"
+	for i in range(0,4):
+		var slot = slot_scene.instantiate()
+		var ratio = i*0.25
+		slot_spawn_location.progress_ratio = ratio
+		slot.position = slot_spawn_location.position
+		var shape = slots[slot_order.pop_front()]
+		slot.name = \"%s Slot\" % shape
+		slot.get_child(1).texture = load(\"res://assets/images/tasks/magic_circle_%s_slot.png\" % shape)
+		slot.shape = shape
+		print(shape)
+		print(slot.position)
+		add_child(slot)
+		
+		
+func spawn_items():
+	var shape = shapes[item_order.pop_front()]
+	var item = item_scene.instantiate()
+	item.name = \"%sItem\" % shape
+	item.get_node(\"SpritePath/SpritePathFollow/Sprite2D\").texture = load(\"res://assets/images/tasks/magic_%s.png\" % shape)
+	item.shape = shape_dir[shape]
+	add_child(item)
+	item.position = get_item_spawn_position()
 	
-	print(item_spawn_location)
+func get_item_spawn_position():
+	var centerpos = $item_spawn_area/CollisionShape2D.position + $item_spawn_area.position
+	var size = $item_spawn_area/CollisionShape2D.shape.size
+	var position_in_area = Vector2()
+	position_in_area.x = (randf() * size.x) - (size.x/2) + centerpos.x 
+	position_in_area.y = (randf() * size.y) - (size.y/2) + centerpos.y
+	return position_in_area
+	
+func deposit_item():
+	print(\"test\")
+	$ItemSpawnerTimer.start()
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f7v1c"]
@@ -89,10 +133,15 @@ _data = {
 }
 point_count = 5
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t5hka"]
+size = Vector2(315.893, 127.895)
+
 [node name="magic_circle" type="Node2D"]
 z_index = -2
 texture_filter = 1
 script = SubResource("GDScript_f36f7")
+slot_scene = ExtResource("1_h7ug1")
+item_scene = ExtResource("2_cdf5b")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_ompek")
@@ -104,9 +153,20 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_f7v1c")
 
-[node name="ItemPath" type="Path2D" parent="."]
+[node name="SlotPath" type="Path2D" parent="."]
 curve = SubResource("Curve2D_ug1w5")
 
-[node name="ItemSpawnLocation" type="PathFollow2D" parent="ItemPath"]
+[node name="SlotSpawnLocation" type="PathFollow2D" parent="SlotPath"]
 position = Vector2(33.5, -33.5)
 rotation = 3.14159
+
+[node name="ItemSpawnerTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="item_spawn_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="item_spawn_area"]
+position = Vector2(-3.72204, 0.583305)
+shape = SubResource("RectangleShape2D_t5hka")
+
+[connection signal="timeout" from="ItemSpawnerTimer" to="." method="spawn_items"]
