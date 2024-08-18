@@ -1,11 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=22 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
 [ext_resource type="PackedScene" uid="uid://bpuc2pa2o764y" path="res://player.tscn" id="2_4n720"]
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
 [ext_resource type="PackedScene" uid="uid://dgh4u0trlvmpf" path="res://hand_controller.tscn" id="4_j51c6"]
 [ext_resource type="Texture2D" uid="uid://lbuet6fobe71" path="res://assets/images/stage/background.png" id="5_pq2fe"]
-[ext_resource type="Texture2D" uid="uid://urny1m1c0yqf" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
+[ext_resource type="Texture2D" uid="uid://bs8e0f68g2odq" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
 [ext_resource type="Texture2D" uid="uid://n4ay8np85bry" path="res://assets/images/stage/mountains.png" id="6_osgxv"]
 [ext_resource type="Texture2D" uid="uid://w7opisttso2t" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
 [ext_resource type="PackedScene" uid="uid://b2u6scfv4pp56" path="res://side_wall.tscn" id="9_a4p07"]
@@ -23,6 +23,14 @@ _data = {
 }
 point_count = 5
 
+[sub_resource type="Gradient" id="Gradient_i1l6t"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wj10j"]
+gradient = SubResource("Gradient_i1l6t")
+width = 680
+height = 400
+
 [sub_resource type="Curve2D" id="Curve2D_iiqsw"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 0, 150, 0, 10, 0, 0, 0, 50, 0, -30, 0, 0, 0, 80)
@@ -35,10 +43,14 @@ seed = 123456
 frequency = 0.209
 fractal_octaves = 3
 
-[node name="Main" type="Node"]
+[node name="Main" type="Node" node_paths=PackedStringArray("invisible_when_raising", "hand_spawners", "big_fella")]
 script = ExtResource("1_ognb3")
+anim_speed = 10.0
 player_scene = ExtResource("2_4n720")
 hand_controller_scene = ExtResource("4_j51c6")
+invisible_when_raising = [NodePath("ParallaxBackground/BigFellaHead"), NodePath("ParallaxBackground/BigFellaHelm"), NodePath("ParallaxBackground/Stage"), NodePath("Walls")]
+hand_spawners = [NodePath("ParallaxBackground/HandSpawnL"), NodePath("ParallaxBackground/HandSpawnR")]
+big_fella = [NodePath("ParallaxBackground/BigFellaHead"), NodePath("ParallaxBackground/BigFellaHelm")]
 
 [node name="StartMenu" parent="." instance=ExtResource("3_0co1d")]
 
@@ -64,6 +76,10 @@ motion_scale = Vector2(0.6, 0.6)
 texture_filter = 1
 position = Vector2(240, 134)
 texture = ExtResource("6_osgxv")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/Background_mountains"]
+position = Vector2(240, 500)
+texture = SubResource("GradientTexture2D_wj10j")
 
 [node name="BigFellaHead" type="ParallaxLayer" parent="ParallaxBackground"]
 motion_offset = Vector2(0, 500)
@@ -125,22 +141,25 @@ offset_ampl = Vector2(20, 20)
 noise = SubResource("FastNoiseLite_vtf6u")
 
 [node name="GameMaster" parent="." node_paths=PackedStringArray("bigfella_sprites") instance=ExtResource("14_d1hmp")]
+process_mode = 4
 bigfella_sprites = [NodePath("../ParallaxBackground/BigFellaHelm/Sprite2D"), NodePath("../ParallaxBackground/BigFellaHead/Sprite2D")]
 
-[node name="UpWall" parent="." instance=ExtResource("13_rmgko")]
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="UpWall" parent="Walls" instance=ExtResource("13_rmgko")]
 z_index = -3
 position = Vector2(0, 82)
 scale = Vector2(0.99, 1.035)
 
-[node name="LeftWall" parent="." instance=ExtResource("9_a4p07")]
+[node name="LeftWall" parent="Walls" instance=ExtResource("9_a4p07")]
 position = Vector2(0, 84)
 scale = Vector2(1, 1.035)
 
-[node name="RightWall" parent="." instance=ExtResource("9_a4p07")]
+[node name="RightWall" parent="Walls" instance=ExtResource("9_a4p07")]
 position = Vector2(474, 84)
 scale = Vector2(1, 1.035)
 
-[node name="DownWall" parent="." instance=ExtResource("13_rmgko")]
+[node name="DownWall" parent="Walls" instance=ExtResource("13_rmgko")]
 z_index = 4
 position = Vector2(0, 256)
 scale = Vector2(0.99, 1.015)
