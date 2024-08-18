@@ -29,6 +29,7 @@ func _process(delta):
 		if t >= 1.5:
 			# Finish game
 			print("finished game")
+			get_tree().change_scene_to_file("res://post_game.tscn")
 
 
 func _hurt_bigfella(amount: int = 1):

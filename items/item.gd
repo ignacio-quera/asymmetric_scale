@@ -3,11 +3,10 @@ extends StaticBody2D
 signal picked_signal
 signal deposited
 
-var picked = false
 var t:float = 0
 var type:String
 var shape:String
-var picked_by
+var picked_by: WeakRef = WeakRef.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var screen_size = get_viewport_rect().size
@@ -18,23 +17,19 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	t += delta
-	if picked:
-		global_position = Vector2(picked_by.position.x, picked_by.position.y-10)
+	if picked_by.get_ref():
+		global_position = Vector2(picked_by.get_ref().position.x, picked_by.get_ref().position.y-10)
 	else:
 		$SpritePath/SpritePathFollow.progress = t * 10
 
 func player_interact(player_area):
-	if not picked:
-		picked = true
-		picked_by = player_area
+	if not picked_by.get_ref():
+		player_area.encumber(self)
 		$CollisionShape2D.disabled = true
-		picked_by.encumber()
 		z_index = 1
 	else:
-		picked = false
+		picked_by.get_ref().unencumber()
 		$CollisionShape2D.disabled = false
-		picked_by.unencumber()
-		picked_by = null
 		z_index = 0
 
 
@@ -42,12 +37,10 @@ func _on_interactive_area_area_entered(area):
 	var slot = area
 	if "Slot" in slot.name:
 		if slot.shape == shape:
-			picked = false
-			if picked_by:
-				picked_by.unencumber()
-				picked_by = null
+			if picked_by.get_ref():
+				picked_by.get_ref().unencumber()
 			position = slot.position
 			$Shadow.hide()
-			$SpritePath/SpritePathFollow.progress_ratio = 0
-			$SpritePath/SpritePathFollow/Sprite2D.reparent(self)
-			$".."
+			# $SpritePath/SpritePathFollow.progress_ratio = 0
+			# $SpritePath/SpritePathFollow/Sprite2D.reparent(self)
+			$"..".deposit_item()
