@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1wot0vec8veb"]
+
+[ext_resource type="Script" path="res://PlayerLifeIndicator.gd" id="1_yql87"]
+
+[node name="PlayerLifeIndicator" type="TextureRect"]
+custom_minimum_size = Vector2(8, 8)
+expand_mode = 1
+stretch_mode = 3
+script = ExtResource("1_yql87")

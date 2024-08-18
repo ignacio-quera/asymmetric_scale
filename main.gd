@@ -1,7 +1,6 @@
 extends Node
 
 @export var anim_speed: float = 1
-@export var player_scene: PackedScene
 @export var hand_controller_scene: PackedScene
 @export var invisible_when_raising: Array
 @export var hand_spawners: Array[Node2D]
@@ -12,26 +11,14 @@ signal paused
 enum Stage { RAISING, MENU, LOWERING, SPAWNING, PLAYING }
 
 var stage := Stage.MENU
-var number_of_players: int
 var time := 0.0
 var last_t := 0.0
 var big_fella_head_ready := true
 
 var og_camera_offset: float
 
-func new_player(player_num):
-	var player = player_scene.instantiate()
-	var spawner = $PlayerPath
-	var spawn_pos = spawner.position + spawner.curve.sample_baked(player_num * 20)
-	add_child(player)
-	var player_num_name = player_num+1
-	player.name = "Player%s" % player_num_name
-	player.start(spawn_pos, player_num)
-
 func new_game(num):
-	number_of_players = num
-	for player in num:
-		new_player(player)
+	$GameMaster.spawn_players(num)
 	stage = Stage.LOWERING
 
 func start_game():

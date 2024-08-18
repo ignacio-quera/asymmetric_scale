@@ -1,7 +1,6 @@
-[gd_scene load_steps=22 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=21 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
-[ext_resource type="PackedScene" uid="uid://bpuc2pa2o764y" path="res://player.tscn" id="2_4n720"]
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
 [ext_resource type="PackedScene" uid="uid://dgh4u0trlvmpf" path="res://hand_controller.tscn" id="4_j51c6"]
 [ext_resource type="Texture2D" uid="uid://lbuet6fobe71" path="res://assets/images/stage/background.png" id="5_pq2fe"]
@@ -45,7 +44,7 @@ fractal_octaves = 3
 
 [node name="Main" type="Node"]
 script = ExtResource("1_ognb3")
-player_scene = ExtResource("2_4n720")
+anim_speed = 10.0
 hand_controller_scene = ExtResource("4_j51c6")
 invisible_when_raising = [NodePath("StartMenu"), NodePath("ParallaxBackground/BigFellaHead"), NodePath("ParallaxBackground/BigFellaHelm"), NodePath("ParallaxBackground/Stage"), NodePath("Walls")]
 
@@ -137,9 +136,10 @@ decay = 0.75
 offset_ampl = Vector2(20, 20)
 noise = SubResource("FastNoiseLite_vtf6u")
 
-[node name="GameMaster" parent="." node_paths=PackedStringArray("bigfella_sprites") instance=ExtResource("14_d1hmp")]
+[node name="GameMaster" parent="." node_paths=PackedStringArray("bigfella_sprites", "player_spawner") instance=ExtResource("14_d1hmp")]
 process_mode = 4
 bigfella_sprites = [NodePath("../ParallaxBackground/BigFellaHelm/Sprite2D"), NodePath("../ParallaxBackground/BigFellaHead/Sprite2D")]
+player_spawner = NodePath("../PlayerPath")
 
 [node name="Walls" type="Node2D" parent="."]
 
