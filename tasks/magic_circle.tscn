@@ -1,9 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://daux8l3mlpo1b"]
+[gd_scene load_steps=5 format=3 uid="uid://daux8l3mlpo1b"]
 
 [ext_resource type="Texture2D" uid="uid://bshdqwyj10j3v" path="res://assets/images/tasks/magic_circle.png" id="1_ompek"]
 
 [sub_resource type="GDScript" id="GDScript_f36f7"]
 script/source = "extends Node2D
+@export var item_spawn_scene: PackedScene
+
+enum Shapes {CUBE, OCTA, PYRAMID, SPHERE}
+func start():
+	spawn_item_locations()
 
 const Player = preload(\"res://player.gd\")
 
@@ -65,12 +70,27 @@ func player_interact_enter(player):
 func player_interact_exit(player):
 	# print(\"player cannot activate \", player)
 	pass
+
+func spawn_item_locations():
+	randomize()
+	var order = [0,1,2,3]
+	order.shuffle()
+	var item_spawn_location =$\"ItemPath/ItemSpawnLocation\"
+	
+	print(item_spawn_location)
 "
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f7v1c"]
 radius = 33.0151
 
+[sub_resource type="Curve2D" id="Curve2D_ug1w5"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 33.5, -33.5, 0, 0, 0, 0, -33.5, -33.5, 0, 0, 0, 0, -33.5, 33.5, 0, 0, 0, 0, 33.5, 33.5, 0, 0, 0, 0, 33.5, -33.5)
+}
+point_count = 5
+
 [node name="magic_circle" type="Node2D"]
+z_index = -2
 texture_filter = 1
 script = SubResource("GDScript_f36f7")
 
@@ -83,3 +103,10 @@ collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_f7v1c")
+
+[node name="ItemPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_ug1w5")
+
+[node name="ItemSpawnLocation" type="PathFollow2D" parent="ItemPath"]
+position = Vector2(33.5, -33.5)
+rotation = 3.14159
