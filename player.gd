@@ -5,14 +5,16 @@ signal hit
 @export var SPEED = 100.0
 @export var DASH_INVUL = 0.7
 @export var player_id = 0
+var player_num: int
 var dash_path: Curve2D = null
-var time:float = 0
+var time: float = 0
 var screen_size
 var dashing = false
 var has_dashed = false
 var objects_in_contact: Dictionary = {}
 var carrying: WeakRef = WeakRef.new()
 var helpless: bool = false
+var celebrating: bool = false
 
 func _ready():
 	# Set the initial velocity to zero.
@@ -52,6 +54,8 @@ func _physics_process(delta):
 				$AnimatedSprite2D.play("up")
 			elif direction_y > 0:
 				$AnimatedSprite2D.play("down")
+		elif celebrating:
+			$AnimatedSprite2D.play("celebrate")
 		else:
 			$AnimatedSprite2D.play("idle")
 
@@ -163,3 +167,14 @@ func _on_interact_area_area_exited(area):
 		area.player_interact_exit(self)
 	if area.get_parent().has_method("player_interact_exit"):
 		area.get_parent().player_interact_exit(self)
+
+func _kill():
+	if helpless:
+		return
+	if carrying.get_ref():
+		unencumber()
+	$/root/Main/GameMaster._player_died(player_num)
+	queue_free()
+
+func _celebrate():
+	celebrating = true

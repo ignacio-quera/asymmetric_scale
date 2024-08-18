@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://jsp2qogxc2ry"]
+[gd_scene load_steps=8 format=3 uid="uid://jsp2qogxc2ry"]
 
 [ext_resource type="Script" path="res://GameMaster.gd" id="1_ysuk8"]
 [ext_resource type="Script" path="res://tasks/task_controller.gd" id="2_lvv2n"]
 [ext_resource type="PackedScene" uid="uid://cqiob0oqg0jao" path="res://post_game.tscn" id="2_qe1fn"]
+[ext_resource type="PackedScene" uid="uid://bpuc2pa2o764y" path="res://player.tscn" id="3_rm3w5"]
 [ext_resource type="PackedScene" uid="uid://daux8l3mlpo1b" path="res://tasks/magic_circle.tscn" id="3_uosvk"]
+[ext_resource type="PackedScene" uid="uid://cqci7noyna0on" path="res://player_hud.tscn" id="4_ddhtm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d1hnx"]
 size = Vector2(256, 16)
@@ -11,20 +13,8 @@ size = Vector2(256, 16)
 [node name="GameMaster" type="Node" groups=["gamemaster"]]
 script = ExtResource("1_ysuk8")
 postgame_scene = ExtResource("2_qe1fn")
-
-[node name="FadeToBlack" type="ColorRect" parent="."]
-visible = false
-z_index = 1000
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -100.0
-offset_top = -100.0
-offset_right = 100.0
-offset_bottom = 100.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0)
+player_scene = ExtResource("3_rm3w5")
+player_hud_scene = ExtResource("4_ddhtm")
 
 [node name="task_controller" type="Node2D" parent="."]
 script = ExtResource("2_lvv2n")
@@ -40,5 +30,31 @@ one_shot = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="task_controller/task_spawn_area"]
 position = Vector2(230, 170)
 shape = SubResource("RectangleShape2D_d1hnx")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PlayerHUDs" type="VBoxContainer" parent="CanvasLayer"]
+visible = false
+anchors_preset = -1
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 40.0
+offset_bottom = 40.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 4
+
+[node name="FadeToBlack" type="ColorRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
 
 [connection signal="timeout" from="task_controller/task_spawn_timer" to="task_controller" method="_on_task_spawn_timer_timeout"]

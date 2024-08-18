@@ -20,7 +20,7 @@ func start():
 	item_order.shuffle()
 	spawn_slot()
 	$ItemSpawnerTimer.start()
-	
+
 const Player = preload(\"res://player.gd\")
 
 const SETUP_TIME = 1
