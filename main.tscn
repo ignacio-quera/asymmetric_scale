@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://drdnhbqbs1ack" path="res://pause_menu.tscn" id="9_jkarc"]
 [ext_resource type="Texture2D" uid="uid://cm61vso26wgvu" path="res://assets/images/bigfellasprites/hand_fist_blue.png" id="10_fme4l"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="12_qlfb1"]
-[ext_resource type="PackedScene" uid="uid://dne4hxwuc2ngi" path="res://up_wall.tscn" id="13_rmgko"]
+[ext_resource type="PackedScene" uid="uid://qhwohg2vnlev" path="res://up_wall.tscn" id="13_rmgko"]
 [ext_resource type="PackedScene" uid="uid://jsp2qogxc2ry" path="res://game_master.tscn" id="14_d1hmp"]
 
 [sub_resource type="Curve2D" id="Curve2D_dg3t6"]
