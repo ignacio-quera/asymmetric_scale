@@ -43,14 +43,11 @@ seed = 123456
 frequency = 0.209
 fractal_octaves = 3
 
-[node name="Main" type="Node" node_paths=PackedStringArray("invisible_when_raising", "hand_spawners", "big_fella")]
+[node name="Main" type="Node"]
 script = ExtResource("1_ognb3")
-anim_speed = 10.0
 player_scene = ExtResource("2_4n720")
 hand_controller_scene = ExtResource("4_j51c6")
-invisible_when_raising = [NodePath("ParallaxBackground/BigFellaHead"), NodePath("ParallaxBackground/BigFellaHelm"), NodePath("ParallaxBackground/Stage"), NodePath("Walls")]
-hand_spawners = [NodePath("ParallaxBackground/HandSpawnL"), NodePath("ParallaxBackground/HandSpawnR")]
-big_fella = [NodePath("ParallaxBackground/BigFellaHead"), NodePath("ParallaxBackground/BigFellaHelm")]
+invisible_when_raising = [NodePath("StartMenu"), NodePath("ParallaxBackground/BigFellaHead"), NodePath("ParallaxBackground/BigFellaHelm"), NodePath("ParallaxBackground/Stage"), NodePath("Walls")]
 
 [node name="StartMenu" parent="." instance=ExtResource("3_0co1d")]
 

@@ -13,7 +13,7 @@ var slots = [\"circle\", \"rombus\", \"square\", \"triangle\"]
 var shapes = [\"cube\", \"octahedron\", \"pyramid\", \"sphere\"]
 var shape_dir = {\"cube\": \"square\", \"sphere\": \"circle\", \"octahedron\": \"rombus\", \"pyramid\": \"triangle\"}
 var item_order
-var completed := false
+var completed := true
 func start():
 	randomize()
 	item_order = [0,1,2,3]

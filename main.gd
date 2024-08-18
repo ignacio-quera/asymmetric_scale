@@ -3,7 +3,7 @@ extends Node
 @export var anim_speed: float = 1
 @export var player_scene: PackedScene
 @export var hand_controller_scene: PackedScene
-@export var invisible_when_raising: Array[Node2D]
+@export var invisible_when_raising: Array
 @export var hand_spawners: Array[Node2D]
 @export var big_fella: Array[Node2D]
 
@@ -52,27 +52,29 @@ func _ready():
 	hand_spawners = [$ParallaxBackground/HandSpawnL, $ParallaxBackground/HandSpawnR]
 	big_fella = [$ParallaxBackground/BigFellaHead, $ParallaxBackground/BigFellaHelm]
 	if stage == Stage.RAISING:
-		for obj in invisible_when_raising:
-			obj.visible = false
+		for path in invisible_when_raising:
+			get_node(path).visible = false
 		time = 0.0
 		$Camera2D.offset.y = 200
 
 func _process(delta):
 	match stage:
 		Stage.RAISING:
-			$Camera2D.offset.y -= delta * 50 * anim_speed
+			$Camera2D.offset.y -= delta * 100 * anim_speed
 			if $Camera2D.offset.y <= og_camera_offset:
 				$Camera2D.offset.y = og_camera_offset
 				stage = Stage.MENU
-				time = 0
-				for obj in invisible_when_raising:
-					obj.visible = true
+				time = -1
 		Stage.MENU:
-			pass
+			time += delta * anim_speed
+			if time >= 0:
+				for path in invisible_when_raising:
+					get_node(path).visible = true
 		Stage.LOWERING:
 			$Camera2D.offset.y += delta * 50 * anim_speed
 			if $Camera2D.offset.y >= 0:
 				$Camera2D.offset.y = 0
+				$Camera2D.enable_shake = true
 				stage = Stage.SPAWNING
 				time = -2
 				big_fella_head_ready = false

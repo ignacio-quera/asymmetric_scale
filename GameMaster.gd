@@ -36,7 +36,7 @@ func _process(delta):
 		var t = (time - 5) / 5
 		$FadeToBlack.visible = true
 		$FadeToBlack.color.a = clamp(t, 0, 1)
-		if t >= 1.5:
+		if t >= 1.2:
 			# Finish game
 			finish_game()
 

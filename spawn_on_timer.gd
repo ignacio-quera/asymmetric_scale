@@ -1,4 +1,4 @@
-extends Label
+extends CanvasItem
 
 
 @export var delay: float
