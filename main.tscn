@@ -127,6 +127,7 @@ texture = ExtResource("9_dsp7g")
 centered = false
 
 [node name="PauseMenu" parent="." instance=ExtResource("9_jkarc")]
+layer = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(240, 135)
