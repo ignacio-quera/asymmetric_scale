@@ -48,12 +48,12 @@ func _process(delta):
 		if (d.x < 0) == (choose_dir == Dir.RIGHT):
 			action = Hand.Action.SWIPE
 		else:
-			action = Hand.Action.BACKHAND
+			action = Hand.Action.CLAW
 	else:
 		if d.y < 0:
-			action = Hand.Action.PUNCH
+			action = Hand.Action.SWAB
 		else:
-			action = Hand.Action.CLAW
+			action = Hand.Action.FLICK
 	var hand: Hand = ($HandL if choose_dir == Dir.LEFT else $HandR)
 	if not want_choose and choosing and hand.ready_to_attack():
 		hand.do_action(action, anchor)
@@ -80,18 +80,18 @@ func _process(delta):
 					icon = preload("res://assets/images/bigfellasprites/icon_forward_l.png")
 				else:
 					icon = preload("res://assets/images/bigfellasprites/icon_forward_r.png")
-			Hand.Action.BACKHAND:
+			Hand.Action.CLAW:
 				$ActionPreview.add_point(Vector2(scr.x, anchor.y))
 				$ActionPreview.add_point(Vector2(0, anchor.y))
 				if choose_dir == Dir.RIGHT:
 					icon = preload("res://assets/images/bigfellasprites/icon_backwards_l.png")
 				else:
 					icon = preload("res://assets/images/bigfellasprites/icon_backwards_r.png")
-			Hand.Action.CLAW:
+			Hand.Action.FLICK:
 				$ActionPreview.add_point(Vector2(anchor.x, 0))
 				$ActionPreview.add_point(Vector2(anchor.x, scr.y))
 				icon = preload("res://assets/images/bigfellasprites/icon_down.png")
-			Hand.Action.PUNCH:
+			Hand.Action.SWAB:
 				$ActionPreview.add_point(Vector2(anchor.x, scr.y))
 				$ActionPreview.add_point(Vector2(anchor.x, 0))
 				icon = preload("res://assets/images/bigfellasprites/icon_up.png")

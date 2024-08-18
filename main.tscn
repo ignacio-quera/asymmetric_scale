@@ -44,7 +44,7 @@ fractal_octaves = 3
 
 [node name="Main" type="Node"]
 script = ExtResource("1_ognb3")
-anim_speed = 10.0
+anim_speed = 1000.0
 hand_controller_scene = ExtResource("4_j51c6")
 invisible_when_raising = [NodePath("StartMenu"), NodePath("ParallaxBackground/BigFellaHead"), NodePath("ParallaxBackground/BigFellaHelm"), NodePath("ParallaxBackground/Stage"), NodePath("Walls")]
 

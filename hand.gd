@@ -4,15 +4,16 @@ extends Area2D
 @export var recover_pos: Marker2D
 @export var hand_texture: Texture2D
 @export var shockwave_scene: PackedScene
+@export var flick_scene: PackedScene
 
-const SETUP_TIME: float = 1
-const RECOVER_TIME: float = 1
 const RECOVER_GRACE: float = 0.7
 
-enum Action {SWIPE, BACKHAND, FIST, CLAW, PUNCH}
+enum Action {SWIPE, CLAW, FIST, FLICK, SWAB}
 var follow_curve: Curve2D = null
 var recovering: bool = false
 var time: float = 0
+var setup_time: float
+var recover_time: float
 var max_time: float = 0
 var deadly: bool = false
 var shake_hit: float = 0
@@ -26,11 +27,12 @@ func do_action(act: Action, pos: Vector2):
 	var scrsize = get_viewport_rect().size
 	var forward = (1 if is_left else -1)
 	const MARGIN = 70
-	time = -SETUP_TIME
 	follow_curve = Curve2D.new()
 	follow_curve.add_point(position)
 	recovering = false
 	doing_action = act
+	setup_time = 1
+	recover_time = 1
 	match act:
 		Action.FIST:
 			follow_curve.add_point(pos + Vector2.UP*100)
@@ -42,22 +44,23 @@ func do_action(act: Action, pos: Vector2):
 			follow_curve.add_point(Vector2(scrsize.x*(1+forward)/2+MARGIN*forward, pos.y), Vector2.LEFT*100*forward)
 			max_time = 1
 			deadly = true
-		Action.BACKHAND:
+		Action.CLAW:
 			follow_curve.add_point(Vector2(scrsize.x*(1+forward)/2, pos.y))
 			follow_curve.add_point(Vector2(scrsize.x*(1-forward)/2-MARGIN*forward, pos.y), -Vector2.LEFT*100*forward)
 			max_time = 2
 			deadly = true
 			constant_shake = 0.5
-		Action.CLAW:
-			follow_curve.add_point(Vector2(pos.x, 0))
-			follow_curve.add_point(Vector2(pos.x, scrsize.y+MARGIN), Vector2.UP*100)
-			max_time = 1
-			deadly = true
-		Action.PUNCH:
+		Action.FLICK:
+			follow_curve.add_point(pos, Vector2.UP*10)
+			max_time = 0.01
+			setup_time = 0.4
+			recover_time = 2
+		Action.SWAB:
 			follow_curve.add_point(Vector2(pos.x, scrsize.y))
 			follow_curve.add_point(Vector2(pos.x, -MARGIN), -Vector2.UP*100)
 			max_time = 1
 			deadly = true
+	time = -setup_time
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -71,7 +74,7 @@ func _process(delta):
 	if follow_curve != null:
 		time += delta
 		if time < 0:
-			position = follow_curve.sample(0, 1 + time / SETUP_TIME)
+			position = follow_curve.sample(0, 1 + time / setup_time)
 		else:
 			var n = follow_curve.point_count - 2
 			position = follow_curve.samplef(1 + time / max_time * n)
@@ -91,12 +94,16 @@ func _process(delta):
 						var shockwave = shockwave_scene.instantiate()
 						shockwave.start(position)
 						$/root/Main.add_child(shockwave)
+					Action.FLICK:
+						var flick = flick_scene.instantiate()
+						flick.start(position)
+						$/root/Main.add_child(flick)
 				follow_curve = Curve2D.new()
 				follow_curve.add_point(position)
 				follow_curve.add_point(position)
 				follow_curve.add_point(recover_pos.position)
 				time = 0
-				max_time = RECOVER_TIME
+				max_time = recover_time
 				recovering = true
 				deadly = false
 	$CollisionShape2D.disabled = not deadly or time < 0
