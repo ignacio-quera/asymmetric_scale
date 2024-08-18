@@ -1,12 +1,13 @@
-[gd_scene load_steps=15 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=16 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
 [ext_resource type="PackedScene" uid="uid://bpuc2pa2o764y" path="res://player.tscn" id="2_4n720"]
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
 [ext_resource type="PackedScene" uid="uid://dgh4u0trlvmpf" path="res://hand_controller.tscn" id="4_j51c6"]
-[ext_resource type="Texture2D" uid="uid://b66ykbaxk1382" path="res://assets/images/stage/blackground_prototype.png" id="5_8ai88"]
 [ext_resource type="Texture2D" uid="uid://cs6mmjlai34ie" path="res://assets/images/stage/arena_prototype.png" id="5_in1k4"]
+[ext_resource type="Texture2D" uid="uid://lbuet6fobe71" path="res://assets/images/stage/background.png" id="5_pq2fe"]
 [ext_resource type="Texture2D" uid="uid://bs8e0f68g2odq" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
+[ext_resource type="Texture2D" uid="uid://n4ay8np85bry" path="res://assets/images/stage/mountains.png" id="6_osgxv"]
 [ext_resource type="Texture2D" uid="uid://b6guu7hftkdt0" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
 [ext_resource type="PackedScene" uid="uid://b2u6scfv4pp56" path="res://wall.tscn" id="9_a4p07"]
 [ext_resource type="PackedScene" uid="uid://drdnhbqbs1ack" path="res://pause_menu.tscn" id="9_jkarc"]
@@ -40,8 +41,14 @@ curve = SubResource("Curve2D_dg3t6")
 [node name="Background_Sky" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Background_Sky"]
-texture = ExtResource("5_8ai88")
-centered = false
+position = Vector2(240, 108)
+texture = ExtResource("5_pq2fe")
+
+[node name="Background_mountains" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Background_mountains"]
+position = Vector2(240, 134)
+texture = ExtResource("6_osgxv")
 
 [node name="BigFellaHead" type="ParallaxLayer" parent="ParallaxBackground"]
 
