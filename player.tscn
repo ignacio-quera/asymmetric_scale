@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bpuc2pa2o764y"]
+[gd_scene load_steps=31 format=3 uid="uid://bpuc2pa2o764y"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_vj5vx"]
 [ext_resource type="Texture2D" uid="uid://cdk0eryhbgu4p" path="res://assets/images/lilguyanimations/run_down_animation/run_down_1.png" id="2_e40ux"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://b3arm2vkgr1v5" path="res://assets/images/lilguyanimations/stamina_animation/regen3.png" id="18_mpujh"]
 [ext_resource type="Texture2D" uid="uid://g0utufv88ovu" path="res://assets/images/lilguyanimations/stamina_animation/regen4.png" id="19_hpnhf"]
 [ext_resource type="Texture2D" uid="uid://buy8gu3ufpiar" path="res://assets/images/lilguyanimations/stamina_animation/regen5.png" id="20_f5fpc"]
+[ext_resource type="Texture2D" uid="uid://cn8aweal258sr" path="res://assets/images/lilguyanimations/idle_animation/shadow.png" id="25_8nck2"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wfhkl"]
 
@@ -142,6 +143,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("19_hpnhf")
+}, {
+"duration": 1.0,
+"texture": null
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_hpnhf")
 }],
 "loop": false,
 "name": &"default",
@@ -149,7 +156,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_iquhm"]
-radius = 12.0
+radius = 6.08276
 
 [node name="Player" type="CharacterBody2D" groups=["littleguy"]]
 collision_layer = 2
@@ -180,6 +187,7 @@ wait_time = 3.0
 [node name="Line2D" type="Line2D" parent="."]
 
 [node name="DashStatus" type="Sprite2D" parent="."]
+z_index = 100
 position = Vector2(-5.25, -3.75)
 texture = ExtResource("20_f5fpc")
 
@@ -189,6 +197,23 @@ collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
 shape = SubResource("CircleShape2D_iquhm")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 1
+position = Vector2(0, 1)
+texture = ExtResource("25_8nck2")
+
+[node name="Ghost" type="Sprite2D" parent="."]
+
+[node name="InteractLabel" type="Label" parent="."]
+visible = false
+texture_filter = 1
+offset_left = -2.0
+offset_top = -22.0
+offset_right = 3.0
+offset_bottom = 1.0
+text = "!"
 
 [connection signal="timeout" from="DashingResetTimer" to="." method="_on_dashing_timer_timeout"]
 [connection signal="area_entered" from="InteractArea" to="." method="_on_interact_area_area_entered"]
