@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://bt27d6qh4in8a"]
+[gd_scene load_steps=19 format=3 uid="uid://bt27d6qh4in8a"]
 
 [ext_resource type="Script" path="res://hand.gd" id="1_lnp1f"]
 [ext_resource type="PackedScene" uid="uid://b58dyadq4olip" path="res://shockwave.tscn" id="2_asv7a"]
 [ext_resource type="Texture2D" uid="uid://cm61vso26wgvu" path="res://assets/images/bigfellasprites/hand_fist_blue.png" id="2_atyit"]
 [ext_resource type="PackedScene" uid="uid://b4202g4lgv34l" path="res://flick.tscn" id="3_u8f44"]
+[ext_resource type="PackedScene" uid="uid://8vu2jctucp2x" path="res://trench.tscn" id="4_6xwwb"]
 [ext_resource type="Texture2D" uid="uid://f0pw6gpt2s8j" path="res://assets/images/bigfellasprites/hand_claw_blue.png" id="4_nx78r"]
 [ext_resource type="Texture2D" uid="uid://j2yegkj8bi4u" path="res://assets/images/bigfellasprites/hand_fist_red.png" id="5_4iumf"]
 [ext_resource type="Texture2D" uid="uid://b7rd6iv1t2mxe" path="res://assets/images/bigfellasprites/hand_claw_red.png" id="5_6qu0r"]
@@ -15,7 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://chvlrsm56yfi4" path="res://assets/images/bigfellasprites/hand_flick_red_3.png" id="13_jf5qn"]
 [ext_resource type="Texture2D" uid="uid://bo32a708fihh0" path="res://assets/images/bigfellasprites/hand_swab_blue.png" id="14_iyx8l"]
 [ext_resource type="Texture2D" uid="uid://cr4bxnioya3v" path="res://assets/images/bigfellasprites/hand_swab_red.png" id="15_vxjpd"]
-[ext_resource type="PackedScene" uid="uid://8vu2jctucp2x" path="res://trench.tscn" id="4_6xwwb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nhcnw"]
 radius = 1.0

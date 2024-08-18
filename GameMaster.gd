@@ -20,7 +20,7 @@ var playing: bool = true
 var time: float = 0
 
 var bigfella_health: int = 1
-var players: Array[Player] = []
+var players: Array[WeakRef] = []
 var lives_left: Array[int] = []
 
 
@@ -35,10 +35,10 @@ func spawn_player(player_num):
 	var player_num_name = player_num+1
 	player.name = "Player%s" % player_num_name
 	player.start(spawn_pos, player_num)
-	players[player_num] = player
+	players[player_num] = weakref(player)
 
 func new_player(player_num):
-	players.append(null)
+	players.append(WeakRef.new())
 	lives_left.append(player_default_lives)
 	spawn_player(player_num)
 	
@@ -74,7 +74,8 @@ func _process(delta):
 					obj.get_parent().motion_offset.y = abs(sin(time * 3))*-3
 		else:
 			for player in players:
-				player._celebrate()
+				if player.get_ref():
+					player.get_ref()._celebrate()
 			get_viewport().get_camera_2d().apply_shake(0.6)
 			for sprite in bigfella_sprites:
 				sprite.position.y += delta * 10
