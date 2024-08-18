@@ -1,18 +1,19 @@
-[gd_scene load_steps=16 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=17 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
 [ext_resource type="PackedScene" uid="uid://bpuc2pa2o764y" path="res://player.tscn" id="2_4n720"]
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
 [ext_resource type="PackedScene" uid="uid://dgh4u0trlvmpf" path="res://hand_controller.tscn" id="4_j51c6"]
-[ext_resource type="Texture2D" uid="uid://cs6mmjlai34ie" path="res://assets/images/stage/arena_prototype.png" id="5_in1k4"]
 [ext_resource type="Texture2D" uid="uid://lbuet6fobe71" path="res://assets/images/stage/background.png" id="5_pq2fe"]
 [ext_resource type="Texture2D" uid="uid://bs8e0f68g2odq" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
 [ext_resource type="Texture2D" uid="uid://n4ay8np85bry" path="res://assets/images/stage/mountains.png" id="6_osgxv"]
 [ext_resource type="Texture2D" uid="uid://b6guu7hftkdt0" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
-[ext_resource type="PackedScene" uid="uid://b2u6scfv4pp56" path="res://wall.tscn" id="9_a4p07"]
+[ext_resource type="PackedScene" uid="uid://b2u6scfv4pp56" path="res://side_wall.tscn" id="9_a4p07"]
+[ext_resource type="Texture2D" uid="uid://ber8xj2amlj32" path="res://assets/images/stage/arena.png" id="9_dsp7g"]
 [ext_resource type="PackedScene" uid="uid://drdnhbqbs1ack" path="res://pause_menu.tscn" id="9_jkarc"]
 [ext_resource type="PackedScene" uid="uid://3jq2vjcu6vdq" path="res://tasks/task_controller.tscn" id="10_crd63"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="12_qlfb1"]
+[ext_resource type="PackedScene" uid="uid://dne4hxwuc2ngi" path="res://up_wall.tscn" id="13_rmgko"]
 
 [sub_resource type="Curve2D" id="Curve2D_dg3t6"]
 _data = {
@@ -40,53 +41,44 @@ curve = SubResource("Curve2D_dg3t6")
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="Background_Sky" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.1, 0.1)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Background_Sky"]
+texture_filter = 1
 position = Vector2(240, 108)
 texture = ExtResource("5_pq2fe")
 
 [node name="Background_mountains" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.2, 0.2)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Background_mountains"]
+texture_filter = 1
 position = Vector2(240, 134)
 texture = ExtResource("6_osgxv")
 
 [node name="BigFellaHead" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.3, 0.3)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BigFellaHead"]
+texture_filter = 1
 position = Vector2(240, 60)
 texture = ExtResource("6_8f447")
 
 [node name="BigFellaHelm" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.4, 0.4)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/BigFellaHelm"]
+texture_filter = 1
 position = Vector2(240, 60)
 texture = ExtResource("7_t25bi")
 
 [node name="Stage" type="ParallaxLayer" parent="ParallaxBackground"]
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/Stage"]
-texture = ExtResource("5_in1k4")
+texture_filter = 1
+position = Vector2(1, 90)
+texture = ExtResource("9_dsp7g")
 centered = false
-
-[node name="LeftWall" parent="." instance=ExtResource("9_a4p07")]
-position = Vector2(0, 89)
-scale = Vector2(1, 11.3)
-
-[node name="RightWall" parent="." instance=ExtResource("9_a4p07")]
-position = Vector2(481, 270)
-rotation = 3.14159
-scale = Vector2(1, 11.3)
-
-[node name="TopWall" parent="." instance=ExtResource("9_a4p07")]
-position = Vector2(481, 89)
-rotation = 1.5708
-scale = Vector2(1, 30)
-
-[node name="BottomWall" parent="." instance=ExtResource("9_a4p07")]
-position = Vector2(3.05176e-05, 270)
-rotation = -1.5708
-scale = Vector2(1, 30)
 
 [node name="task_controller" parent="." instance=ExtResource("10_crd63")]
 position = Vector2(240, 180)
@@ -99,6 +91,22 @@ script = ExtResource("12_qlfb1")
 decay = 0.75
 max_offset = Vector2(20, 20)
 noise = SubResource("FastNoiseLite_vtf6u")
+
+[node name="UpWall" parent="." instance=ExtResource("13_rmgko")]
+position = Vector2(0, 82)
+scale = Vector2(0.99, 1.035)
+
+[node name="LeftWall" parent="." instance=ExtResource("9_a4p07")]
+position = Vector2(0, 84)
+scale = Vector2(1, 1.035)
+
+[node name="RightWall" parent="." instance=ExtResource("9_a4p07")]
+position = Vector2(474, 84)
+scale = Vector2(1, 1.035)
+
+[node name="DownWall" parent="." instance=ExtResource("13_rmgko")]
+position = Vector2(0, 256)
+scale = Vector2(0.99, 1.015)
 
 [connection signal="paused" from="." to="PauseMenu" method="_on_pause"]
 [connection signal="start_game" from="StartMenu" to="." method="new_game"]
