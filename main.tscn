@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=22 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
@@ -35,6 +35,10 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 0, 150, 0, 10, 0, 0, 0, 50, 0, -30, 0, 0, 0, 80)
 }
 point_count = 3
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5s2nh"]
+radius = 56.0
+height = 124.0
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vtf6u"]
 noise_type = 4
@@ -125,6 +129,14 @@ texture_filter = 1
 position = Vector2(1, 90)
 texture = ExtResource("9_dsp7g")
 centered = false
+
+[node name="BigFellaCollision" type="Area2D" parent="ParallaxBackground"]
+position = Vector2(240, 50)
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ParallaxBackground/BigFellaCollision"]
+shape = SubResource("CapsuleShape2D_5s2nh")
 
 [node name="PauseMenu" parent="." instance=ExtResource("9_jkarc")]
 

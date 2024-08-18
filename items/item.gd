@@ -50,7 +50,11 @@ func _on_interactive_area_area_entered(area):
 			crankable = true
 			if picked_by.get_ref():
 				picked_by.get_ref().unencumber()
-			position = slot.position
+			print(slot.position)
+			print(slot.global_position)
+			global_position = slot.global_position
+			print(position)
+			print(global_position)
 			$Shadow.hide()
 			if $"SpritePath/SpritePathFollow/".get_child_count() != 0:
 				$SpritePath/SpritePathFollow/Sprite2D.z_index = 6

@@ -63,7 +63,6 @@ func _process(delta):
 		
 
 func player_interact(player):
-	print(\"test\")
 	if not launching and completed:
 		player.helpless = true
 		launching = player
