@@ -17,7 +17,6 @@ func _process(delta):
 		position = Vector2(picked_by.position.x, picked_by.position.y-10)
 	pass
 
-		
 func player_interact(player_area):
 	if not picked:
 		picked = true
