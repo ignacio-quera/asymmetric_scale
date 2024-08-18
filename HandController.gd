@@ -67,7 +67,7 @@ func _process(delta):
 	var icon = null
 	if choosing and hand.ready_to_attack():
 		$ActionPreview.clear_points()
-		$ActionPreview.width = 2*$HandL/CollisionShape2D.shape.radius
+		$ActionPreview.width = 2*hand.action_radius(action)
 		$ActionPreview.gradient = HOVER_GRADIENT[choose_dir]
 		match action:
 			Hand.Action.FIST:
