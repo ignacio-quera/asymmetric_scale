@@ -12,7 +12,7 @@ func _ready():
 	task_order.shuffle()
 
 func _on_task_spawn_timer_timeout():
-	var task = task_scenes[next_task].instantiate()
+	var task = task_scenes[task_order[next_task]].instantiate()
 	next_task = (next_task + 1) % len(task_order)
 	task.position = get_spawn_position()
 	add_child(task)

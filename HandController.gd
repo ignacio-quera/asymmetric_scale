@@ -3,7 +3,7 @@ extends Node
 const Hand = preload("res://hand.gd")
 
 const HOVER_GRADIENT = [preload("res://assets/gradients/lefthover.tres"), preload("res://assets/gradients/righthover.tres")]
-var SINGLE_GRADIENT = HOVER_GRADIENT.duplicate()
+var SINGLE_GRADIENT = []
 
 const ANCHOR_READY = preload("res://assets/images/bigfellasprites/anchor_ready.png")
 const ANCHOR_WAIT = preload("res://assets/images/bigfellasprites/anchor_cooldown.png")
@@ -18,8 +18,10 @@ var choosing: bool = false
 var choose_dir: Dir = Dir.LEFT
 
 func _init():
-	for grad in SINGLE_GRADIENT:
-		grad.remove_point(1)
+	for grad in HOVER_GRADIENT:
+		var newgrad = grad.duplicate()
+		newgrad.remove_point(1)
+		SINGLE_GRADIENT.append(newgrad)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
