@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://nqqkkckrbut6"
-path="res://.godot/imported/icon_punch.png-4c08baa7ea9202958a88233363f773dc.ctex"
+uid="uid://b2sh1ciqoqjp1"
+path="res://.godot/imported/icon_up.png-32bc835a341256bfea770445baa06592.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/bigfellasprites/icon_punch.png"
-dest_files=["res://.godot/imported/icon_punch.png-4c08baa7ea9202958a88233363f773dc.ctex"]
+source_file="res://assets/images/bigfellasprites/icon_up.png"
+dest_files=["res://.godot/imported/icon_up.png-32bc835a341256bfea770445baa06592.ctex"]
 
 [params]
 

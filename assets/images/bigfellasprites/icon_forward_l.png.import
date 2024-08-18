@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdf3kwnuun1wb"
-path="res://.godot/imported/icon_fist.png-f7d11cd0c1debae5e881fea7ac7e590d.ctex"
+uid="uid://vu4qujvhdb6g"
+path="res://.godot/imported/icon_forward_l.png-6c7d337e69e031f139d68d7470f28d2f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/bigfellasprites/icon_fist.png"
-dest_files=["res://.godot/imported/icon_fist.png-f7d11cd0c1debae5e881fea7ac7e590d.ctex"]
+source_file="res://assets/images/bigfellasprites/icon_forward_l.png"
+dest_files=["res://.godot/imported/icon_forward_l.png-6c7d337e69e031f139d68d7470f28d2f.ctex"]
 
 [params]
 

@@ -68,7 +68,7 @@ func _process(delta):
 		$ActionPreview.gradient = HOVER_GRADIENT[choose_dir]
 		match action:
 			Hand.Action.FIST:
-				icon = preload("res://assets/images/bigfellasprites/icon_fist.png")
+				icon = preload("res://assets/images/bigfellasprites/icon_center.png")
 				$ActionPreview.add_point(anchor)
 				$ActionPreview.add_point(anchor+Vector2.UP)
 				$ActionPreview.gradient = SINGLE_GRADIENT[choose_dir]
@@ -77,24 +77,24 @@ func _process(delta):
 				$ActionPreview.add_point(Vector2(0, anchor.y))
 				$ActionPreview.add_point(Vector2(scr.x, anchor.y))
 				if choose_dir == Dir.RIGHT:
-					icon = preload("res://assets/images/bigfellasprites/icon_swipe.png")
+					icon = preload("res://assets/images/bigfellasprites/icon_forward_l.png")
 				else:
-					icon = preload("res://assets/images/bigfellasprites/icon_swipe_r.png")
+					icon = preload("res://assets/images/bigfellasprites/icon_forward_r.png")
 			Hand.Action.BACKHAND:
 				$ActionPreview.add_point(Vector2(scr.x, anchor.y))
 				$ActionPreview.add_point(Vector2(0, anchor.y))
 				if choose_dir == Dir.RIGHT:
-					icon = preload("res://assets/images/bigfellasprites/icon_swipe_r.png")
+					icon = preload("res://assets/images/bigfellasprites/icon_backwards_l.png")
 				else:
-					icon = preload("res://assets/images/bigfellasprites/icon_swipe.png")
+					icon = preload("res://assets/images/bigfellasprites/icon_backwards_r.png")
 			Hand.Action.CLAW:
 				$ActionPreview.add_point(Vector2(anchor.x, 0))
 				$ActionPreview.add_point(Vector2(anchor.x, scr.y))
-				icon = preload("res://assets/images/bigfellasprites/icon_claw.png")
+				icon = preload("res://assets/images/bigfellasprites/icon_down.png")
 			Hand.Action.PUNCH:
 				$ActionPreview.add_point(Vector2(anchor.x, scr.y))
 				$ActionPreview.add_point(Vector2(anchor.x, 0))
-				icon = preload("res://assets/images/bigfellasprites/icon_punch.png")
+				icon = preload("res://assets/images/bigfellasprites/icon_up.png")
 	if icon == null:
 		Input.set_custom_mouse_cursor(null)
 	else:
