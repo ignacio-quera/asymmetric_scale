@@ -11,6 +11,7 @@ var screen_size
 var dashing = false
 var has_dashed = false
 var objects_in_contact: Dictionary = {}
+var encumbered:bool = false
 
 func _ready():
 	# Set the initial velocity to zero.
@@ -89,6 +90,8 @@ func _process(delta):
 	if time >= DASH_INVUL:
 		time = 0
 		dash_path = null
+		dashing = false
+		$CollisionShape2D.disabled = false
 		reset_scale()
 	if dash_path != null:
 		time += delta
@@ -96,7 +99,6 @@ func _process(delta):
 			position = dash_path.sample(0, 1 + time / 1)
 		else:
 			position = dash_path.samplef(1 + time / DASH_INVUL * (dash_path.point_count - 1))
-		dashing = false
 	
 func dashing_stretch(vel):
 	var direction_x = vel.x
@@ -113,6 +115,12 @@ func dashing_stretch(vel):
 func reset_scale():
 	$AnimatedSprite2D.scale.x = 1
 	$AnimatedSprite2D.scale.y = 1
+
+func unencumber():
+	SPEED = SPEED/2
+
+func encumber():
+	SPEED = SPEED*2
 
 func _on_dashing_timer_timeout():
 	$AnimatedStamina.stop()
