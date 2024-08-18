@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://drdnhbqbs1ack" path="res://pause_menu.tscn" id="9_jkarc"]
 [ext_resource type="PackedScene" uid="uid://3jq2vjcu6vdq" path="res://tasks/task_controller.tscn" id="10_crd63"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="12_qlfb1"]
-[ext_resource type="PackedScene" uid="uid://cmb3q44xx1byi" path="res://items/item.tscn" id="13_kmtms"]
+[ext_resource type="PackedScene" uid="uid://cmb3q44xx1byi" path="res://items/item.tscn" id="13_56dmc"]
 
 [sub_resource type="Curve2D" id="Curve2D_dg3t6"]
 _data = {
@@ -93,6 +93,8 @@ script = ExtResource("12_qlfb1")
 decay = 0.75
 max_offset = Vector2(20, 20)
 noise = SubResource("FastNoiseLite_vtf6u")
+
+[node name="CarryItem" parent="." instance=ExtResource("13_56dmc")]
 
 [connection signal="paused" from="." to="PauseMenu" method="_on_pause"]
 [connection signal="start_game" from="StartMenu" to="." method="new_game"]
