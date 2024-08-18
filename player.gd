@@ -3,7 +3,7 @@ extends CharacterBody2D
 signal hit
 
 @export var SPEED = 100.0
-@export var DASH_INVUL = 0.5
+@export var DASH_INVUL = 0.7
 @export var player_id = 0
 var dash_path: Curve2D = null
 var time:float = 0
@@ -58,6 +58,7 @@ func _physics_process(delta):
 		if Input.is_action_just_pressed("action%s" % [player_id]) and vel.length() > 0:
 			if not has_dashed:
 				$DashingResetTimer.start()
+				$CollisionShape2D.disabled = true
 				$DashStatus.hide()
 				dashing_stretch(vel)
 				$AnimatedStamina.show()
@@ -84,6 +85,9 @@ func _physics_process(delta):
 			if closest != null:
 				closest.player_interact(self)
 
+		if encumbered:
+				vel /= 2
+
 	# Move the player.
 	position += vel * delta
 	move_and_slide()
@@ -106,8 +110,6 @@ func _process(delta):
 func dashing_stretch(vel):
 	var direction_x = vel.x
 	var direction_y = vel.y
-	# print("X:", direction_x)
-	# print("Y:", direction_y)
 	if direction_x > 0 or direction_x < 0:
 		$AnimatedSprite2D.scale.x *= 1.5
 	elif direction_y < 0 or direction_y > 0:
@@ -115,16 +117,27 @@ func dashing_stretch(vel):
 		
 	pass
 
+func carrying_squish():
+	$AnimatedSprite2D.scale.y *= 0.5 
+	pass
+	
+func carrying_unsquish():
+	$AnimatedSprite2D.scale.y *= 2
+
 func reset_scale():
 	$AnimatedSprite2D.scale.x = 1
 	$AnimatedSprite2D.scale.y = 1
 
 func unencumber():
-	SPEED = SPEED/2
-
+	encumbered = false
+	has_dashed = false
+	#carrying_unsquish()
+	
 func encumber():
-	SPEED = SPEED*2
-
+	encumbered = true
+	has_dashed = true
+	#carrying_squish()
+	
 func _on_dashing_timer_timeout():
 	$AnimatedStamina.stop()
 	$AnimatedStamina.hide()

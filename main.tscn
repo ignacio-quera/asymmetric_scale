@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://drdnhbqbs1ack" path="res://pause_menu.tscn" id="9_jkarc"]
 [ext_resource type="PackedScene" uid="uid://3jq2vjcu6vdq" path="res://tasks/task_controller.tscn" id="10_crd63"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="12_qlfb1"]
+[ext_resource type="PackedScene" uid="uid://cmb3q44xx1byi" path="res://items/item.tscn" id="13_56dmc"]
 [ext_resource type="PackedScene" uid="uid://daux8l3mlpo1b" path="res://tasks/magic_circle.tscn" id="13_vi4ml"]
 [ext_resource type="PackedScene" uid="uid://jsp2qogxc2ry" path="res://game_master.tscn" id="14_d1hmp"]
 
@@ -95,6 +96,8 @@ script = ExtResource("12_qlfb1")
 decay = 0.75
 offset_ampl = Vector2(20, 20)
 noise = SubResource("FastNoiseLite_vtf6u")
+
+[node name="CarryItem" parent="." instance=ExtResource("13_56dmc")]
 
 [node name="magic_circle" parent="." instance=ExtResource("13_vi4ml")]
 position = Vector2(369, 182)
