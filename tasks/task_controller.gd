@@ -1,16 +1,16 @@
 extends Node2D
 
 @export var magic_circle: PackedScene
+@export var ballista: PackedScene
 
-
-var tasks = ["magic_circle", "crossbow"]
+var tasks = ["magic_circle", "ballista"]
 
 func _ready():
 	randomize()
 	tasks.shuffle()
 
 func _on_task_spawn_timer_timeout():
-	var task = magic_circle.instantiate()
+	var task = ballista.instantiate()
 	task.position = get_spawn_position()
 	add_child(task)
 	task.start()

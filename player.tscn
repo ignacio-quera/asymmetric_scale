@@ -167,7 +167,7 @@ script = ExtResource("1_vj5vx")
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_wfhkl")
 sprite_frames = SubResource("SpriteFrames_x2dw2")
-animation = &"left"
+animation = &"down"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)

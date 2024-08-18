@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
 [ext_resource type="PackedScene" uid="uid://dgh4u0trlvmpf" path="res://hand_controller.tscn" id="4_j51c6"]
 [ext_resource type="Texture2D" uid="uid://lbuet6fobe71" path="res://assets/images/stage/background.png" id="5_pq2fe"]
-[ext_resource type="Texture2D" uid="uid://bs8e0f68g2odq" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
+[ext_resource type="Texture2D" uid="uid://urny1m1c0yqf" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
 [ext_resource type="Texture2D" uid="uid://n4ay8np85bry" path="res://assets/images/stage/mountains.png" id="6_osgxv"]
 [ext_resource type="Texture2D" uid="uid://w7opisttso2t" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
 [ext_resource type="PackedScene" uid="uid://b2u6scfv4pp56" path="res://side_wall.tscn" id="9_a4p07"]
@@ -45,7 +45,7 @@ fractal_octaves = 3
 
 [node name="Main" type="Node" node_paths=PackedStringArray("invisible_when_raising", "hand_spawners", "big_fella")]
 script = ExtResource("1_ognb3")
-anim_speed = 10.0
+anim_speed = 1000.0
 player_scene = ExtResource("2_4n720")
 hand_controller_scene = ExtResource("4_j51c6")
 invisible_when_raising = [NodePath("ParallaxBackground/BigFellaHead"), NodePath("ParallaxBackground/BigFellaHelm"), NodePath("ParallaxBackground/Stage"), NodePath("Walls")]

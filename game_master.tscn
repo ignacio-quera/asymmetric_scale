@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://jsp2qogxc2ry"]
+[gd_scene load_steps=7 format=3 uid="uid://jsp2qogxc2ry"]
 
 [ext_resource type="Script" path="res://GameMaster.gd" id="1_ysuk8"]
 [ext_resource type="Script" path="res://tasks/task_controller.gd" id="2_lvv2n"]
 [ext_resource type="PackedScene" uid="uid://cqiob0oqg0jao" path="res://post_game.tscn" id="2_qe1fn"]
 [ext_resource type="PackedScene" uid="uid://daux8l3mlpo1b" path="res://tasks/magic_circle.tscn" id="3_uosvk"]
+[ext_resource type="PackedScene" uid="uid://ce6trcbesa5os" path="res://tasks/ballista.tscn" id="5_wtt4f"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d1hnx"]
 size = Vector2(256, 16)
@@ -29,6 +30,7 @@ color = Color(0, 0, 0, 0)
 [node name="task_controller" type="Node2D" parent="."]
 script = ExtResource("2_lvv2n")
 magic_circle = ExtResource("3_uosvk")
+ballista = ExtResource("5_wtt4f")
 
 [node name="task_spawn_timer" type="Timer" parent="task_controller"]
 one_shot = true
