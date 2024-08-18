@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://HandController.gd" id="1_0iu6m"]
 [ext_resource type="PackedScene" uid="uid://bt27d6qh4in8a" path="res://hand.tscn" id="2_l7t1c"]
-[ext_resource type="Texture2D" uid="uid://c58rbgr1xhytf" path="res://assets/images/bigfellasprites/hand_red.png" id="3_sqhmw"]
-[ext_resource type="Texture2D" uid="uid://byvsy7n1tim1v" path="res://assets/images/bigfellasprites/hand_blue.png" id="4_f3jdc"]
+[ext_resource type="Texture2D" uid="uid://j2yegkj8bi4u" path="res://assets/images/bigfellasprites/hand_fist_red.png" id="3_q52qu"]
+[ext_resource type="Texture2D" uid="uid://cm61vso26wgvu" path="res://assets/images/bigfellasprites/hand_fist_blue.png" id="4_dqibg"]
 
 [sub_resource type="Gradient" id="Gradient_i1r4q"]
 colors = PackedColorArray(0.2088, 0.87, 0.87, 0.572549, 0.2088, 0.87, 0.87, 0.572549)
@@ -16,13 +16,13 @@ z_index = 3
 position = Vector2(-500, 0)
 is_left = true
 recover_pos = NodePath("../RecoverL")
-hand_texture = ExtResource("3_sqhmw")
+hand_texture = ExtResource("3_q52qu")
 
 [node name="HandR" parent="." node_paths=PackedStringArray("recover_pos") instance=ExtResource("2_l7t1c")]
 z_index = 3
 position = Vector2(-500, 0)
 recover_pos = NodePath("../RecoverR")
-hand_texture = ExtResource("4_f3jdc")
+hand_texture = ExtResource("4_dqibg")
 
 [node name="ActionPreview" type="Line2D" parent="."]
 visible = false

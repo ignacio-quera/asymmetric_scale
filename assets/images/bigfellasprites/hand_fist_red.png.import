@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crt3b4bhpey6o"
-path="res://.godot/imported/icon_backwards.png-e67009cc6ed7c4d003ac95cf4c969498.ctex"
+uid="uid://j2yegkj8bi4u"
+path="res://.godot/imported/hand_fist_red.png-d60094333c6fae0b7bdbd6aaf6098e1b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/bigfellasprites/icon_backwards.png"
-dest_files=["res://.godot/imported/icon_backwards.png-e67009cc6ed7c4d003ac95cf4c969498.ctex"]
+source_file="res://assets/images/bigfellasprites/hand_fist_red.png"
+dest_files=["res://.godot/imported/hand_fist_red.png-d60094333c6fae0b7bdbd6aaf6098e1b.ctex"]
 
 [params]
 

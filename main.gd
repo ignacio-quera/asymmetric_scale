@@ -21,6 +21,8 @@ func new_player(player_num):
 	var spawner = $PlayerPath
 	var spawn_pos = spawner.position + spawner.curve.sample_baked(player_num * 20)
 	add_child(player)
+	var player_num_name = player_num+1
+	player.name = "Player%s" % player_num_name
 	player.start(spawn_pos, player_num)
 
 func new_game(num):

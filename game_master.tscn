@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://jsp2qogxc2ry"]
+[gd_scene load_steps=5 format=3 uid="uid://jsp2qogxc2ry"]
 
 [ext_resource type="Script" path="res://GameMaster.gd" id="1_ysuk8"]
+[ext_resource type="Script" path="res://tasks/task_controller.gd" id="2_lvv2n"]
+[ext_resource type="PackedScene" uid="uid://daux8l3mlpo1b" path="res://tasks/magic_circle.tscn" id="3_uosvk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d1hnx"]
+size = Vector2(256, 16)
 
 [node name="GameMaster" type="Node" groups=["gamemaster"]]
 script = ExtResource("1_ysuk8")
@@ -18,3 +23,20 @@ offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0)
+
+[node name="task_controller" type="Node2D" parent="."]
+script = ExtResource("2_lvv2n")
+magic_circle = ExtResource("3_uosvk")
+
+[node name="task_spawn_timer" type="Timer" parent="task_controller"]
+one_shot = true
+
+[node name="Marker2D" type="Marker2D" parent="task_controller"]
+
+[node name="task_spawn_area" type="Area2D" parent="task_controller"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="task_controller/task_spawn_area"]
+position = Vector2(230, 170)
+shape = SubResource("RectangleShape2D_d1hnx")
+
+[connection signal="timeout" from="task_controller/task_spawn_timer" to="task_controller" method="_on_task_spawn_timer_timeout"]
