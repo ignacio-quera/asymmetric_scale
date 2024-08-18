@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqci7noyna0on"]
+
+[ext_resource type="Script" path="res://PlayerHUD.gd" id="1_vrw5y"]
+[ext_resource type="PackedScene" uid="uid://b1wot0vec8veb" path="res://player_life_indicator.tscn" id="2_i8uun"]
+
+[node name="PlayerHUD" type="HBoxContainer"]
+theme_override_constants/separation = 0
+script = ExtResource("1_vrw5y")
+indicator_scene = ExtResource("2_i8uun")

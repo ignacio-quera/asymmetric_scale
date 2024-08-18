@@ -31,9 +31,9 @@ func _process(delta):
 
 [sub_resource type="Curve2D" id="Curve2D_d2jon"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0)
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0)
 }
-point_count = 6
+point_count = 4
 
 [node name="CarryItem" type="StaticBody2D" groups=["items"]]
 script = ExtResource("1_vrmd8")

@@ -3,6 +3,7 @@ extends Area2D
 @export var is_left: bool
 @export var recover_pos: Marker2D
 @export var hand_texture: Texture2D
+@export var shockwave_scene: PackedScene
 
 const SETUP_TIME: float = 1
 const RECOVER_TIME: float = 1
@@ -16,6 +17,7 @@ var max_time: float = 0
 var deadly: bool = false
 var shake_hit: float = 0
 var constant_shake: float = 0
+var doing_action: Action
 
 func ready_to_attack():
 	return follow_curve == null or (recovering and time >= max_time - RECOVER_GRACE)
@@ -28,6 +30,7 @@ func do_action(act: Action, pos: Vector2):
 	follow_curve = Curve2D.new()
 	follow_curve.add_point(position)
 	recovering = false
+	doing_action = act
 	match act:
 		Action.FIST:
 			follow_curve.add_point(pos + Vector2.UP*100)
@@ -83,6 +86,11 @@ func _process(delta):
 				follow_curve = null
 				recovering = false
 			else:
+				match doing_action:
+					Action.FIST:
+						var shockwave = shockwave_scene.instantiate()
+						shockwave.start(position)
+						$/root/Main.add_child(shockwave)
 				follow_curve = Curve2D.new()
 				follow_curve.add_point(position)
 				follow_curve.add_point(position)
@@ -95,5 +103,5 @@ func _process(delta):
 
 
 func _on_body_entered(body):
-	if body.is_in_group("littleguy") and not body.helpless:
-		body.queue_free()
+	if body.is_in_group("littleguy"):
+		body._kill()

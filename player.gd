@@ -2,17 +2,22 @@ extends CharacterBody2D
 
 signal hit
 
-@export var SPEED = 100.0
-@export var DASH_INVUL = 0.7
-@export var player_id = 0
-var dash_path: Curve2D = null
-var time:float = 0
+const SPEED = 100.0
+const DASH_INVUL = 0.5
+@export var dash_curve: Curve
+
+var player_id: int
+var dash_from: Vector2
+var dash_to: Vector2
+var time: float = 0
 var screen_size
 var dashing = false
 var has_dashed = false
 var objects_in_contact: Dictionary = {}
 var carrying: WeakRef = WeakRef.new()
 var helpless: bool = false
+var celebrating: bool = false
+var stunned: bool = false
 
 func _ready():
 	# Set the initial velocity to zero.
@@ -30,7 +35,14 @@ func _physics_process(delta):
 	
 	var vel = Vector2.ZERO
 	# Get the input velocity and handle the movement/deceleration.
-	if not helpless:
+	if stunned:
+		if time <= 0:
+			time = 0
+			stunned = false
+		else:
+			time -= delta
+		$AnimatedSprite2D.play("stun")
+	elif not helpless:
 		if Input.is_action_pressed("right%s" % [player_id]):
 			vel.x += 1
 		if Input.is_action_pressed("left%s" % [player_id]):
@@ -52,23 +64,23 @@ func _physics_process(delta):
 				$AnimatedSprite2D.play("up")
 			elif direction_y > 0:
 				$AnimatedSprite2D.play("down")
+		elif celebrating:
+			$AnimatedSprite2D.play("celebrate")
 		else:
 			$AnimatedSprite2D.play("idle")
 
 		if Input.is_action_just_pressed("action%s" % [player_id]) and vel.length() > 0:
 			if not has_dashed:
 				$DashingResetTimer.start()
-				$CollisionShape2D.disabled = true
 				$DashStatus.hide()
 				dashing_stretch(vel)
 				$AnimatedStamina.show()
 				$AnimatedStamina.play()
-				dash_path = Curve2D.new()
-				dash_path.add_point(position)
-				dash_path.add_point(position, vel, vel/2)
-				dash_path.add_point(position + vel/2)
+				dash_from = position
+				dash_to = position + vel * 0.5
 				has_dashed = true
 				dashing = true
+				time = 0
 		elif Input.is_action_just_pressed("action%s" % [player_id]) and vel.length() <= 0:
 			var max_dist = INF
 			var closest = null
@@ -94,18 +106,16 @@ func _physics_process(delta):
 
 
 func _process(delta):
-	if time >= DASH_INVUL:
-		time = 0
-		dash_path = null
-		dashing = false
-		$CollisionShape2D.disabled = false
-		reset_scale()
-	if dash_path != null:
+	if dashing:
 		time += delta
-		if time < 0:
-			position = dash_path.sample(0, 1 + time / 1)
+		if time >= DASH_INVUL:
+			time = 0
+			dashing = false
+			reset_scale()
 		else:
-			position = dash_path.samplef(1 + time / DASH_INVUL * (dash_path.point_count - 1))
+			var t = time / DASH_INVUL
+			t = dash_curve.sample(t)
+			position = lerp(dash_from, dash_to, t)
 	
 func dashing_stretch(vel):
 	var direction_x = vel.x
@@ -163,3 +173,26 @@ func _on_interact_area_area_exited(area):
 		area.player_interact_exit(self)
 	if area.get_parent().has_method("player_interact_exit"):
 		area.get_parent().player_interact_exit(self)
+
+func _kill():
+	if helpless:
+		return
+	if dashing and time <= DASH_INVUL:
+		return
+	if carrying.get_ref():
+		unencumber()
+	$/root/Main/GameMaster._player_died(player_id)
+	queue_free()
+
+func _stun(for_time: float):
+	if helpless:
+		return
+	if dashing and time <= DASH_INVUL:
+		return
+	if carrying.get_ref():
+		unencumber()
+	stunned = true
+	time = for_time
+
+func _celebrate():
+	celebrating = true

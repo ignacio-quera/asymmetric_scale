@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://b58dyadq4olip"]
+
+[ext_resource type="Script" path="res://shockwave.gd" id="1_frs5n"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7rggu"]
+radius = 30.0
+
+[sub_resource type="Gradient" id="Gradient_0kvf4"]
+offsets = PackedFloat32Array(0, 0.704918)
+colors = PackedColorArray(0.91, 0.91, 0.7189, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kfea5"]
+gradient = SubResource("Gradient_0kvf4")
+
+[sub_resource type="Curve" id="Curve_xbu7j"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_trgul"]
+curve = SubResource("Curve_xbu7j")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8ibx7"]
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.0
+emission_ring_radius = 30.0
+emission_ring_inner_radius = 29.0
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 100.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 0, 0)
+damping_min = 2.0
+damping_max = 2.0
+scale_min = 8.0
+scale_max = 8.0
+scale_curve = SubResource("CurveTexture_trgul")
+color_ramp = SubResource("GradientTexture1D_kfea5")
+
+[node name="Shockwave" type="Area2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_frs5n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7rggu")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 1000
+process_material = SubResource("ParticleProcessMaterial_8ibx7")
+lifetime = 0.6
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

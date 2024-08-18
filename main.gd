@@ -1,9 +1,8 @@
 extends Node
 
 @export var anim_speed: float = 1
-@export var player_scene: PackedScene
 @export var hand_controller_scene: PackedScene
-@export var invisible_when_raising: Array[Node2D]
+@export var invisible_when_raising: Array
 @export var hand_spawners: Array[Node2D]
 @export var big_fella: Array[Node2D]
 
@@ -12,26 +11,14 @@ signal paused
 enum Stage { RAISING, MENU, LOWERING, SPAWNING, PLAYING }
 
 var stage := Stage.MENU
-var number_of_players: int
 var time := 0.0
 var last_t := 0.0
 var big_fella_head_ready := true
 
 var og_camera_offset: float
 
-func new_player(player_num):
-	var player = player_scene.instantiate()
-	var spawner = $PlayerPath
-	var spawn_pos = spawner.position + spawner.curve.sample_baked(player_num * 20)
-	add_child(player)
-	var player_num_name = player_num+1
-	player.name = "Player%s" % player_num_name
-	player.start(spawn_pos, player_num)
-
 func new_game(num):
-	number_of_players = num
-	for player in num:
-		new_player(player)
+	$GameMaster.spawn_players(num)
 	stage = Stage.LOWERING
 
 func start_game():
@@ -53,27 +40,29 @@ func _ready():
 	hand_spawners = [$ParallaxBackground/HandSpawnL, $ParallaxBackground/HandSpawnR]
 	big_fella = [$ParallaxBackground/BigFellaHead, $ParallaxBackground/BigFellaHelm]
 	if stage == Stage.RAISING:
-		for obj in invisible_when_raising:
-			obj.visible = false
+		for path in invisible_when_raising:
+			get_node(path).visible = false
 		time = 0.0
 		$Camera2D.offset.y = 200
 
 func _process(delta):
 	match stage:
 		Stage.RAISING:
-			$Camera2D.offset.y -= delta * 50 * anim_speed
+			$Camera2D.offset.y -= delta * 100 * anim_speed
 			if $Camera2D.offset.y <= og_camera_offset:
 				$Camera2D.offset.y = og_camera_offset
 				stage = Stage.MENU
-				time = 0
-				for obj in invisible_when_raising:
-					obj.visible = true
+				time = -1
 		Stage.MENU:
-			pass
+			time += delta * anim_speed
+			if time >= 0:
+				for path in invisible_when_raising:
+					get_node(path).visible = true
 		Stage.LOWERING:
 			$Camera2D.offset.y += delta * 50 * anim_speed
 			if $Camera2D.offset.y >= 0:
 				$Camera2D.offset.y = 0
+				$Camera2D.enable_shake = true
 				stage = Stage.SPAWNING
 				time = -2
 				big_fella_head_ready = false

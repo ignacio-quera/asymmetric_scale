@@ -1,20 +1,19 @@
-[gd_scene load_steps=22 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=21 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
-[ext_resource type="PackedScene" uid="uid://bpuc2pa2o764y" path="res://player.tscn" id="2_4n720"]
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
 [ext_resource type="PackedScene" uid="uid://dgh4u0trlvmpf" path="res://hand_controller.tscn" id="4_j51c6"]
 [ext_resource type="Texture2D" uid="uid://lbuet6fobe71" path="res://assets/images/stage/background.png" id="5_pq2fe"]
 [ext_resource type="Texture2D" uid="uid://urny1m1c0yqf" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
 [ext_resource type="Texture2D" uid="uid://n4ay8np85bry" path="res://assets/images/stage/mountains.png" id="6_osgxv"]
-[ext_resource type="Texture2D" uid="uid://w7opisttso2t" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
-[ext_resource type="PackedScene" uid="uid://b2u6scfv4pp56" path="res://side_wall.tscn" id="9_a4p07"]
+[ext_resource type="Texture2D" uid="uid://b6guu7hftkdt0" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
+[ext_resource type="PackedScene" path="res://side_wall.tscn" id="9_a4p07"]
 [ext_resource type="Texture2D" uid="uid://j2yegkj8bi4u" path="res://assets/images/bigfellasprites/hand_fist_red.png" id="9_a5dsx"]
 [ext_resource type="Texture2D" uid="uid://ber8xj2amlj32" path="res://assets/images/stage/arena.png" id="9_dsp7g"]
 [ext_resource type="PackedScene" uid="uid://drdnhbqbs1ack" path="res://pause_menu.tscn" id="9_jkarc"]
 [ext_resource type="Texture2D" uid="uid://cm61vso26wgvu" path="res://assets/images/bigfellasprites/hand_fist_blue.png" id="10_fme4l"]
 [ext_resource type="Script" path="res://Camera2D.gd" id="12_qlfb1"]
-[ext_resource type="PackedScene" uid="uid://dne4hxwuc2ngi" path="res://up_wall.tscn" id="13_rmgko"]
+[ext_resource type="PackedScene" path="res://up_wall.tscn" id="13_rmgko"]
 [ext_resource type="PackedScene" uid="uid://jsp2qogxc2ry" path="res://game_master.tscn" id="14_d1hmp"]
 
 [sub_resource type="Curve2D" id="Curve2D_dg3t6"]
@@ -43,14 +42,11 @@ seed = 123456
 frequency = 0.209
 fractal_octaves = 3
 
-[node name="Main" type="Node" node_paths=PackedStringArray("invisible_when_raising", "hand_spawners", "big_fella")]
+[node name="Main" type="Node"]
 script = ExtResource("1_ognb3")
-anim_speed = 1000.0
-player_scene = ExtResource("2_4n720")
+anim_speed = 10.0
 hand_controller_scene = ExtResource("4_j51c6")
-invisible_when_raising = [NodePath("ParallaxBackground/BigFellaHead"), NodePath("ParallaxBackground/BigFellaHelm"), NodePath("ParallaxBackground/Stage"), NodePath("Walls")]
-hand_spawners = [NodePath("ParallaxBackground/HandSpawnL"), NodePath("ParallaxBackground/HandSpawnR")]
-big_fella = [NodePath("ParallaxBackground/BigFellaHead"), NodePath("ParallaxBackground/BigFellaHelm")]
+invisible_when_raising = [NodePath("StartMenu"), NodePath("ParallaxBackground/BigFellaHead"), NodePath("ParallaxBackground/BigFellaHelm"), NodePath("ParallaxBackground/Stage"), NodePath("Walls")]
 
 [node name="StartMenu" parent="." instance=ExtResource("3_0co1d")]
 
@@ -140,9 +136,10 @@ decay = 0.75
 offset_ampl = Vector2(20, 20)
 noise = SubResource("FastNoiseLite_vtf6u")
 
-[node name="GameMaster" parent="." node_paths=PackedStringArray("bigfella_sprites") instance=ExtResource("14_d1hmp")]
+[node name="GameMaster" parent="." node_paths=PackedStringArray("bigfella_sprites", "player_spawner") instance=ExtResource("14_d1hmp")]
 process_mode = 4
 bigfella_sprites = [NodePath("../ParallaxBackground/BigFellaHelm/Sprite2D"), NodePath("../ParallaxBackground/BigFellaHead/Sprite2D")]
+player_spawner = NodePath("../PlayerPath")
 
 [node name="Walls" type="Node2D" parent="."]
 
