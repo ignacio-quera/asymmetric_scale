@@ -124,7 +124,6 @@ func get_item_spawn_position():
 	return position_in_area
 	
 func deposit_item():
-	print(\"deposit\")
 	$ItemSpawnerTimer.start()
 "
 

@@ -36,6 +36,7 @@ player_huds = NodePath("CanvasLayer/PanelContainer/PlayerHUDs")
 [node name="task_controller" type="Node2D" parent="."]
 script = ExtResource("2_lvv2n")
 magic_circle = ExtResource("3_uosvk")
+ballista = ExtResource("5_wtt4f")
 
 [node name="task_spawn_timer" type="Timer" parent="task_controller"]
 one_shot = true
