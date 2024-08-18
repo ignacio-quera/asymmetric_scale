@@ -1,12 +1,113 @@
-[gd_scene load_steps=6 format=3 uid="uid://bt27d6qh4in8a"]
+[gd_scene load_steps=18 format=3 uid="uid://bt27d6qh4in8a"]
 
 [ext_resource type="Script" path="res://hand.gd" id="1_lnp1f"]
 [ext_resource type="PackedScene" uid="uid://b58dyadq4olip" path="res://shockwave.tscn" id="2_asv7a"]
 [ext_resource type="Texture2D" uid="uid://cm61vso26wgvu" path="res://assets/images/bigfellasprites/hand_fist_blue.png" id="2_atyit"]
 [ext_resource type="PackedScene" uid="uid://b4202g4lgv34l" path="res://flick.tscn" id="3_u8f44"]
+[ext_resource type="Texture2D" uid="uid://f0pw6gpt2s8j" path="res://assets/images/bigfellasprites/hand_claw_blue.png" id="4_nx78r"]
+[ext_resource type="Texture2D" uid="uid://j2yegkj8bi4u" path="res://assets/images/bigfellasprites/hand_fist_red.png" id="5_4iumf"]
+[ext_resource type="Texture2D" uid="uid://b7rd6iv1t2mxe" path="res://assets/images/bigfellasprites/hand_claw_red.png" id="5_6qu0r"]
+[ext_resource type="Texture2D" uid="uid://csvv7vfk7up8u" path="res://assets/images/bigfellasprites/hand_flick_blue_1.png" id="8_dsuu3"]
+[ext_resource type="Texture2D" uid="uid://bt38tha1j6lck" path="res://assets/images/bigfellasprites/hand_flick_blue_2.png" id="9_xjp27"]
+[ext_resource type="Texture2D" uid="uid://sukw6r4qpf82" path="res://assets/images/bigfellasprites/hand_flick_blue_3.png" id="10_xwqi7"]
+[ext_resource type="Texture2D" uid="uid://c27gn2lvyyt5c" path="res://assets/images/bigfellasprites/hand_flick_red_1.png" id="11_r7xlu"]
+[ext_resource type="Texture2D" uid="uid://ba7lebynun45b" path="res://assets/images/bigfellasprites/hand_flick_red_2.png" id="12_ar18w"]
+[ext_resource type="Texture2D" uid="uid://chvlrsm56yfi4" path="res://assets/images/bigfellasprites/hand_flick_red_3.png" id="13_jf5qn"]
+[ext_resource type="Texture2D" uid="uid://bo32a708fihh0" path="res://assets/images/bigfellasprites/hand_swab_blue.png" id="14_iyx8l"]
+[ext_resource type="Texture2D" uid="uid://cr4bxnioya3v" path="res://assets/images/bigfellasprites/hand_swab_red.png" id="15_vxjpd"]
+[ext_resource type="PackedScene" uid="uid://8vu2jctucp2x" path="res://trench.tscn" id="4_6xwwb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nhcnw"]
-radius = 32.0
+radius = 1.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lo327"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_nx78r")
+}],
+"loop": true,
+"name": &"claw_blue",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_6qu0r")
+}],
+"loop": true,
+"name": &"claw_red",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_atyit")
+}],
+"loop": true,
+"name": &"fist_blue",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_4iumf")
+}],
+"loop": true,
+"name": &"fist_red",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_dsuu3")
+}],
+"loop": true,
+"name": &"flick_1_blue",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_r7xlu")
+}],
+"loop": true,
+"name": &"flick_1_red",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_xjp27")
+}, {
+"duration": 10000.0,
+"texture": ExtResource("10_xwqi7")
+}],
+"loop": true,
+"name": &"flick_2_blue",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_ar18w")
+}, {
+"duration": 10000.0,
+"texture": ExtResource("13_jf5qn")
+}],
+"loop": true,
+"name": &"flick_2_red",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_iyx8l")
+}],
+"loop": true,
+"name": &"swab_blue",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_vxjpd")
+}],
+"loop": true,
+"name": &"swab_red",
+"speed": 5.0
+}]
 
 [node name="Hand" type="Area2D"]
 texture_filter = 1
@@ -15,15 +116,16 @@ collision_mask = 2
 script = ExtResource("1_lnp1f")
 shockwave_scene = ExtResource("2_asv7a")
 flick_scene = ExtResource("3_u8f44")
+trench_scene = ExtResource("4_6xwwb")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_nhcnw")
 disabled = true
 metadata/_edit_lock_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(11, -3)
-texture = ExtResource("2_atyit")
-metadata/_edit_lock_ = true
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_lo327")
+animation = &"flick_1_blue"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

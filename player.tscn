@@ -185,7 +185,7 @@ dash_curve = SubResource("Curve_a7ngd")
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_wfhkl")
 sprite_frames = SubResource("SpriteFrames_x2dw2")
-animation = &"idle"
+animation = &"celebrate"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
