@@ -135,7 +135,7 @@ func unencumber():
 	
 func encumber():
 	encumbered = true
-	has_dashed = true
+	#has_dashed = true
 	#carrying_squish()
 	
 func _on_dashing_timer_timeout():

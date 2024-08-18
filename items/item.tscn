@@ -33,7 +33,7 @@ _data = {
 }
 point_count = 6
 
-[node name="CarryItem" type="StaticBody2D"]
+[node name="CarryItem" type="StaticBody2D" groups=["items"]]
 script = ExtResource("1_vrmd8")
 metadata/_edit_group_ = true
 

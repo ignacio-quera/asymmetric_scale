@@ -15,6 +15,7 @@ func new_player(player_num):
 
 func restart_game():
 	get_tree().call_group("littleguy", "queue_free")
+	get_tree().call_group("items", "queue_free")
 	get_tree().paused = false
 	for player in number_of_players:
 		new_player(player)
