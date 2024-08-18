@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://daux8l3mlpo1b"]
 
-[ext_resource type="PackedScene" uid="uid://bw7bdc13pmlbj" path="res://tasks/magic_circle_slot.tscn" id="1_h7ug1"]
+[ext_resource type="PackedScene" path="res://tasks/magic_circle_slot.tscn" id="1_h7ug1"]
 [ext_resource type="Texture2D" uid="uid://bshdqwyj10j3v" path="res://assets/images/tasks/magic_circle.png" id="1_ompek"]
 [ext_resource type="PackedScene" uid="uid://cmb3q44xx1byi" path="res://items/item.tscn" id="2_cdf5b"]
 
@@ -13,6 +13,7 @@ var slots = [\"circle\", \"rombus\", \"square\", \"triangle\"]
 var shapes = [\"cube\", \"octahedron\", \"pyramid\", \"sphere\"]
 var shape_dir = {\"cube\": \"square\", \"sphere\": \"circle\", \"octahedron\": \"rombus\", \"pyramid\": \"triangle\"}
 var item_order
+var completed := true
 func start():
 	randomize()
 	item_order = [0,1,2,3]
@@ -26,12 +27,11 @@ const SETUP_TIME = 1
 const DISAPPEAR_TIME = 1
 
 var launching: Player = null
-var completed: bool = false
 var launch_curve: Curve2D = null
 var time: float = 0
 var last_t: float = 0
 
-func _process(delta):
+func _process(delta):	
 	if launching != null:
 		var len = launch_curve.get_baked_length()
 		time += delta
@@ -60,6 +60,7 @@ func _process(delta):
 			$Sprite2D.modulate.a = 1 - t2
 			if t2 >= 1:
 				queue_free()
+		
 
 func player_interact(player):
 	print(\"test\")
@@ -103,6 +104,9 @@ func spawn_slot():
 		
 		
 func spawn_items():
+	if not item_order:
+		completed = true
+		return
 	var shape = shapes[item_order.pop_front()]
 	var item = item_scene.instantiate()
 	item.name = \"%sItem\" % shape
@@ -120,7 +124,7 @@ func get_item_spawn_position():
 	return position_in_area
 	
 func deposit_item():
-	print(\"test\")
+	print(\"deposit\")
 	$ItemSpawnerTimer.start()
 "
 
