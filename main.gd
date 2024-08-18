@@ -38,6 +38,7 @@ func start_game():
 	for hand in hand_spawners:
 		remove_child(hand)
 	add_child(hand_controller_scene.instantiate())
+	$GameMaster/task_controller.new_task()
 
 func restart_game():
 	get_tree().paused = false
