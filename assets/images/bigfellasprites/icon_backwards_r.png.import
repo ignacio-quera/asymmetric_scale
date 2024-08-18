@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blafa2tja8m11"
-path="res://.godot/imported/icon_claw.png-7577e0205365b84001b2ad5374310ee7.ctex"
+uid="uid://b4de6b7ea8gqq"
+path="res://.godot/imported/icon_backwards_r.png-261ffb317e318815acdfdedd4fa6648f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/bigfellasprites/icon_claw.png"
-dest_files=["res://.godot/imported/icon_claw.png-7577e0205365b84001b2ad5374310ee7.ctex"]
+source_file="res://assets/images/bigfellasprites/icon_backwards_r.png"
+dest_files=["res://.godot/imported/icon_backwards_r.png-261ffb317e318815acdfdedd4fa6648f.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chtvivlrus5ot"
-path="res://.godot/imported/icon_swipe.png-b1b241c6e42c6fb64cef121ee6550933.ctex"
+uid="uid://bu62yke32gros"
+path="res://.godot/imported/icon_forward_r.png-dc4706186a01f28159467efda2f35a8d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/bigfellasprites/icon_swipe.png"
-dest_files=["res://.godot/imported/icon_swipe.png-b1b241c6e42c6fb64cef121ee6550933.ctex"]
+source_file="res://assets/images/bigfellasprites/icon_forward_r.png"
+dest_files=["res://.godot/imported/icon_forward_r.png-dc4706186a01f28159467efda2f35a8d.ctex"]
 
 [params]
 
