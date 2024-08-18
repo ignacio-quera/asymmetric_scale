@@ -62,20 +62,23 @@ func _process(delta):
 	choosing = want_choose
 	$Anchor.visible = choosing
 	$Anchor.texture = (ANCHOR_READY if hand.ready_to_attack() else ANCHOR_WAIT)
-	$ActionPreview.visible = choosing and hand.ready_to_attack()
+	$ActionPreview.visible = false
+	$FlickPreview.visible = false
 	var icon = null
-	if choosing:
+	if choosing and hand.ready_to_attack():
 		$ActionPreview.clear_points()
 		$ActionPreview.width = 2*$HandL/CollisionShape2D.shape.radius
 		$ActionPreview.gradient = HOVER_GRADIENT[choose_dir]
 		match action:
 			Hand.Action.FIST:
 				icon = preload("res://assets/images/bigfellasprites/icon_center.png")
+				$ActionPreview.visible = true
 				$ActionPreview.add_point(anchor)
 				$ActionPreview.add_point(anchor+Vector2.UP)
 				$ActionPreview.gradient = SINGLE_GRADIENT[choose_dir]
 				$ActionPreview.width = 2*FIST_DISTANCE
 			Hand.Action.SWIPE:
+				$ActionPreview.visible = true
 				$ActionPreview.add_point(Vector2(0, anchor.y))
 				$ActionPreview.add_point(Vector2(scr.x, anchor.y))
 				if choose_dir == Dir.RIGHT:
@@ -83,6 +86,7 @@ func _process(delta):
 				else:
 					icon = preload("res://assets/images/bigfellasprites/icon_forward_r.png")
 			Hand.Action.CLAW:
+				$ActionPreview.visible = true
 				$ActionPreview.add_point(Vector2(scr.x, anchor.y))
 				$ActionPreview.add_point(Vector2(0, anchor.y))
 				if choose_dir == Dir.RIGHT:
@@ -90,10 +94,12 @@ func _process(delta):
 				else:
 					icon = preload("res://assets/images/bigfellasprites/icon_backwards_r.png")
 			Hand.Action.FLICK:
-				$ActionPreview.add_point(Vector2(anchor.x, 0))
-				$ActionPreview.add_point(Vector2(anchor.x, scr.y))
+				$FlickPreview.visible = true
+				$FlickPreview.texture.gradient = HOVER_GRADIENT[choose_dir]
+				$FlickPreview.position = anchor
 				icon = preload("res://assets/images/bigfellasprites/icon_down.png")
 			Hand.Action.SWAB:
+				$ActionPreview.visible = true
 				$ActionPreview.add_point(Vector2(anchor.x, scr.y))
 				$ActionPreview.add_point(Vector2(anchor.x, 0))
 				icon = preload("res://assets/images/bigfellasprites/icon_up.png")
