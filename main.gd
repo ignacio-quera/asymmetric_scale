@@ -17,14 +17,12 @@ func restart_game():
 	get_tree().call_group("littleguy", "queue_free")
 	get_tree().paused = false
 	for player in number_of_players:
-		print(player)
 		new_player(player)
 	pass
 
 func new_game(num):
 	number_of_players = num
 	for player in num:
-		print(player)
 		new_player(player)
 	started = true
 
@@ -37,16 +35,12 @@ func _on_hud_start_game():
 
 
 func _input(event):
-	#if event.is_action_pressed("ui_cancel"):
-		#get_tree().quit()
-	if event.is_action_pressed("ui_home"):
-		new_game(2)
 	if event.is_action_pressed("menu"):
 		pause()
-		
+
 func quit():
 	get_tree().quit()
-		
+
 func pause():
 	if started:
 		get_tree().paused = true

@@ -1,20 +1,71 @@
-[gd_scene load_steps=4 format=3 uid="uid://cmb3q44xx1byi"]
+[gd_scene load_steps=8 format=3 uid="uid://cmb3q44xx1byi"]
 
 [ext_resource type="Texture2D" uid="uid://cxcefn7nuo8iq" path="res://assets/images/tasks/magic_cube.png" id="1_5ky7y"]
 [ext_resource type="Script" path="res://items/item.gd" id="1_vrmd8"]
+[ext_resource type="Texture2D" uid="uid://cn8aweal258sr" path="res://assets/images/lilguyanimations/idle_animation/shadow.png" id="3_mvknl"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y8sk3"]
+radius = 8.0
+height = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_m3j4i"]
 radius = 16.0
-height = 32.0
 
-[node name="Item" type="Area2D"]
+[sub_resource type="GDScript" id="GDScript_4i8sx"]
+script/source = "extends Sprite2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	var multiplier = 6.5-abs(global_position.y-$\"../SpritePath/SpritePathFollow/Sprite2D\".global_position.y)
+	scale = Vector2(2.75,1.875) + multiplier*Vector2(0.05,0.05)  
+	pass
+"
+
+[sub_resource type="Curve2D" id="Curve2D_d2jon"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0)
+}
+point_count = 6
+
+[node name="CarryItem" type="StaticBody2D"]
 script = ExtResource("1_vrmd8")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
-texture = ExtResource("1_5ky7y")
+metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_y8sk3")
 
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[node name="InteractiveArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractiveArea"]
+shape = SubResource("CircleShape2D_m3j4i")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+z_index = -1
+texture_filter = 1
+position = Vector2(2.38419e-07, 6.5)
+scale = Vector2(2.75, 1.875)
+texture = ExtResource("3_mvknl")
+script = SubResource("GDScript_4i8sx")
+
+[node name="SpritePath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_d2jon")
+
+[node name="SpritePathFollow" type="PathFollow2D" parent="SpritePath"]
+rotation = -1.5708
+rotates = false
+
+[node name="Sprite2D" type="Sprite2D" parent="SpritePath/SpritePathFollow"]
+texture_filter = 1
+position = Vector2(-1.19209e-07, 0)
+rotation = 1.5708
+texture = ExtResource("1_5ky7y")
+
+[connection signal="body_entered" from="InteractiveArea" to="." method="_on_area_2d_body_entered"]
