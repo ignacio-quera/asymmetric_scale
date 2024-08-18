@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://daux8l3mlpo1b"]
 
-[ext_resource type="PackedScene" path="res://tasks/magic_circle_slot.tscn" id="1_h7ug1"]
+[ext_resource type="PackedScene" uid="uid://bw7bdc13pmlbj" path="res://tasks/magic_circle_slot.tscn" id="1_h7ug1"]
 [ext_resource type="Texture2D" uid="uid://bshdqwyj10j3v" path="res://assets/images/tasks/magic_circle.png" id="1_ompek"]
 [ext_resource type="PackedScene" uid="uid://cmb3q44xx1byi" path="res://items/item.tscn" id="2_cdf5b"]
 
@@ -31,7 +31,7 @@ var launch_curve: Curve2D = null
 var time: float = 0
 var last_t: float = 0
 
-func _process(delta):
+func _process(delta):	
 	if launching != null:
 		var len = launch_curve.get_baked_length()
 		time += delta
@@ -60,6 +60,7 @@ func _process(delta):
 			$Sprite2D.modulate.a = 1 - t2
 			if t2 >= 1:
 				queue_free()
+		
 
 func player_interact(player):
 	print(\"test\")
@@ -123,7 +124,7 @@ func get_item_spawn_position():
 	return position_in_area
 	
 func deposit_item():
-	print(\"test\")
+	print(\"deposit\")
 	$ItemSpawnerTimer.start()
 "
 

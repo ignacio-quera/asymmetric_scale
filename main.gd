@@ -42,6 +42,7 @@ func start_game():
 		remove_child(hand)
 	add_child(hand_controller_scene.instantiate())
 	$GameMaster.process_mode = Node.PROCESS_MODE_INHERIT
+	$GameMaster/task_controller.new_task()
 
 func restart_game():
 	get_tree().paused = false
