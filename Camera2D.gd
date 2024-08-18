@@ -24,6 +24,11 @@ func _process(delta):
 		lerp(offset.y,0.0,1)
 		lerp(rotation,0.0,1)
 
+# Llamar a esta funcion para agregar shake a la camara
+func apply_shake(shake: float):
+	print("applying shake ", shake)
+	trauma = max(trauma, shake)
+
 func shake(): 
 	var amt = pow(trauma, trauma_pwr)
 	noise_y += 1

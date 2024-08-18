@@ -206,3 +206,5 @@ texture = ExtResource("25_8nck2")
 [node name="Ghost" type="Sprite2D" parent="."]
 
 [connection signal="timeout" from="DashingResetTimer" to="." method="_on_dashing_timer_timeout"]
+[connection signal="area_entered" from="InteractArea" to="." method="_on_interact_area_area_entered"]
+[connection signal="area_exited" from="InteractArea" to="." method="_on_interact_area_area_exited"]

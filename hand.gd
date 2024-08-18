@@ -1,5 +1,6 @@
 extends Area2D
 
+signal shake_camera(float)
 
 @export var is_left: bool
 @export var recover_pos: Marker2D
@@ -16,6 +17,8 @@ var recovering: bool = false
 var time: float = 0
 var max_time: float = 0
 var deadly: bool = false
+var shake_hit: float = 0
+var constant_shake: float = 0
 
 func ready_to_attack():
 	return follow_curve == null or (recovering and time >= max_time - RECOVER_GRACE)
@@ -33,6 +36,7 @@ func do_action(act: Action, pos: Vector2):
 			follow_curve.add_point(pos + Vector2.UP*100)
 			follow_curve.add_point(pos, Vector2.UP*100)
 			max_time = 1
+			shake_hit = 1
 		Action.SWIPE:
 			follow_curve.add_point(Vector2(scrsize.x*(1-forward)/2, pos.y))
 			follow_curve.add_point(Vector2(scrsize.x*(1+forward)/2+MARGIN*forward, pos.y), Vector2.LEFT*100*forward)
@@ -43,6 +47,7 @@ func do_action(act: Action, pos: Vector2):
 			follow_curve.add_point(Vector2(scrsize.x*(1-forward)/2-MARGIN*forward, pos.y), -Vector2.LEFT*100*forward)
 			max_time = 2
 			deadly = true
+			constant_shake = 0.5
 		Action.CLAW:
 			follow_curve.add_point(Vector2(pos.x, 0))
 			follow_curve.add_point(Vector2(pos.x, scrsize.y+MARGIN), Vector2.UP*100)
@@ -69,9 +74,15 @@ func _process(delta):
 		if time < 0:
 			position = follow_curve.sample(0, 1 + time / SETUP_TIME)
 		else:
-			var n = follow_curve.point_count - 1
+			var n = follow_curve.point_count - 2
 			position = follow_curve.samplef(1 + time / max_time * n)
+			if constant_shake > 0:
+				shake_camera.emit(constant_shake)
 		if time >= max_time:
+			if shake_hit > 0:
+				shake_camera.emit(shake_hit)
+				shake_hit = 0
+			constant_shake = 0
 			if recovering:
 				follow_curve = null
 				recovering = false

@@ -10,6 +10,7 @@ var time:float = 0
 var screen_size
 var dashing = false
 var has_dashed = false
+var objects_in_contact: Dictionary = {}
 var encumbered:bool = false
 
 func _ready():
@@ -51,7 +52,6 @@ func _physics_process(delta):
 	else:
 		$AnimatedSprite2D.play("idle")
 
-	$InteractArea/CollisionShape2D.disabled = false
 	if Input.is_action_just_pressed("action%s" % [player_id]) and velocity.length() > 0:
 		if not has_dashed:
 			$DashingResetTimer.start()
@@ -66,11 +66,21 @@ func _physics_process(delta):
 			has_dashed = true
 			dashing = true
 	elif Input.is_action_just_pressed("action%s" % [player_id]) and velocity.length() <= 0:
-		$InteractArea/CollisionShape2D.disabled = false
+		var max_dist = INF
+		var closest = null
+		for id in objects_in_contact:
+			var obj = objects_in_contact[id]
+			if not obj.has_method("player_interact"):
+				obj = obj.get_parent()
+			if not obj.has_method("player_interact"):
+				continue
+			var d = (obj.position - position).length()
+			if d < max_dist:
+				max_dist = d
+				closest = obj
+		if closest != null:
+			closest.player_interact(self)
 
-
-	if dashing:
-		$CollisionShape2D.disabled = true
 	# Move the player.
 	position += velocity * delta
 	move_and_slide()
@@ -117,3 +127,19 @@ func _on_dashing_timer_timeout():
 	$AnimatedStamina.hide()
 	has_dashed = false
 	$DashStatus.show()
+
+
+func _on_interact_area_area_entered(area):
+	objects_in_contact[area.get_instance_id()] = area
+	if area.has_method("player_interact_enter"):
+		area.player_interact_enter(self)
+	if area.get_parent().has_method("player_interact_enter"):
+		area.get_parent().player_interact_enter(self)
+
+
+func _on_interact_area_area_exited(area):
+	objects_in_contact.erase(area.get_instance_id())
+	if area.has_method("player_interact_exit"):
+		area.player_interact_exit(self)
+	if area.get_parent().has_method("player_interact_exit"):
+		area.get_parent().player_interact_exit(self)
