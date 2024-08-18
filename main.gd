@@ -10,8 +10,10 @@ func new_player(player_num):
 	var spawner = $PlayerPath
 	var spawn_pos = spawner.position + spawner.curve.sample_baked(player_num * 20)
 	add_child(player)
+	var player_num_name = player_num+1
+	player.name = "Player%s" % player_num_name
 	player.start(spawn_pos, player_num)
-	#$Player.start($StartPosition.position+Vector2(player_num*10, player_num*10), player_num)
+	#$Player.start($StartPosition.position+Vectowr2(player_num*10, player_num*10), player_num)
 
 func restart_game():
 	get_tree().call_group("littleguy", "queue_free")

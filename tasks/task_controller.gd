@@ -19,4 +19,3 @@ func get_spawn_position():
 	position_in_area.x = (randf() * size.x) - (size.x/2) + centerpos.x 
 	position_in_area.y = (randf() * size.y) - (size.y/2) + centerpos.y
 	return position_in_area
-
