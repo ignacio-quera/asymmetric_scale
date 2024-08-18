@@ -21,7 +21,8 @@ point_count = 5
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vtf6u"]
 noise_type = 3
-frequency = 0.1
+frequency = 0.1104
+fractal_octaves = 3
 
 [node name="Main" type="Node"]
 script = ExtResource("1_ognb3")
@@ -88,14 +89,15 @@ position = Vector2(240, 180)
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(240, 135)
 script = ExtResource("12_qlfb1")
-max_offset = Vector2(25, 25)
+decay = 0.75
+max_offset = Vector2(20, 20)
 noise = SubResource("FastNoiseLite_vtf6u")
-
-[node name="Shake" type="Timer" parent="."]
-wait_time = 5.0
-autostart = true
 
 [connection signal="paused" from="." to="PauseMenu" method="_on_pause"]
 [connection signal="start_game" from="StartMenu" to="." method="new_game"]
+[connection signal="shake_camera" from="HandController/HandL" to="Camera2D" method="apply_shake"]
+[connection signal="shake_camera" from="HandController/HandR" to="Camera2D" method="apply_shake"]
 [connection signal="exit_game" from="PauseMenu" to="." method="quit"]
 [connection signal="reset_game" from="PauseMenu" to="." method="restart_game"]
+
+[editable path="HandController"]
