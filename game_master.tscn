@@ -27,15 +27,15 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
-[node name="GameMaster" type="Node" node_paths=PackedStringArray("player_huds", "fella_hud") groups=["gamemaster"]]
+[node name="GameMaster" type="Node" node_paths=PackedStringArray("player_huds", "fella_hud", "hud_panel") groups=["gamemaster"]]
 script = ExtResource("1_ysuk8")
-player_default_lives = 100
 bigfella_default_lives = 2
 postgame_scene = ExtResource("2_qe1fn")
 player_scene = ExtResource("3_rm3w5")
 player_hud_scene = ExtResource("4_ddhtm")
-player_huds = NodePath("CanvasLayer/PanelContainer/PlayerHUDs")
-fella_hud = NodePath("CanvasLayer/PanelContainer/FellaLives")
+player_huds = NodePath("CanvasLayer/PanelContainer/VBoxContainer/PlayerHUDs")
+fella_hud = NodePath("CanvasLayer/PanelContainer/VBoxContainer/FellaLives")
+hud_panel = NodePath("CanvasLayer/PanelContainer")
 player_colors = Array[Color]([Color(0.117647, 0.772549, 0.890196, 1), Color(0.89, 0.283465, 0.1157, 1), Color(0.438325, 0.89, 0.1157, 1)])
 
 [node name="task_controller" type="Node2D" parent="."]
@@ -61,10 +61,13 @@ offset_left = 5.0
 offset_top = 5.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ih2mn")
 
-[node name="FellaLives" type="HBoxContainer" parent="CanvasLayer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer"]
 layout_mode = 2
 
-[node name="PlayerHUDs" type="VBoxContainer" parent="CanvasLayer/PanelContainer"]
+[node name="FellaLives" type="HBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PlayerHUDs" type="VBoxContainer" parent="CanvasLayer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0

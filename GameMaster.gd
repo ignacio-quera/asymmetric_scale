@@ -10,6 +10,7 @@ extends Node
 @export var player_hud_scene: PackedScene
 @export var player_huds: BoxContainer
 @export var fella_hud: BoxContainer
+@export var hud_panel: PanelContainer
 @export var player_colors: Array[Color]
 
 const Player := preload("res://player.gd")
@@ -59,7 +60,7 @@ func spawn_players(pnum):
 func start_game():
 	for i in bigfella_health:
 		fella_hud.add_child(preload("res://fella_life.tscn").instantiate())
-	player_huds.get_parent().visible = true
+	hud_panel.visible = true
 
 func finish_game():
 	print("finished game")

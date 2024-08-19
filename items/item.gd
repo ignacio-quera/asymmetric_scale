@@ -53,7 +53,7 @@ func _on_interactive_area_area_entered(area):
 		last_entered = area.get_parent().player_id
 		interactable = true
 	if "Slot" in slot.name:
-		if "Crank" in slot.name:
+		if "Crank" in name and "Crank" in slot.name:
 			crankable = true
 			if picked_by.get_ref():
 				picked_by.get_ref().unencumber()
@@ -64,7 +64,7 @@ func _on_interactive_area_area_entered(area):
 				$SpritePath/SpritePathFollow.progress_ratio = 0
 				$SpritePath/SpritePathFollow/Sprite2D.reparent(self)
 			return
-		if slot.shape == shape:
+		if "Magic" in name and slot.shape == shape:
 			if picked_by.get_ref():
 				picked_by.get_ref().unencumber()
 			position = slot.position

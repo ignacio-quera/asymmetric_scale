@@ -109,7 +109,7 @@ func spawn_items():
 	var shape = shapes[item_order.pop_front()]
 	var item = item_scene.instantiate()
 	item.compatible_slot = shape
-	item.name = \"%sItem\" % shape
+	item.name = \"%sItem Magic\" % shape
 	item.get_node(\"SpritePath/SpritePathFollow/Sprite2D\").texture = load(\"res://assets/images/tasks/magic_%s.png\" % shape)
 	item.shape = shape_dir[shape]
 	add_child(item)
