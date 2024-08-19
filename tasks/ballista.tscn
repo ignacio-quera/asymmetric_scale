@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://q87lwpgvr60v"]
+[gd_scene load_steps=25 format=3 uid="uid://q87lwpgvr60v"]
 
 [ext_resource type="Script" path="res://tasks/ballista.gd" id="1_54ixe"]
 [ext_resource type="Texture2D" uid="uid://djt7ktkw3m0rt" path="res://assets/images/tasks/ballista_base.png" id="1_qum3j"]
@@ -6,16 +6,21 @@
 [ext_resource type="Texture2D" uid="uid://cjhqnnmatg4al" path="res://assets/images/tasks/ballista_shooter.png" id="2_o035k"]
 [ext_resource type="Texture2D" uid="uid://cc775l8k5duht" path="res://assets/images/tasks/strings/string1.png" id="4_c8y8i"]
 [ext_resource type="Script" path="res://tasks/holder1.gd" id="4_nf7gm"]
+[ext_resource type="Script" path="res://tasks/CrankSlot.gd" id="4_owruw"]
 [ext_resource type="Texture2D" uid="uid://batm0w1xmsa3s" path="res://assets/images/tasks/wheel.png" id="5_2y1ik"]
 [ext_resource type="Script" path="res://tasks/holder2.gd" id="5_yfqy7"]
 [ext_resource type="Script" path="res://tasks/shooter.gd" id="6_pnnox"]
 [ext_resource type="Texture2D" uid="uid://c14ltlbctiuel" path="res://assets/images/tasks/line_texture.png" id="9_21wvs"]
 
+[sub_resource type="Curve" id="Curve_pfa6g"]
+_data = [Vector2(0, 0.113245), 0.0, 0.0, 0, 0, Vector2(0.147766, 0.268212), 0.0, 0.0, 0, 0, Vector2(0.250859, 0.603974), -0.966393, -0.966393, 0, 0, Vector2(0.347079, 0.982781), 0.0, 0.0, 0, 0, Vector2(0.611684, 1), 0.0, 0.0, 0, 0, Vector2(0.769759, 0.776159), 0.0, 0.0, 0, 0, Vector2(0.862543, 0.457616), 0.0, 0.0, 0, 0, Vector2(0.958763, 0.358136), 0.0, 0.0, 0, 0, Vector2(1, 0.0146037), 0.0, 0.0, 0, 0]
+point_count = 9
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f3h75"]
 size = Vector2(104, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gxfmo"]
-size = Vector2(32, 28.525)
+size = Vector2(32, 36.525)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dx1h7"]
 size = Vector2(10, 8)
@@ -53,6 +58,7 @@ z_index = -2
 position = Vector2(3.78, 0)
 script = ExtResource("1_54ixe")
 item_scene = ExtResource("2_8ybxy")
+curve = SubResource("Curve_pfa6g")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
@@ -66,21 +72,21 @@ shape = SubResource("RectangleShape2D_f3h75")
 position = Vector2(-3, 39)
 collision_layer = 17
 collision_mask = 17
+script = ExtResource("4_owruw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CrankSlot"]
-position = Vector2(-0.78, 2.7375)
+position = Vector2(-0.78, 6.7375)
 shape = SubResource("RectangleShape2D_gxfmo")
 
 [node name="holder1" type="StaticBody2D" parent="."]
 position = Vector2(-67.78, 36)
 script = ExtResource("4_nf7gm")
-metadata/_edit_group_ = true
 
 [node name="Area2D" type="Area2D" parent="holder1"]
 collision_layer = 8
 collision_mask = 8
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="holder1/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="holder1/Area2D"]
 position = Vector2(0.220001, 0)
 shape = SubResource("RectangleShape2D_dx1h7")
 

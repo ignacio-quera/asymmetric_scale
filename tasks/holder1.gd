@@ -8,15 +8,16 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
 	pass
 
 func player_interact(player_area):
-	if not picked_by.get_ref():
+	if not $"..".picked_by.get_ref():
 		$"..".holder = self
 		player_area.encumber($"..")
 		$CollisionShape2D.disabled = true
 		z_index = 1
 	else:
-		picked_by.get_ref().unencumber()
+		$"..".picked_by.get_ref().unencumber()
 		$CollisionShape2D.disabled = false
 		z_index = 0
