@@ -6,6 +6,7 @@ const STUN_TIME: float = 1
 
 var radius: float
 var deadly: int = 2
+var pushed: Dictionary = {}
 
 
 func start(pos):
@@ -34,4 +35,6 @@ func _on_body_entered(body):
 		if deadly > 0:
 			body._kill()
 		else:
-			body._stun(STUN_TIME)
+			if not pushed.has(body.get_instance_id()):
+				body._push((body.position - position).normalized() * 1000)
+			pushed[body.get_instance_id()] = true

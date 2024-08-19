@@ -17,6 +17,7 @@ scale_max = 2.0
 script = ExtResource("1_w4vyp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -3
 texture_filter = 1
 material = ExtResource("2_hl758")
 texture = ExtResource("1_c45p5")

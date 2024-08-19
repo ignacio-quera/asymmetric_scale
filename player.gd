@@ -4,6 +4,7 @@ signal hit
 
 const SPEED = 100.0
 const DASH_INVUL = 0.5
+const MAX_PUSH = 500
 @export var dash_curve: Curve
 @export var corpse_scene: PackedScene
 
@@ -21,6 +22,8 @@ var celebrating: bool = false
 var stunned: bool = false
 var dragging: bool = false
 var iframes: float = 0
+var passive_vel: Vector2
+var push_iframes: float = 0
 
 func _ready():
 	# Set the initial velocity to zero.
@@ -32,7 +35,7 @@ func _ready():
 func start(pos: Vector2, player_num: int, player_color: Color):
 	position = pos
 	player_id = player_num
-	modulate = player_color
+	$AnimatedSprite2D.modulate = player_color
 	$DashStatus.show()
 	show()
 
@@ -88,8 +91,6 @@ func _physics_process(delta):
 				dashing = true
 				time = 0
 		elif Input.is_action_just_pressed("action%s" % [player_id]) and vel.length() <= 0:
-			print(position)
-			print(global_position)
 			var max_dist = INF
 			var closest = null
 			for id in objects_in_contact:
@@ -108,17 +109,25 @@ func _physics_process(delta):
 		if carrying.get_ref() != null:
 			vel /= 2
 
+	if passive_vel.length() > 2:
+		passive_vel -= passive_vel * delta * 10
+	else:
+		passive_vel = Vector2.ZERO
+	var push_vel = passive_vel
+	if push_vel.length() > MAX_PUSH:
+		push_vel *= MAX_PUSH / push_vel.length()
+	vel += push_vel
+
 	# Move the player.
 	position += vel * delta
 	move_and_slide()
 
 
 func _process(delta):
-	iframes -= delta
-	if iframes <= 0:
-		iframes = 0
-	else:
+	iframes = max(0, iframes - delta)
+	if iframes > 0:
 		$AnimatedSprite2D.visible = fmod(iframes / 0.2, 2) < 1
+	push_iframes = max(0, push_iframes - delta)
 
 	if dashing:
 		time += delta
@@ -154,7 +163,6 @@ func reset_scale():
 
 func unencumber():
 	var item = carrying.get_ref()
-	print(item)
 	if item != null:
 		item.picked_by = WeakRef.new()
 	carrying = WeakRef.new()
@@ -199,7 +207,7 @@ func _kill():
 	$/root/Main/GameMaster._player_died(player_id)
 	var corpse = corpse_scene.instantiate()
 	corpse.position = position
-	corpse.modulate = modulate
+	corpse.modulate = $AnimatedSprite2D.modulate
 	$/root/Main.add_child(corpse)
 	queue_free()
 
@@ -212,6 +220,14 @@ func _stun(for_time: float):
 		unencumber()
 	stunned = true
 	time = for_time
+
+func _push(dir: Vector2):
+	if helpless or push_iframes > 0:
+		return
+	if dashing and time <= DASH_INVUL:
+		return
+	passive_vel += dir
+	# push_iframes = 2
 
 func _celebrate():
 	celebrating = true

@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://player.gd" id="1_vj5vx"]
 [ext_resource type="Texture2D" uid="uid://cdk0eryhbgu4p" path="res://assets/images/lilguyanimations/run_down_animation/run_down_1.png" id="2_e40ux"]
-[ext_resource type="PackedScene" path="res://player_death.tscn" id="2_jsy5x"]
+[ext_resource type="PackedScene" uid="uid://bbq2dibinbinr" path="res://player_death.tscn" id="2_jsy5x"]
 [ext_resource type="Texture2D" uid="uid://dj8rdif2jeauy" path="res://assets/images/lilguyanimations/celebrate_animation/celeb1.png" id="2_m5y5v"]
 [ext_resource type="Texture2D" uid="uid://bc05guoul8qtt" path="res://assets/images/lilguyanimations/run_down_animation/run_down_2.png" id="3_3b33u"]
 [ext_resource type="Texture2D" uid="uid://dtqkrv2u6iguk" path="res://assets/images/lilguyanimations/celebrate_animation/celeb2.png" id="3_lq31o"]
-[ext_resource type="Material" path="res://player_material.tres" id="3_lrq6c"]
+[ext_resource type="Material" uid="uid://bj6frp71d3qvo" path="res://player_material.tres" id="3_lrq6c"]
 [ext_resource type="Texture2D" uid="uid://e32bnby6gvia" path="res://assets/images/lilguyanimations/run_down_animation/run_down_3.png" id="4_tr6x0"]
 [ext_resource type="Texture2D" uid="uid://vwyv5a1si5pd" path="res://assets/images/lilguyanimations/idle_animation/idle1.png" id="5_x5pfg"]
 [ext_resource type="Texture2D" uid="uid://1tyl0ix8dtb0" path="res://assets/images/lilguyanimations/idle_animation/idle2.png" id="6_21xe0"]
@@ -176,8 +176,8 @@ animations = [{
 radius = 6.08276
 
 [node name="Player" type="CharacterBody2D" groups=["littleguy"]]
-collision_layer = 130
-collision_mask = 141
+collision_layer = 2
+collision_mask = 13
 script = ExtResource("1_vj5vx")
 dash_curve = SubResource("Curve_a7ngd")
 corpse_scene = ExtResource("2_jsy5x")
