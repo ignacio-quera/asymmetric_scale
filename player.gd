@@ -19,9 +19,11 @@ var carrying: WeakRef = WeakRef.new()
 var helpless: bool = false
 var celebrating: bool = false
 var stunned: bool = false
+var iframes: float = 0
 
 func _ready():
 	# Set the initial velocity to zero.
+	iframes = 3
 	velocity = Vector2.ZERO
 	screen_size = get_viewport_rect().size
 	hide()
@@ -110,6 +112,12 @@ func _physics_process(delta):
 
 
 func _process(delta):
+	iframes -= delta
+	if iframes <= 0:
+		iframes = 0
+	else:
+		$AnimatedSprite2D.visible = fmod(iframes / 0.2, 2) < 1
+
 	if dashing:
 		time += delta
 		if time >= DASH_INVUL:
@@ -179,7 +187,7 @@ func _on_interact_area_area_exited(area):
 		area.get_parent().player_interact_exit(self)
 
 func _kill():
-	if helpless:
+	if helpless or iframes > 0:
 		return
 	if dashing and time <= DASH_INVUL:
 		return
@@ -193,7 +201,7 @@ func _kill():
 	queue_free()
 
 func _stun(for_time: float):
-	if helpless:
+	if helpless or iframes > 0:
 		return
 	if dashing and time <= DASH_INVUL:
 		return

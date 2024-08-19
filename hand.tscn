@@ -196,20 +196,28 @@ animation = &"swab_blue"
 emitting = false
 amount = 100
 process_material = SubResource("ParticleProcessMaterial_8rcnv")
+fixed_fps = 0
+interpolate = false
 
 [node name="SwabParticles2" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 100
 process_material = SubResource("ParticleProcessMaterial_mrpl5")
+fixed_fps = 0
+interpolate = false
 
 [node name="SwipeParticles" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 100
 process_material = SubResource("ParticleProcessMaterial_0nda3")
+fixed_fps = 0
+interpolate = false
 
 [node name="ClawParticles" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 150
 process_material = SubResource("ParticleProcessMaterial_052l3")
+fixed_fps = 0
+interpolate = false
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

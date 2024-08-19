@@ -67,7 +67,7 @@ func do_action(act: Action, pos: Vector2):
 		Action.FLICK:
 			follow_curve.add_point(pos, Vector2.UP*10)
 			max_time = 0.01
-			setup_time = 0.4
+			setup_time = 0.6
 			recover_time = 2
 		Action.SWAB:
 			follow_curve.add_point(Vector2(pos.x, scrsize.y))

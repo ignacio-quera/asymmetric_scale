@@ -48,5 +48,7 @@ process_material = SubResource("ParticleProcessMaterial_0s4sp")
 lifetime = 0.4
 one_shot = true
 explosiveness = 1.0
+fixed_fps = 0
+interpolate = false
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

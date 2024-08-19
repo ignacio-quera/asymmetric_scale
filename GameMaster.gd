@@ -1,5 +1,7 @@
 extends Node
 
+@export var player_default_lives := 5
+@export var bigfella_default_lives := 1
 
 @export var bigfella_sprites: Array[Sprite2D]
 @export var postgame_scene: PackedScene
@@ -14,13 +16,11 @@ const Player := preload("res://player.gd")
 const FINISH_ANIM_TIME: float = 5
 const RESPAWN_TIME: float = 5
 
-var player_default_lives := 3
-
 var player_count: int
 var playing: bool = true
 var time: float = 0
 
-var bigfella_health: int = 1
+var bigfella_health: int
 var players: Array[WeakRef] = []
 var lives_left: Array[int] = []
 
@@ -29,7 +29,7 @@ func player_color(num: int):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	bigfella_health = bigfella_default_lives
 
 func spawn_player(player_num):
 	var player = player_scene.instantiate()
