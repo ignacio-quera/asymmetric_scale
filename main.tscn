@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=33 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://urny1m1c0yqf" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
 [ext_resource type="Texture2D" uid="uid://n4ay8np85bry" path="res://assets/images/stage/mountains.png" id="6_osgxv"]
 [ext_resource type="Texture2D" uid="uid://w7opisttso2t" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
-[ext_resource type="PackedScene" path="res://side_wall.tscn" id="9_a4p07"]
+[ext_resource type="PackedScene" uid="uid://b2u6scfv4pp56" path="res://side_wall.tscn" id="9_a4p07"]
 [ext_resource type="Texture2D" uid="uid://j2yegkj8bi4u" path="res://assets/images/bigfellasprites/hand_fist_red.png" id="9_a5dsx"]
 [ext_resource type="Texture2D" uid="uid://ber8xj2amlj32" path="res://assets/images/stage/arena.png" id="9_dsp7g"]
 [ext_resource type="PackedScene" uid="uid://drdnhbqbs1ack" path="res://pause_menu.tscn" id="9_jkarc"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" path="res://Camera2D.gd" id="12_qlfb1"]
 [ext_resource type="PackedScene" uid="uid://qhwohg2vnlev" path="res://up_wall.tscn" id="13_rmgko"]
 [ext_resource type="PackedScene" uid="uid://jsp2qogxc2ry" path="res://game_master.tscn" id="14_d1hmp"]
+[ext_resource type="Script" path="res://Killzone.gd" id="16_lvwqf"]
 
 [sub_resource type="Curve2D" id="Curve2D_dg3t6"]
 _data = {
@@ -144,8 +145,21 @@ fractal_octaves = 3
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ppo18"]
 size = Vector2(2184, 560)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7gnk5"]
+size = Vector2(82, 362)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xj3nr"]
+size = Vector2(480, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p2qgb"]
+size = Vector2(74, 360)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xqfos"]
+size = Vector2(480, 98)
+
 [node name="Main" type="Node"]
 script = ExtResource("1_ognb3")
+anim_speed = 100.0
 hand_controller_scene = ExtResource("4_j51c6")
 invisible_when_raising = [NodePath("StartMenu"), NodePath("ParallaxBackground/BigFellaHead"), NodePath("ParallaxBackground/BigFellaHelm"), NodePath("ParallaxBackground/Stage"), NodePath("Walls")]
 
@@ -286,12 +300,34 @@ shape = SubResource("RectangleShape2D_ppo18")
 
 [node name="Killzone" type="Area2D" parent="."]
 position = Vector2(-72, 0)
+collision_layer = 2
+collision_mask = 2
+input_pickable = false
+priority = 1
+script = ExtResource("16_lvwqf")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Killzone"]
-build_mode = 1
-polygon = PackedVector2Array(72, -64, 72, 272, 552, 272, 552, 88, 72, 88, 72, -64, 600, -64, 600, 336, -16, 336, -16, -64)
+[node name="Left" type="CollisionShape2D" parent="Killzone"]
+position = Vector2(31, 171)
+shape = SubResource("RectangleShape2D_7gnk5")
+
+[node name="Down" type="CollisionShape2D" parent="Killzone"]
+position = Vector2(312, 312)
+shape = SubResource("RectangleShape2D_xj3nr")
+
+[node name="Right" type="CollisionShape2D" parent="Killzone"]
+position = Vector2(592, 172)
+shape = SubResource("RectangleShape2D_p2qgb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+position = Vector2(312, 39)
+shape = SubResource("RectangleShape2D_xqfos")
+
+[node name="KillTimer" type="Timer" parent="Killzone"]
+one_shot = true
 
 [connection signal="paused" from="." to="PauseMenu" method="_on_pause"]
 [connection signal="start_game" from="StartMenu" to="." method="new_game"]
 [connection signal="exit_game" from="PauseMenu" to="." method="quit"]
 [connection signal="reset_game" from="PauseMenu" to="." method="restart_game"]
+[connection signal="body_entered" from="Killzone" to="Killzone" method="_on_body_entered"]
+[connection signal="timeout" from="Killzone/KillTimer" to="Killzone" method="_on_kill_timer_timeout"]
