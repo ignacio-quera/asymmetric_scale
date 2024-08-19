@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=39 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
@@ -18,6 +18,7 @@
 [ext_resource type="Script" path="res://Killzone.gd" id="16_lvwqf"]
 [ext_resource type="AudioStream" uid="uid://bsvf3jit5wp58" path="res://assets/music/Darkling.mp3" id="17_w8r7l"]
 [ext_resource type="AudioStream" uid="uid://dhou1qjhffntr" path="res://assets/music/Strength of the Titans.mp3" id="18_1kdl2"]
+[ext_resource type="AudioStream" uid="uid://djmnra1w2gceo" path="res://assets/sound_effects/metal_boom.mp3" id="19_0l0jr"]
 
 [sub_resource type="Curve2D" id="Curve2D_dg3t6"]
 _data = {
@@ -350,10 +351,16 @@ one_shot = true
 
 [node name="GameMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_w8r7l")
+volume_db = -30.0
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("18_1kdl2")
+volume_db = -25.0
 autoplay = true
+
+[node name="HandBoom" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_0l0jr")
+volume_db = -10.0
 
 [connection signal="paused" from="." to="PauseMenu" method="_on_pause"]
 [connection signal="start_game" from="StartMenu" to="." method="new_game"]

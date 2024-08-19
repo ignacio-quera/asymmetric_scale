@@ -62,6 +62,7 @@ func _process(delta):
 					curve = miss_curve
 					curve_len_time = 0.4
 				time = 0
+				$FireSound.play()
 		elif Input.is_action_pressed("up%s" % [aiming.player_id]):
 			current_load_time = 0
 			aiming.helpless = false
@@ -83,36 +84,6 @@ func _process(delta):
 				launching._kill()
 				launching = null
 			$shooter/Line2D.hide()
-		
-		#var len = launch_curve.get_baked_length()
-		#time += delta
-		#var t = time / 1.5
-		#rotation = (time + SETUP_TIME)**2 * 3
-		#var d = 0
-		#$"shooter/Line2D".hide()
-		#$"shooter".z_index = 1
-		#if t >= 0:
-			#var mid = 0.76
-			#if t < mid:
-				#d = t / mid
-				#d = d**2
-				#d *= 0.5 * len
-			#else:
-				#d = (t - mid) / (1 - mid)
-				#d = lerp(d, d**2, 0.3)
-				#d = (d/2+0.5)*len
-			#if last_t < mid and t >= mid:
-				#get_tree().call_group("gamemaster", "_hurt_bigfella")
-		#last_t = t
-		#if launching.helpless:
-			#launching.position = launch_curve.sample_baked(d)
-		#if t >= 1:
-			## Terminó la animación de daño
-			#launching.helpless = false
-			#var t2 = (t-1) / DISAPPEAR_TIME
-			#$Sprite2D.modulate.a = 1 - t2
-			#if t2 >= 1:
-				#queue_free()
 
 func _physics_process(delta):
 	if picked_by.get_ref():
@@ -154,8 +125,10 @@ func crank():
 		var cranky = floor(rope_state)
 		$shooter/String.texture = load("res://assets/images/tasks/strings/string%s.png" % cranky)
 		rope_state += 0.2
+		if !$CrankSound.playing:
+			$CrankSound.play()
 	else:
 		$CrankItem.interactable = false
 		cranked = true
 		$shooter/String.texture = load("res://assets/images/tasks/strings/string8.png")
-		$shoot
+		$FireSound.play()

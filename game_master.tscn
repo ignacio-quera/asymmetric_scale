@@ -39,7 +39,7 @@ player_colors = Array[Color]([Color(0.117647, 0.772549, 0.890196, 1), Color(0.89
 
 [node name="task_controller" type="Node2D" parent="."]
 script = ExtResource("2_lvv2n")
-task_scenes = Array[PackedScene]([ExtResource("6_0wmms")])
+task_scenes = Array[PackedScene]([ExtResource("6_0wmms"), null])
 
 [node name="task_spawn_timer" type="Timer" parent="task_controller"]
 one_shot = true

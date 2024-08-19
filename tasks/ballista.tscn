@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://q87lwpgvr60v"]
+[gd_scene load_steps=27 format=3 uid="uid://q87lwpgvr60v"]
 
 [ext_resource type="Script" path="res://tasks/ballista.gd" id="1_54ixe"]
 [ext_resource type="Texture2D" uid="uid://djt7ktkw3m0rt" path="res://assets/images/tasks/ballista_base.png" id="1_qum3j"]
@@ -10,6 +10,8 @@
 [ext_resource type="Script" path="res://tasks/holder2.gd" id="5_yfqy7"]
 [ext_resource type="Script" path="res://tasks/shooter.gd" id="6_pnnox"]
 [ext_resource type="Texture2D" uid="uid://c14ltlbctiuel" path="res://assets/images/tasks/line_texture.png" id="9_21wvs"]
+[ext_resource type="AudioStream" uid="uid://ddt5pf03dthmg" path="res://assets/sound_effects/ballista_crank.mp3" id="11_fd0e8"]
+[ext_resource type="AudioStream" uid="uid://t2ab4n1vwyen" path="res://assets/sound_effects/ballista_fire.mp3" id="12_65qh7"]
 
 [sub_resource type="Curve" id="Curve_cfvqn"]
 _data = [Vector2(0, 0), 0.0, 3.30586, 0, 0, Vector2(0.394737, 1), 1.98849, -1.16677, 0, 0, Vector2(1, 0.296703), -1.04396, 0.0, 0, 0]
@@ -226,5 +228,11 @@ one_shot = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="item_spawn_area"]
 position = Vector2(240, 176)
 shape = SubResource("RectangleShape2D_22vti")
+
+[node name="CrankSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_fd0e8")
+
+[node name="FireSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_65qh7")
 
 [connection signal="timeout" from="CrankSpawnTimer" to="." method="spawn_crank"]
