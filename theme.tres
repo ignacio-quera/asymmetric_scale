@@ -1,0 +1,45 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://bmcdxk0x6hkxt"]
+
+[ext_resource type="FontFile" uid="uid://bbafd5lgwlv8k" path="res://fonts/MountainKingRegular-woBYn.ttf" id="1_87yi5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_td5ne"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="Gradient" id="Gradient_0ew3r"]
+offsets = PackedFloat32Array(0, 0.655844, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_itf84"]
+gradient = SubResource("Gradient_0ew3r")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gfttw"]
+texture = SubResource("GradientTexture2D_itf84")
+modulate_color = Color(1, 1, 1, 0.466667)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5556l"]
+
+[resource]
+default_font = ExtResource("1_87yi5")
+Button/colors/font_color = Color(0.724643, 0.724643, 0.724642, 1)
+Button/colors/font_disabled_color = Color(0.72549, 0.72549, 0.72549, 1)
+Button/colors/font_focus_color = Color(0.873298, 0.873299, 0.873298, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(0.54, 0.54, 0.54, 1)
+Button/styles/disabled = SubResource("StyleBoxFlat_td5ne")
+Button/styles/focus = SubResource("StyleBoxTexture_gfttw")
+Button/styles/hover = SubResource("StyleBoxTexture_gfttw")
+Button/styles/normal = SubResource("StyleBoxTexture_gfttw")
+Button/styles/pressed = SubResource("StyleBoxTexture_gfttw")
+Label/colors/font_color = Color(0.72549, 0.72549, 0.72549, 1)
+MenuButton/styles/normal = SubResource("StyleBoxEmpty_5556l")

@@ -12,38 +12,72 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -23.0
-offset_top = -110.0
+offset_top = -70.0
 offset_right = 23.0
-offset_bottom = -79.0
+offset_bottom = -39.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Start"
 
-[node name="NumberOfPlayers" type="OptionButton" parent="."]
-anchors_preset = -1
+[node name="PlayerCount" type="HBoxContainer" parent="."]
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -32.0
-offset_top = -64.0
-offset_right = 23.0
-offset_bottom = -33.0
-item_count = 3
-selected = 1
-popup/item_0/text = "1"
-popup/item_0/id = 0
-popup/item_1/text = "2"
-popup/item_1/id = 1
-popup/item_2/text = "3"
-popup/item_2/id = 2
+offset_left = -39.5
+offset_top = -44.0
+offset_right = 39.5
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="Button1" type="Button" parent="PlayerCount"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "1"
+
+[node name="Button2" type="Button" parent="PlayerCount"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "2"
+
+[node name="Button3" type="Button" parent="PlayerCount"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "3"
+
+[node name="Button4" type="Button" parent="PlayerCount"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "4"
 
 [node name="Label" type="Label" parent="."]
-offset_left = 862.0
-offset_top = 939.0
-offset_right = 929.0
-offset_bottom = 962.0
-text = "N° Guys:"
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -105.0
+offset_top = -35.0
+offset_right = -20.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "N° players:"
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="item_selected" from="NumberOfPlayers" to="." method="_on_number_of_players_item_selected"]
+[connection signal="pressed" from="PlayerCount/Button1" to="." method="_set_player_count" binds= [1]]
+[connection signal="pressed" from="PlayerCount/Button2" to="." method="_set_player_count" binds= [2]]
+[connection signal="pressed" from="PlayerCount/Button3" to="." method="_set_player_count" binds= [3]]
+[connection signal="pressed" from="PlayerCount/Button4" to="." method="_set_player_count" binds= [4]]

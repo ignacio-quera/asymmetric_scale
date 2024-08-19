@@ -95,11 +95,12 @@ func _process(delta):
 			position = follow_curve.sample(0, 1 + time / setup_time)
 			if not recovering and doing_action == Action.FLICK:
 				$AnimatedSprite2D.play('flick_1_%s' % color)
-				$AnimatedSprite2D.offset.y = -50
+				$AnimatedSprite2D.offset = Vector2(0, -50)
 				idle_anim = false
 		else:
 			if doing_action == Action.FLICK:
 				$AnimatedSprite2D.play('flick_2_%s' % color)
+				$AnimatedSprite2D.offset = Vector2(0, -50)
 				idle_anim = false
 			if doing_action == Action.SWIPE:
 				if not recovering:
@@ -112,8 +113,7 @@ func _process(delta):
 				get_viewport().get_camera_2d().apply_shake(constant_shake)
 			if doing_action == Action.SWAB:
 				$AnimatedSprite2D.play('swab_%s' % color)
-				$AnimatedSprite2D.offset.y = -70
-				$AnimatedSprite2D.offset.x = 11
+				$AnimatedSprite2D.offset = Vector2(11, -70)
 				idle_anim = false
 				if not recovering:
 					$SwabParticles1.emitting = true
@@ -130,11 +130,11 @@ func _process(delta):
 			if doing_action == Action.CLAW:
 				if not recovering:
 					$AnimatedSprite2D.play('claw_%s' % color)
-					$AnimatedSprite2D.offset.y = round(sin(time*100)*0.5+0.5)*2 - 20
+					$AnimatedSprite2D.offset = Vector2(0, round(sin(time*100)*0.5+0.5)*2 - 20)
 					$ClawParticles.emitting = true
 					idle_anim = false
 				else:
-					$AnimatedSprite2D.offset.y = -20
+					$AnimatedSprite2D.offset = Vector2(0, -20)
 					$ClawParticles.emitting = false
 					idle_anim = false
 		if time >= max_time:
@@ -168,7 +168,7 @@ func _process(delta):
 	$CollisionShape2D.shape.radius = action_radius(doing_action)
 	if idle_anim:
 		$AnimatedSprite2D.play('fist_%s' % color)
-		$AnimatedSprite2D.offset = Vector2.ZERO
+		$AnimatedSprite2D.offset = Vector2(24, 0)
 
 
 func _on_body_entered(body):

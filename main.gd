@@ -19,6 +19,7 @@ var og_camera_offset: float
 
 func new_game(num):
 	$GameMaster.spawn_players(num)
+	$StartMenu.visible = false
 	stage = Stage.LOWERING
 
 func start_game():
@@ -30,7 +31,6 @@ func start_game():
 	add_child(hand_controller_scene.instantiate())
 	$GameMaster.process_mode = Node.PROCESS_MODE_INHERIT
 	$GameMaster.start_game()
-	$GameMaster/task_controller.new_task()
 	$ParallaxBackground/FellaAnim.play("bobbing")
 
 func restart_game():
