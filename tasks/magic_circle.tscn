@@ -13,7 +13,7 @@ var slots = [\"circle\", \"rombus\", \"square\", \"triangle\"]
 var shapes = [\"cube\", \"octahedron\", \"pyramid\", \"sphere\"]
 var shape_dir = {\"cube\": \"square\", \"sphere\": \"circle\", \"octahedron\": \"rombus\", \"pyramid\": \"triangle\"}
 var item_order
-var completed := true
+var completed := false
 func start():
 	randomize()
 	item_order = [0,1,2,3]
@@ -57,7 +57,7 @@ func _process(delta):
 			# Terminó la animación de daño
 			launching.helpless = false
 			var t2 = (t-1) / DISAPPEAR_TIME
-			$Sprite2D.modulate.a = 1 - t2
+			modulate.a = 1 - t2
 			if t2 >= 1:
 				queue_free()
 		

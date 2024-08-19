@@ -93,11 +93,15 @@ func _process(delta):
 
 
 func _hurt_bigfella(amount: int = 1):
+	if not playing:
+		return
 	bigfella_health -= amount
 	get_viewport().get_camera_2d().apply_shake(1)
 	if bigfella_health <= 0:
 		playing = false
 		time = 0
+	else:
+		$task_controller.new_task()
 
 func update_lives_indicator():
 	for i in player_count:
@@ -106,7 +110,7 @@ func update_lives_indicator():
 func _player_died(player_num: int):
 	lives_left[player_num] -= 1
 	update_lives_indicator()
-	if lives_left.all(func(n): return n <= 0):
+	if playing and lives_left.all(func(n): return n <= 0):
 		# Big fella won
 		playing = false
 		time = 0

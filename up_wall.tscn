@@ -3,9 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://q8pw5ff4apu4" path="res://assets/images/stage/upper_wall.png" id="1_fiiry"]
 [ext_resource type="Texture2D" uid="uid://dlejdfxhs0tpu" path="res://assets/images/stage/wall.png" id="2_08tyu"]
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_hs5rr"]
-a = Vector2(247, 5)
-b = Vector2(-240, 5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_51pqq"]
+size = Vector2(526.263, 20.6897)
 
 [node name="UpWall" type="Node2D"]
 
@@ -22,5 +21,5 @@ texture = ExtResource("2_08tyu")
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(240, 9)
-shape = SubResource("SegmentShape2D_hs5rr")
+position = Vector2(243, 7)
+shape = SubResource("RectangleShape2D_51pqq")
