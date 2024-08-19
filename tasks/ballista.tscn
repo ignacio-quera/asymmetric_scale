@@ -15,16 +15,16 @@
 size = Vector2(104, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gxfmo"]
-size = Vector2(13, 23)
+size = Vector2(32, 28.525)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dx1h7"]
-size = Vector2(10, 14)
+size = Vector2(10, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1rkas"]
 size = Vector2(6, 9)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l8x3u"]
-size = Vector2(18, 17)
+size = Vector2(18, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fluat"]
 size = Vector2(11, 9)
@@ -68,37 +68,41 @@ collision_layer = 17
 collision_mask = 17
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CrankSlot"]
-position = Vector2(-0.3, -0.0250015)
+position = Vector2(-0.78, 2.7375)
 shape = SubResource("RectangleShape2D_gxfmo")
 
 [node name="holder1" type="StaticBody2D" parent="."]
+position = Vector2(-67.78, 36)
 script = ExtResource("4_nf7gm")
+metadata/_edit_group_ = true
 
 [node name="Area2D" type="Area2D" parent="holder1"]
 collision_layer = 8
 collision_mask = 8
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="holder1/Area2D"]
-position = Vector2(-65, 37)
+position = Vector2(0.220001, 0)
 shape = SubResource("RectangleShape2D_dx1h7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="holder1"]
-position = Vector2(-61, 37.5)
+position = Vector2(8.22, 0)
 shape = SubResource("RectangleShape2D_1rkas")
 
 [node name="holder2" type="StaticBody2D" parent="."]
+position = Vector2(68.22, 36)
 script = ExtResource("5_yfqy7")
 
 [node name="Area2D" type="Area2D" parent="holder2"]
+position = Vector2(15.22, 36)
 collision_layer = 8
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="holder2/Area2D"]
-position = Vector2(63, 35.5)
+position = Vector2(-15.22, -37)
 shape = SubResource("RectangleShape2D_l8x3u")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="holder2"]
-position = Vector2(59.5, 35.5)
+position = Vector2(-9, -1)
 shape = SubResource("RectangleShape2D_fluat")
 
 [node name="shooter" type="Area2D" parent="."]
@@ -133,6 +137,7 @@ shape = SubResource("CircleShape2D_uabxb")
 position = Vector2(0, -9)
 
 [node name="Line2D" type="Line2D" parent="shooter"]
+visible = false
 z_index = 10
 texture_filter = 1
 texture_repeat = 2
@@ -144,6 +149,12 @@ texture = ExtResource("9_21wvs")
 texture_mode = 1
 round_precision = 1
 metadata/_edit_group_ = true
+
+[node name="RayCast2D" type="RayCast2D" parent="shooter"]
+position = Vector2(0, -39)
+target_position = Vector2(0.22, -59)
+collision_mask = 128
+collide_with_areas = true
 
 [node name="Wheel" type="StaticBody2D" parent="."]
 position = Vector2(-44, 45)
@@ -202,9 +213,9 @@ wait_time = 2.0
 one_shot = true
 
 [node name="item_spawn_area" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="item_spawn_area"]
+position = Vector2(240, 176)
 shape = SubResource("RectangleShape2D_22vti")
 
 [connection signal="timeout" from="CrankSpawnTimer" to="." method="spawn_crank"]

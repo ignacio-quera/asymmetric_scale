@@ -19,7 +19,6 @@ func _on_task_spawn_timer_timeout():
 	task.start()
 
 func new_task():
-	print("test")
 	$task_spawn_timer.start()
 	
 

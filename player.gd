@@ -84,6 +84,8 @@ func _physics_process(delta):
 				dashing = true
 				time = 0
 		elif Input.is_action_just_pressed("action%s" % [player_id]) and vel.length() <= 0:
+			print(position)
+			print(global_position)
 			var max_dist = INF
 			var closest = null
 			for id in objects_in_contact:

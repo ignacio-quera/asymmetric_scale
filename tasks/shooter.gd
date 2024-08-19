@@ -12,6 +12,7 @@ func _process(delta):
 
 func player_interact(player):
 	#if $"..".cranked:
+	$Line2D.show()
 	$"..".aiming = player
 		#player.helpless = true
 		##launching = player
