@@ -61,6 +61,7 @@ func start_game():
 	for i in bigfella_health:
 		fella_hud.add_child(preload("res://fella_life.tscn").instantiate())
 	hud_panel.visible = true
+	$task_controller.new_task()
 
 func finish_game():
 	print("finished game")
@@ -127,7 +128,7 @@ func _player_died(player_num: int):
 
 func kill_sfx():
 	get_viewport().get_camera_2d().apply_shake(0.5)
-	await get_tree().create_timer(0.1).timeout
+	# await get_tree().create_timer(0.05).timeout
 	get_tree().paused = true
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.15).timeout
 	get_tree().paused = false

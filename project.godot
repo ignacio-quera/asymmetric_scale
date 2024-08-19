@@ -23,6 +23,10 @@ window/size/mode=3
 window/stretch/mode="viewport"
 window/stretch/scale=4.0
 
+[gui]
+
+theme/custom="res://theme.tres"
+
 [input]
 
 ui_cancel={
