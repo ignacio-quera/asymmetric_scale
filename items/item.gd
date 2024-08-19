@@ -10,6 +10,9 @@ var picked_by: WeakRef = WeakRef.new()
 var crankable:bool = false
 var interactable = true
 var last_entered
+
+var compatible_slot: String
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var screen_size = get_viewport_rect().size
@@ -46,7 +49,7 @@ func player_interact(player_area):
 
 func _on_interactive_area_area_entered(area):
 	var slot = area
-	if crankable:
+	if crankable and area.get_parent().is_in_group("littleguy"):
 		last_entered = area.get_parent().player_id
 		interactable = true
 	if "Slot" in slot.name:

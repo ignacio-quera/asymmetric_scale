@@ -132,6 +132,7 @@ func _ready():
 func spawn_crank():
 	var item = item_scene.instantiate()
 	item.name = "CrankItem"
+	item.compatible_slot = "Crank"
 	item.get_node("SpritePath/SpritePathFollow/Sprite2D").texture = load("res://assets/images/tasks/crank.png")
 	add_child(item)
 	var gotten = get_item_spawn_position()
