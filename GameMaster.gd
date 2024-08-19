@@ -9,6 +9,7 @@ extends Node
 @export var player_spawner: Path2D
 @export var player_hud_scene: PackedScene
 @export var player_huds: BoxContainer
+@export var fella_hud: BoxContainer
 @export var player_colors: Array[Color]
 
 const Player := preload("res://player.gd")
@@ -56,6 +57,8 @@ func spawn_players(pnum):
 	update_lives_indicator()
 
 func start_game():
+	for i in bigfella_health:
+		fella_hud.add_child(preload("res://fella_life.tscn").instantiate())
 	player_huds.get_parent().visible = true
 
 func finish_game():
@@ -97,6 +100,8 @@ func _hurt_bigfella(amount: int = 1):
 		return
 	bigfella_health -= amount
 	get_viewport().get_camera_2d().apply_shake(1)
+	if fella_hud.get_child_count() > 0:
+		fella_hud.remove_child(fella_hud.get_child(fella_hud.get_child_count() - 1))
 	if bigfella_health <= 0:
 		playing = false
 		time = 0

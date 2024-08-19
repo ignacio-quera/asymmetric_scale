@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://biy48xacgukcg"]
+
+[node name="FellaLife" type="TextureRect"]
+custom_minimum_size = Vector2(16, 16)
+offset_right = 40.0
+offset_bottom = 40.0
+expand_mode = 1
+stretch_mode = 3

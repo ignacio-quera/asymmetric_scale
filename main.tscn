@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=36 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bs8e0f68g2odq" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
 [ext_resource type="Texture2D" uid="uid://n4ay8np85bry" path="res://assets/images/stage/mountains.png" id="6_osgxv"]
 [ext_resource type="Texture2D" uid="uid://b6guu7hftkdt0" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
-[ext_resource type="PackedScene" uid="uid://5ntd5j1j5o3k" uid="uid://b2u6scfv4pp56" path="res://side_wall.tscn" id="9_a4p07"]
+[ext_resource type="PackedScene" uid="uid://5ntd5j1j5o3k" path="res://side_wall.tscn" id="9_a4p07"]
 [ext_resource type="Texture2D" uid="uid://j2yegkj8bi4u" path="res://assets/images/bigfellasprites/hand_fist_red.png" id="9_a5dsx"]
 [ext_resource type="Texture2D" uid="uid://ber8xj2amlj32" path="res://assets/images/stage/arena.png" id="9_dsp7g"]
 [ext_resource type="PackedScene" uid="uid://drdnhbqbs1ack" path="res://pause_menu.tscn" id="9_jkarc"]
@@ -286,7 +286,6 @@ scale = Vector2(0.99, 1.035)
 
 [node name="CollisionShape2D" parent="Walls/UpWall/StaticBody2D" index="0"]
 position = Vector2(242.929, 5.31401)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_4gllt")
 
 [node name="LeftWall" parent="Walls" instance=ExtResource("9_a4p07")]
@@ -312,7 +311,6 @@ scale = Vector2(0.99, 1.015)
 
 [node name="CollisionShape2D" parent="Walls/DownWall/StaticBody2D" index="0"]
 position = Vector2(242.929, 19.2118)
-scale = Vector2(1, 1)
 
 [node name="DeathWall" type="Area2D" parent="."]
 collision_layer = 128
@@ -353,10 +351,10 @@ one_shot = true
 [connection signal="start_game" from="StartMenu" to="." method="new_game"]
 [connection signal="exit_game" from="PauseMenu" to="." method="quit"]
 [connection signal="reset_game" from="PauseMenu" to="." method="restart_game"]
+[connection signal="body_entered" from="Killzone" to="Killzone" method="_on_body_entered"]
+[connection signal="timeout" from="Killzone/KillTimer" to="Killzone" method="_on_kill_timer_timeout"]
 
 [editable path="Walls/UpWall"]
 [editable path="Walls/LeftWall"]
 [editable path="Walls/RightWall"]
 [editable path="Walls/DownWall"]
-[connection signal="body_entered" from="Killzone" to="Killzone" method="_on_body_entered"]
-[connection signal="timeout" from="Killzone/KillTimer" to="Killzone" method="_on_kill_timer_timeout"]
