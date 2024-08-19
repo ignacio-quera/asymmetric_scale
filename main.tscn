@@ -214,7 +214,6 @@ scale = Vector2(-1, 1)
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/HandSpawnL"]
 visible = false
 texture_filter = 1
-position = Vector2(11, -3)
 texture = ExtResource("9_a5dsx")
 
 [node name="Path" type="Path2D" parent="ParallaxBackground/HandSpawnL"]
@@ -226,7 +225,6 @@ curve = SubResource("Curve2D_iiqsw")
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/HandSpawnR"]
 visible = false
 texture_filter = 1
-position = Vector2(11, -3)
 texture = ExtResource("10_fme4l")
 
 [node name="Path" type="Path2D" parent="ParallaxBackground/HandSpawnR"]

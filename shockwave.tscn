@@ -51,7 +51,5 @@ shape = SubResource("CircleShape2D_7rggu")
 amount = 1000
 process_material = SubResource("ParticleProcessMaterial_8ibx7")
 lifetime = 0.6
-fixed_fps = 0
-interpolate = false
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
