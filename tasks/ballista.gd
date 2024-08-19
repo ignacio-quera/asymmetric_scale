@@ -2,7 +2,11 @@ extends StaticBody2D
 @export var item_scene: PackedScene
 @export var shooter_rotation = 1 
 @export var load_time = 0.2
-@export var curve:Curve
+@export var hit_curve:Curve
+@export var miss_curve:Curve
+
+var curve: Curve
+var curve_len_time: float
 
 const Player = preload("res://player.gd")
 
@@ -44,34 +48,40 @@ func _process(delta):
 			current_load_time = 0
 			launching = aiming
 			aiming = null
-			raycast.target_position = $"shooter/Line2D".points[1]
 			launch_curve = Curve2D.new()
 			launch_curve.add_point(launching.global_position)
-			print(raycast.get_collider())
 			if raycast.get_collider() != null:
-				launch_curve.add_point(raycast.get_collider().global_position)
-				launch_curve.add_point(launching.global_position + randi()*Vector2(1,1))
-			else:
-				launch_curve.add_point($"shooter/Line2D".points[1])
+				if raycast.get_collider().name == "BigFellaCollision":
+					var target_pos = raycast.get_collider().global_position
+					launch_curve.add_point(target_pos)
+					curve = hit_curve
+					curve_len_time = 0.8
+				else:
+					var target_pos = raycast.get_collision_point()
+					launch_curve.add_point(target_pos)
+					curve = miss_curve
+					curve_len_time = 0.4
+				time = 0
 		elif Input.is_action_pressed("up%s" % [aiming.player_id]):
 			current_load_time = 0
 			aiming.helpless = false
 			aiming = null
 	if launching != null:
-		time += delta * 0.5
-		launching.position = launch_curve.samplef(curve.sample_baked(time))
-		if time > 1:
+		time += delta
+		var t = curve.sample(time / curve_len_time)
+		launching.position = launch_curve.sample_baked(t * launch_curve.get_baked_length())
+		if time >= 1:
 			time = 0
-			print(raycast.get_collider())
-			if raycast.get_collider().name == "BigFellaCollision":
+			if curve == hit_curve:
 				leaving = true
 				$shooter.z_index = 0
 				get_tree().call_group("gamemaster", "_hurt_bigfella")
 				launching.helpless = false
-				launching = null		
+				launching = null
 			else:
+				launching.helpless = false
 				launching._kill()
-				launching = null	
+				launching = null
 			$shooter/Line2D.hide()
 		
 		#var len = launch_curve.get_baked_length()
@@ -122,6 +132,7 @@ func _ready():
 func spawn_crank():
 	var item = item_scene.instantiate()
 	item.name = "CrankItem"
+	item.compatible_slot = "Crank"
 	item.get_node("SpritePath/SpritePathFollow/Sprite2D").texture = load("res://assets/images/tasks/crank.png")
 	add_child(item)
 	var gotten = get_item_spawn_position()

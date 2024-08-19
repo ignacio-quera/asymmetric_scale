@@ -9,6 +9,8 @@ extends Node
 @export var player_spawner: Path2D
 @export var player_hud_scene: PackedScene
 @export var player_huds: BoxContainer
+@export var fella_hud: BoxContainer
+@export var hud_panel: PanelContainer
 @export var player_colors: Array[Color]
 
 const Player := preload("res://player.gd")
@@ -56,7 +58,9 @@ func spawn_players(pnum):
 	update_lives_indicator()
 
 func start_game():
-	player_huds.get_parent().visible = true
+	for i in bigfella_health:
+		fella_hud.add_child(preload("res://fella_life.tscn").instantiate())
+	hud_panel.visible = true
 
 func finish_game():
 	print("finished game")
@@ -93,11 +97,17 @@ func _process(delta):
 
 
 func _hurt_bigfella(amount: int = 1):
+	if not playing:
+		return
 	bigfella_health -= amount
 	get_viewport().get_camera_2d().apply_shake(1)
+	if fella_hud.get_child_count() > 0:
+		fella_hud.remove_child(fella_hud.get_child(fella_hud.get_child_count() - 1))
 	if bigfella_health <= 0:
 		playing = false
 		time = 0
+	else:
+		$task_controller.new_task()
 
 func update_lives_indicator():
 	for i in player_count:
@@ -106,7 +116,7 @@ func update_lives_indicator():
 func _player_died(player_num: int):
 	lives_left[player_num] -= 1
 	update_lives_indicator()
-	if lives_left.all(func(n): return n <= 0):
+	if playing and lives_left.all(func(n): return n <= 0):
 		# Big fella won
 		playing = false
 		time = 0

@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://b2u6scfv4pp56"]
+[gd_scene load_steps=3 format=3 uid="uid://5ntd5j1j5o3k"]
 
 [ext_resource type="Texture2D" uid="uid://ju5v3xhnyhnn" path="res://assets/images/stage/side_wall.png" id="1_25tm2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ggw8i"]
-size = Vector2(7, 180)
+size = Vector2(27, 200.966)
 
 [node name="Wall" type="Node2D"]
 

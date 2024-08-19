@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://daux8l3mlpo1b"]
 
-[ext_resource type="PackedScene" uid="uid://bw7bdc13pmlbj" path="res://tasks/magic_circle_slot.tscn" id="1_h7ug1"]
+[ext_resource type="PackedScene" path="res://tasks/magic_circle_slot.tscn" id="1_h7ug1"]
 [ext_resource type="Texture2D" uid="uid://bshdqwyj10j3v" path="res://assets/images/tasks/magic_circle.png" id="1_ompek"]
 [ext_resource type="PackedScene" uid="uid://cmb3q44xx1byi" path="res://items/item.tscn" id="2_cdf5b"]
 
@@ -13,7 +13,7 @@ var slots = [\"circle\", \"rombus\", \"square\", \"triangle\"]
 var shapes = [\"cube\", \"octahedron\", \"pyramid\", \"sphere\"]
 var shape_dir = {\"cube\": \"square\", \"sphere\": \"circle\", \"octahedron\": \"rombus\", \"pyramid\": \"triangle\"}
 var item_order
-var completed := true
+var completed := false
 func start():
 	randomize()
 	item_order = [0,1,2,3]
@@ -57,7 +57,7 @@ func _process(delta):
 			# Terminó la animación de daño
 			launching.helpless = false
 			var t2 = (t-1) / DISAPPEAR_TIME
-			$Sprite2D.modulate.a = 1 - t2
+			modulate.a = 1 - t2
 			if t2 >= 1:
 				queue_free()
 		
@@ -108,7 +108,8 @@ func spawn_items():
 		return
 	var shape = shapes[item_order.pop_front()]
 	var item = item_scene.instantiate()
-	item.name = \"%sItem\" % shape
+	item.compatible_slot = shape
+	item.name = \"%sItem Magic\" % shape
 	item.get_node(\"SpritePath/SpritePathFollow/Sprite2D\").texture = load(\"res://assets/images/tasks/magic_%s.png\" % shape)
 	item.shape = shape_dir[shape]
 	add_child(item)

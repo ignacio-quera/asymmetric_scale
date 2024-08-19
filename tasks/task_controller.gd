@@ -20,7 +20,6 @@ func _on_task_spawn_timer_timeout():
 
 func new_task():
 	$task_spawn_timer.start()
-	
 
 func get_spawn_position():
 	var centerpos = $task_spawn_area/CollisionShape2D.position + $task_spawn_area.position

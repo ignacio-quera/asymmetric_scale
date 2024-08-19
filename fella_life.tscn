@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://biy48xacgukcg"]
+
+[ext_resource type="Texture2D" uid="uid://dm5hk3icbqase" path="res://assets/images/bigfellasprites/icon_health.png" id="1_ct4hu"]
+
+[node name="FellaLife" type="TextureRect"]
+texture_filter = 1
+custom_minimum_size = Vector2(16, 16)
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_ct4hu")
+expand_mode = 1
+stretch_mode = 3
