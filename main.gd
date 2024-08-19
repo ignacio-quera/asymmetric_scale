@@ -21,6 +21,14 @@ func new_game(num):
 	$GameMaster.spawn_players(num)
 	$StartMenu.visible = false
 	stage = Stage.LOWERING
+	$GameMusic.play()
+	$MenuMusic.stop()
+
+func reload_menu_music():
+	$MenuMusic.play()
+	
+func reload_game_music():
+	$GameMusic.play()
 
 func start_game():
 	$Camera2D.offset.y = 0
