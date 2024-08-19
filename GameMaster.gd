@@ -1,5 +1,7 @@
 extends Node
 
+@export var player_default_lives := 5
+@export var bigfella_default_lives := 1
 
 @export var bigfella_sprites: Array[Sprite2D]
 @export var postgame_scene: PackedScene
@@ -7,26 +9,27 @@ extends Node
 @export var player_spawner: Path2D
 @export var player_hud_scene: PackedScene
 @export var player_huds: BoxContainer
+@export var player_colors: Array[Color]
 
 const Player := preload("res://player.gd")
 
 const FINISH_ANIM_TIME: float = 5
 const RESPAWN_TIME: float = 5
 
-var player_default_lives := 3
-
 var player_count: int
 var playing: bool = true
 var time: float = 0
 
-var bigfella_health: int = 1
-var players: Array[Player] = []
+var bigfella_health: int
+var players: Array[WeakRef] = []
 var lives_left: Array[int] = []
 
+func player_color(num: int):
+	return player_colors[num % len(player_colors)]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	bigfella_health = bigfella_default_lives
 
 func spawn_player(player_num):
 	var player = player_scene.instantiate()
@@ -34,15 +37,16 @@ func spawn_player(player_num):
 	get_parent().add_child(player)
 	var player_num_name = player_num+1
 	player.name = "Player%s" % player_num_name
-	player.start(spawn_pos, player_num)
-	players[player_num] = player
+	player.start(spawn_pos, player_num, player_color(player_num))
+	players[player_num] = weakref(player)
 
 func new_player(player_num):
-	players.append(null)
+	players.append(WeakRef.new())
 	lives_left.append(player_default_lives)
 	spawn_player(player_num)
 	
 	var hud = player_hud_scene.instantiate()
+	hud.modulate = player_color(player_num)
 	player_huds.add_child(hud)
 
 func spawn_players(pnum):
@@ -50,7 +54,9 @@ func spawn_players(pnum):
 	for player in player_count:
 		new_player(player)
 	update_lives_indicator()
-	player_huds.visible = true
+
+func start_game():
+	player_huds.get_parent().visible = true
 
 func finish_game():
 	print("finished game")
@@ -70,11 +76,11 @@ func _process(delta):
 		var bigfella_won = (bigfella_health > 0)
 		if bigfella_won:
 			if time >= 1:
-				for obj in bigfella_sprites:
-					obj.get_parent().motion_offset.y = abs(sin(time * 3))*-3
+				$"../ParallaxBackground/FellaAnim".play("laugh")
 		else:
 			for player in players:
-				player._celebrate()
+				if player.get_ref():
+					player.get_ref()._celebrate()
 			get_viewport().get_camera_2d().apply_shake(0.6)
 			for sprite in bigfella_sprites:
 				sprite.position.y += delta * 10
@@ -104,6 +110,14 @@ func _player_died(player_num: int):
 		# Big fella won
 		playing = false
 		time = 0
+	kill_sfx()
 	if lives_left[player_num] > 0:
 		await get_tree().create_timer(RESPAWN_TIME).timeout
 		spawn_player(player_num)
+
+func kill_sfx():
+	get_viewport().get_camera_2d().apply_shake(0.5)
+	await get_tree().create_timer(0.1).timeout
+	get_tree().paused = true
+	await get_tree().create_timer(0.2).timeout
+	get_tree().paused = false

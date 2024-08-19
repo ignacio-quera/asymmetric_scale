@@ -1,9 +1,10 @@
-[gd_scene load_steps=18 format=3 uid="uid://bt27d6qh4in8a"]
+[gd_scene load_steps=25 format=3 uid="uid://bt27d6qh4in8a"]
 
 [ext_resource type="Script" path="res://hand.gd" id="1_lnp1f"]
 [ext_resource type="PackedScene" uid="uid://b58dyadq4olip" path="res://shockwave.tscn" id="2_asv7a"]
 [ext_resource type="Texture2D" uid="uid://cm61vso26wgvu" path="res://assets/images/bigfellasprites/hand_fist_blue.png" id="2_atyit"]
 [ext_resource type="PackedScene" uid="uid://b4202g4lgv34l" path="res://flick.tscn" id="3_u8f44"]
+[ext_resource type="PackedScene" uid="uid://8vu2jctucp2x" path="res://trench.tscn" id="4_6xwwb"]
 [ext_resource type="Texture2D" uid="uid://f0pw6gpt2s8j" path="res://assets/images/bigfellasprites/hand_claw_blue.png" id="4_nx78r"]
 [ext_resource type="Texture2D" uid="uid://j2yegkj8bi4u" path="res://assets/images/bigfellasprites/hand_fist_red.png" id="5_4iumf"]
 [ext_resource type="Texture2D" uid="uid://b7rd6iv1t2mxe" path="res://assets/images/bigfellasprites/hand_claw_red.png" id="5_6qu0r"]
@@ -15,7 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://chvlrsm56yfi4" path="res://assets/images/bigfellasprites/hand_flick_red_3.png" id="13_jf5qn"]
 [ext_resource type="Texture2D" uid="uid://bo32a708fihh0" path="res://assets/images/bigfellasprites/hand_swab_blue.png" id="14_iyx8l"]
 [ext_resource type="Texture2D" uid="uid://cr4bxnioya3v" path="res://assets/images/bigfellasprites/hand_swab_red.png" id="15_vxjpd"]
-[ext_resource type="PackedScene" uid="uid://8vu2jctucp2x" path="res://trench.tscn" id="4_6xwwb"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nhcnw"]
 radius = 1.0
@@ -109,6 +109,70 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8rcnv"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(1, 1, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 16.0
+direction = Vector3(-1, -0.3, 0)
+spread = 50.0
+initial_velocity_min = 34.32
+initial_velocity_max = 105.39
+gravity = Vector3(0, 98, 0)
+color = Color(0.761561, 0.761561, 0.761561, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mrpl5"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(1, 1, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 16.0
+direction = Vector3(1, -0.3, 0)
+spread = 50.0
+initial_velocity_min = 34.32
+initial_velocity_max = 105.39
+gravity = Vector3(0, 98, 0)
+color = Color(0.761561, 0.761561, 0.761561, 1)
+
+[sub_resource type="Curve" id="Curve_1vo8l"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.789694, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_r3nuy"]
+curve = SubResource("Curve_1vo8l")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0nda3"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 40.0
+spread = 5.0
+initial_velocity_min = 250.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 0, 0)
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_r3nuy")
+color = Color(0.67118, 1, 0.99591, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_052l3"]
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 36.0
+direction = Vector3(1, -0.75, 0)
+spread = 28.553
+initial_velocity_min = 70.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+color = Color(0.73468, 0.73468, 0.73468, 1)
+
 [node name="Hand" type="Area2D"]
 texture_filter = 1
 collision_layer = 4
@@ -126,6 +190,34 @@ metadata/_edit_lock_ = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_lo327")
-animation = &"flick_1_blue"
+animation = &"swab_blue"
+
+[node name="SwabParticles1" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_8rcnv")
+fixed_fps = 0
+interpolate = false
+
+[node name="SwabParticles2" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_mrpl5")
+fixed_fps = 0
+interpolate = false
+
+[node name="SwipeParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_0nda3")
+fixed_fps = 0
+interpolate = false
+
+[node name="ClawParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 150
+process_material = SubResource("ParticleProcessMaterial_052l3")
+fixed_fps = 0
+interpolate = false
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

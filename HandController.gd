@@ -11,11 +11,14 @@ const ANCHOR_WAIT = preload("res://assets/images/bigfellasprites/anchor_cooldown
 const FIST_DISTANCE: float = 30
 const DELAY: float = 1
 const COOLDOWN_DURATION: float = 0.5
+const SWAB_COOLDOWN: float = 6
 
 enum Dir {LEFT, RIGHT}
 
 var choosing: bool = false
 var choose_dir: Dir = Dir.LEFT
+
+var swab_cooldown: float = 0
 
 func _init():
 	for grad in HOVER_GRADIENT:
@@ -57,15 +60,20 @@ func _process(delta):
 		else:
 			action = Hand.Action.FLICK
 	var hand: Hand = ($HandL if choose_dir == Dir.LEFT else $HandR)
-	if not want_choose and choosing and hand.ready_to_attack():
+	var ready_to_attack = hand.ready_to_attack()
+	if action == Hand.Action.SWAB and swab_cooldown > 0:
+		ready_to_attack = false
+	if not want_choose and choosing and ready_to_attack:
 		hand.do_action(action, anchor)
+		if action == Hand.Action.SWAB:
+			swab_cooldown = SWAB_COOLDOWN
 	choosing = want_choose
 	$Anchor.visible = choosing
-	$Anchor.texture = (ANCHOR_READY if hand.ready_to_attack() else ANCHOR_WAIT)
+	$Anchor.texture = (ANCHOR_READY if ready_to_attack else ANCHOR_WAIT)
 	$ActionPreview.visible = false
 	$FlickPreview.visible = false
 	var icon = null
-	if choosing and hand.ready_to_attack():
+	if choosing and ready_to_attack:
 		$ActionPreview.clear_points()
 		$ActionPreview.width = 2*hand.action_radius(action)
 		$ActionPreview.gradient = HOVER_GRADIENT[choose_dir]
@@ -107,3 +115,4 @@ func _process(delta):
 		Input.set_custom_mouse_cursor(null)
 	else:
 		Input.set_custom_mouse_cursor(icon, 0, icon.get_size()/2)
+	swab_cooldown = max(0, swab_cooldown - delta)

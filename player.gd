@@ -5,6 +5,7 @@ signal hit
 const SPEED = 100.0
 const DASH_INVUL = 0.5
 @export var dash_curve: Curve
+@export var corpse_scene: PackedScene
 
 var player_id: int
 var dash_from: Vector2
@@ -19,16 +20,19 @@ var helpless: bool = false
 var celebrating: bool = false
 var stunned: bool = false
 var dragging: bool = false
+var iframes: float = 0
 
 func _ready():
 	# Set the initial velocity to zero.
+	iframes = 3
 	velocity = Vector2.ZERO
 	screen_size = get_viewport_rect().size
 	hide()
 	
-func start(pos, player_num):
+func start(pos: Vector2, player_num: int, player_color: Color):
 	position = pos
 	player_id = player_num
+	modulate = player_color
 	$DashStatus.show()
 	show()
 
@@ -110,6 +114,12 @@ func _physics_process(delta):
 
 
 func _process(delta):
+	iframes -= delta
+	if iframes <= 0:
+		iframes = 0
+	else:
+		$AnimatedSprite2D.visible = fmod(iframes / 0.2, 2) < 1
+
 	if dashing:
 		time += delta
 		if time >= DASH_INVUL:
@@ -180,17 +190,21 @@ func _on_interact_area_area_exited(area):
 		area.get_parent().player_interact_exit(self)
 
 func _kill():
-	if helpless:
+	if helpless or iframes > 0:
 		return
 	if dashing and time <= DASH_INVUL:
 		return
 	if carrying.get_ref():
 		unencumber()
 	$/root/Main/GameMaster._player_died(player_id)
+	var corpse = corpse_scene.instantiate()
+	corpse.position = position
+	corpse.modulate = modulate
+	$/root/Main.add_child(corpse)
 	queue_free()
 
 func _stun(for_time: float):
-	if helpless:
+	if helpless or iframes > 0:
 		return
 	if dashing and time <= DASH_INVUL:
 		return

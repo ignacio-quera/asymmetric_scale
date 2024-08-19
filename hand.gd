@@ -30,9 +30,9 @@ func action_radius(act: Action):
 		Action.SWIPE:
 			return 24
 		Action.CLAW:
-			return 35
+			return 36
 		Action.SWAB:
-			return 8
+			return 16
 		Action.FIST:
 			return 32
 	return 0
@@ -67,7 +67,7 @@ func do_action(act: Action, pos: Vector2):
 		Action.FLICK:
 			follow_curve.add_point(pos, Vector2.UP*10)
 			max_time = 0.01
-			setup_time = 0.4
+			setup_time = 0.6
 			recover_time = 2
 		Action.SWAB:
 			follow_curve.add_point(Vector2(pos.x, scrsize.y))
@@ -75,6 +75,7 @@ func do_action(act: Action, pos: Vector2):
 			max_time = 1
 			deadly = true
 			last_placed_trench = scrsize.y+20
+			constant_shake = 0.4
 	time = -setup_time
 
 # Called when the node enters the scene tree for the first time.
@@ -100,17 +101,42 @@ func _process(delta):
 			if doing_action == Action.FLICK:
 				$AnimatedSprite2D.play('flick_2_%s' % color)
 				idle_anim = false
+			if doing_action == Action.SWIPE:
+				if not recovering:
+					$SwipeParticles.emitting = true
+				if recovering:
+					$SwipeParticles.emitting = false
 			var n = follow_curve.point_count - 2
 			position = follow_curve.samplef(1 + time / max_time * n)
 			if constant_shake > 0:
 				get_viewport().get_camera_2d().apply_shake(constant_shake)
 			if doing_action == Action.SWAB:
+				$AnimatedSprite2D.play('swab_%s' % color)
+				$AnimatedSprite2D.offset.y = -70
+				$AnimatedSprite2D.offset.x = 11
+				idle_anim = false
+				if not recovering:
+					$SwabParticles1.emitting = true
+					$SwabParticles2.emitting = true
+				else:
+					$SwabParticles1.emitting = false
+					$SwabParticles2.emitting = false
 				while last_placed_trench > position.y:
 					var trench = trench_scene.instantiate()
 					last_placed_trench -= trench.get_node("Sprite2D").texture.get_height()
 					if last_placed_trench >= 94:
 						trench.place_at(Vector2(position.x, last_placed_trench))
 						$/root/Main.add_child(trench)
+			if doing_action == Action.CLAW:
+				if not recovering:
+					$AnimatedSprite2D.play('claw_%s' % color)
+					$AnimatedSprite2D.offset.y = round(sin(time*100)*0.5+0.5)*2 - 20
+					$ClawParticles.emitting = true
+					idle_anim = false
+				else:
+					$AnimatedSprite2D.offset.y = -20
+					$ClawParticles.emitting = false
+					idle_anim = false
 		if time >= max_time:
 			if shake_hit > 0:
 				get_viewport().get_camera_2d().apply_shake(shake_hit)
