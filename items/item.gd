@@ -9,6 +9,7 @@ var shape:String
 var picked_by: WeakRef = WeakRef.new()
 var crankable:bool = false
 var interactable = true
+var last_entered
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var screen_size = get_viewport_rect().size
@@ -23,8 +24,10 @@ func _process(delta):
 		global_position = Vector2(picked_by.get_ref().position.x, picked_by.get_ref().position.y-10)
 	else:
 		$SpritePath/SpritePathFollow.progress = t * 10
+	if crankable:
+		global_position = $"../CrankSlot".global_position
 	if crankable and interactable:
-		if Input.is_action_just_pressed("action%s" % 0) or Input.is_action_just_pressed("action%s" % 1):
+		if Input.is_action_just_pressed("action%s" % last_entered):
 			rotation += 15 * delta
 			$"..".crank()
 		
@@ -44,17 +47,14 @@ func player_interact(player_area):
 func _on_interactive_area_area_entered(area):
 	var slot = area
 	if crankable:
+		last_entered = area.get_parent().player_id
 		interactable = true
 	if "Slot" in slot.name:
 		if "Crank" in slot.name:
 			crankable = true
 			if picked_by.get_ref():
 				picked_by.get_ref().unencumber()
-			print(slot.position)
-			print(slot.global_position)
 			global_position = slot.global_position
-			print(position)
-			print(global_position)
 			$Shadow.hide()
 			if $"SpritePath/SpritePathFollow/".get_child_count() != 0:
 				$SpritePath/SpritePathFollow/Sprite2D.z_index = 6
@@ -66,8 +66,6 @@ func _on_interactive_area_area_entered(area):
 				picked_by.get_ref().unencumber()
 			position = slot.position
 			$Shadow.hide()
-			 #$SpritePath/SpritePathFollow.progress_ratio = 0
-			 #$SpritePath/SpritePathFollow/Sprite2D.reparent(self)
 			$"..".deposit_item()
 
 

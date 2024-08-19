@@ -4,9 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
 [ext_resource type="PackedScene" uid="uid://dgh4u0trlvmpf" path="res://hand_controller.tscn" id="4_j51c6"]
 [ext_resource type="Texture2D" uid="uid://lbuet6fobe71" path="res://assets/images/stage/background.png" id="5_pq2fe"]
-[ext_resource type="Texture2D" uid="uid://bs8e0f68g2odq" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
+[ext_resource type="Texture2D" uid="uid://urny1m1c0yqf" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
 [ext_resource type="Texture2D" uid="uid://n4ay8np85bry" path="res://assets/images/stage/mountains.png" id="6_osgxv"]
-[ext_resource type="Texture2D" uid="uid://b6guu7hftkdt0" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
+[ext_resource type="Texture2D" uid="uid://w7opisttso2t" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
 [ext_resource type="PackedScene" uid="uid://b2u6scfv4pp56" path="res://side_wall.tscn" id="9_a4p07"]
 [ext_resource type="Texture2D" uid="uid://j2yegkj8bi4u" path="res://assets/images/bigfellasprites/hand_fist_red.png" id="9_a5dsx"]
 [ext_resource type="Texture2D" uid="uid://ber8xj2amlj32" path="res://assets/images/stage/arena.png" id="9_dsp7g"]
@@ -141,6 +141,9 @@ seed = 123456
 frequency = 0.209
 fractal_octaves = 3
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ppo18"]
+size = Vector2(2184, 560)
+
 [node name="Main" type="Node"]
 script = ExtResource("1_ognb3")
 hand_controller_scene = ExtResource("4_j51c6")
@@ -270,6 +273,21 @@ scale = Vector2(1, 1.035)
 z_index = 4
 position = Vector2(0, 256)
 scale = Vector2(0.99, 1.015)
+
+[node name="DeathWall" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathWall"]
+position = Vector2(196, -352)
+shape = SubResource("RectangleShape2D_ppo18")
+
+[node name="Killzone" type="Area2D" parent="."]
+position = Vector2(-72, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Killzone"]
+build_mode = 1
+polygon = PackedVector2Array(72, -64, 72, 272, 552, 272, 552, 88, 72, 88, 72, -64, 600, -64, 600, 336, -16, 336, -16, -64)
 
 [connection signal="paused" from="." to="PauseMenu" method="_on_pause"]
 [connection signal="start_game" from="StartMenu" to="." method="new_game"]

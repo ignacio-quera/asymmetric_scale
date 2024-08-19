@@ -25,5 +25,4 @@ func _process(delta):
 
 # Llamar a esta funcion para agregar shake a la camara
 func apply_shake(shake: float):
-	print("applying shake ", shake)
 	trauma = max(trauma, shake)

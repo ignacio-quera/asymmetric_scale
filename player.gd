@@ -19,6 +19,7 @@ var carrying: WeakRef = WeakRef.new()
 var helpless: bool = false
 var celebrating: bool = false
 var stunned: bool = false
+var dragging: bool = false
 var iframes: float = 0
 
 func _ready():
@@ -51,10 +52,11 @@ func _physics_process(delta):
 			vel.x += 1
 		if Input.is_action_pressed("left%s" % [player_id]):
 			vel.x -= 1
-		if Input.is_action_pressed("up%s" % [player_id]):
-			vel.y -= 1
-		if Input.is_action_pressed("down%s" % [player_id]):
-			vel.y += 1
+		if not dragging:
+			if Input.is_action_pressed("up%s" % [player_id]):
+				vel.y -= 1
+			if Input.is_action_pressed("down%s" % [player_id]):
+				vel.y += 1
 
 		if vel.length() > 0:
 			vel = vel.normalized() * SPEED
@@ -152,17 +154,18 @@ func reset_scale():
 
 func unencumber():
 	var item = carrying.get_ref()
+	print(item)
 	if item != null:
 		item.picked_by = WeakRef.new()
 	carrying = WeakRef.new()
 	has_dashed = false
-	#carrying_unsquish()
+	dragging = false
 	
 func encumber(item):
 	item.picked_by = weakref(self)
 	carrying = weakref(item)
-	#has_dashed = true
-	#carrying_squish()
+	if item.name == "ballista":
+		dragging = true
 	
 func _on_dashing_timer_timeout():
 	$AnimatedStamina.stop()
