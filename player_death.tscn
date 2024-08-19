@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://bbq2dibinbinr"]
+
+[ext_resource type="Texture2D" uid="uid://c0o4wom5hxub5" path="res://assets/images/lilguyanimations/splats/neutral.png" id="1_c45p5"]
+[ext_resource type="Script" path="res://player_death.gd" id="1_w4vyp"]
+[ext_resource type="Material" uid="uid://bj6frp71d3qvo" path="res://player_material.tres" id="2_hl758"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wk14m"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 300.0
+initial_velocity_max = 300.0
+gravity = Vector3(0, 98, 0)
+scale_min = 2.0
+scale_max = 2.0
+
+[node name="PlayerDeath" type="Node2D"]
+script = ExtResource("1_w4vyp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+material = ExtResource("2_hl758")
+texture = ExtResource("1_c45p5")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_wk14m")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0

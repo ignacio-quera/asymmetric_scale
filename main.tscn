@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cs2oake6vkla2"]
+[gd_scene load_steps=26 format=3 uid="uid://cs2oake6vkla2"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_ognb3"]
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
@@ -36,6 +36,101 @@ _data = {
 }
 point_count = 3
 
+[sub_resource type="Animation" id="Animation_1h45l"]
+resource_name = "bobbing"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BigFellaHead:motion_offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(5, 5), Vector2(0, 0), Vector2(-5, 5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BigFellaHelm:motion_offset")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.3, 1.3, 2.3, 3.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(5, 3), Vector2(0, 0), Vector2(-5, 3)]
+}
+
+[sub_resource type="Animation" id="Animation_gtbva"]
+resource_name = "idle"
+
+[sub_resource type="Animation" id="Animation_tao3y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BigFellaHead:motion_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 500)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BigFellaHelm:motion_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 500)]
+}
+
+[sub_resource type="Animation" id="Animation_h3ti0"]
+resource_name = "laugh"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BigFellaHelm:motion_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.6),
+"transitions": PackedFloat32Array(1, 1.18921),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BigFellaHead:motion_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1.46409),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -3)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ygwum"]
+_data = {
+"RESET": SubResource("Animation_tao3y"),
+"bobbing": SubResource("Animation_1h45l"),
+"idle": SubResource("Animation_gtbva"),
+"laugh": SubResource("Animation_h3ti0")
+}
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_vtf6u"]
 noise_type = 4
 seed = 123456
@@ -44,7 +139,6 @@ fractal_octaves = 3
 
 [node name="Main" type="Node"]
 script = ExtResource("1_ognb3")
-anim_speed = 1000.0
 hand_controller_scene = ExtResource("4_j51c6")
 invisible_when_raising = [NodePath("StartMenu"), NodePath("ParallaxBackground/BigFellaHead"), NodePath("ParallaxBackground/BigFellaHelm"), NodePath("ParallaxBackground/Stage"), NodePath("Walls")]
 
@@ -125,6 +219,11 @@ texture_filter = 1
 position = Vector2(1, 90)
 texture = ExtResource("9_dsp7g")
 centered = false
+
+[node name="FellaAnim" type="AnimationPlayer" parent="ParallaxBackground"]
+libraries = {
+"": SubResource("AnimationLibrary_ygwum")
+}
 
 [node name="PauseMenu" parent="." instance=ExtResource("9_jkarc")]
 layer = 2

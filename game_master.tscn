@@ -33,6 +33,7 @@ postgame_scene = ExtResource("2_qe1fn")
 player_scene = ExtResource("3_rm3w5")
 player_hud_scene = ExtResource("4_ddhtm")
 player_huds = NodePath("CanvasLayer/PanelContainer/PlayerHUDs")
+player_colors = Array[Color]([Color(0.117647, 0.772549, 0.890196, 1), Color(0.89, 0.283465, 0.1157, 1), Color(0.438325, 0.89, 0.1157, 1)])
 
 [node name="task_controller" type="Node2D" parent="."]
 script = ExtResource("2_lvv2n")
@@ -52,12 +53,12 @@ shape = SubResource("RectangleShape2D_d1hnx")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+visible = false
 offset_left = 5.0
 offset_top = 5.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ih2mn")
 
 [node name="PlayerHUDs" type="VBoxContainer" parent="CanvasLayer/PanelContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0

@@ -29,7 +29,9 @@ func start_game():
 		remove_child(hand)
 	add_child(hand_controller_scene.instantiate())
 	$GameMaster.process_mode = Node.PROCESS_MODE_INHERIT
+	$GameMaster.start_game()
 	$GameMaster/task_controller.new_task()
+	$ParallaxBackground/FellaAnim.play("bobbing")
 
 func restart_game():
 	get_tree().paused = false

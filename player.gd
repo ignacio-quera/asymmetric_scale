@@ -5,6 +5,7 @@ signal hit
 const SPEED = 100.0
 const DASH_INVUL = 0.5
 @export var dash_curve: Curve
+@export var corpse_scene: PackedScene
 
 var player_id: int
 var dash_from: Vector2
@@ -25,9 +26,10 @@ func _ready():
 	screen_size = get_viewport_rect().size
 	hide()
 	
-func start(pos, player_num):
+func start(pos: Vector2, player_num: int, player_color: Color):
 	position = pos
 	player_id = player_num
+	modulate = player_color
 	$DashStatus.show()
 	show()
 
@@ -182,6 +184,10 @@ func _kill():
 	if carrying.get_ref():
 		unencumber()
 	$/root/Main/GameMaster._player_died(player_id)
+	var corpse = corpse_scene.instantiate()
+	corpse.position = position
+	corpse.modulate = modulate
+	$/root/Main.add_child(corpse)
 	queue_free()
 
 func _stun(for_time: float):

@@ -7,6 +7,7 @@ extends Node
 @export var player_spawner: Path2D
 @export var player_hud_scene: PackedScene
 @export var player_huds: BoxContainer
+@export var player_colors: Array[Color]
 
 const Player := preload("res://player.gd")
 
@@ -23,6 +24,8 @@ var bigfella_health: int = 1
 var players: Array[Player] = []
 var lives_left: Array[int] = []
 
+func player_color(num: int):
+	return player_colors[num % len(player_colors)]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -34,7 +37,7 @@ func spawn_player(player_num):
 	get_parent().add_child(player)
 	var player_num_name = player_num+1
 	player.name = "Player%s" % player_num_name
-	player.start(spawn_pos, player_num)
+	player.start(spawn_pos, player_num, player_color(player_num))
 	players[player_num] = player
 
 func new_player(player_num):
@@ -43,6 +46,7 @@ func new_player(player_num):
 	spawn_player(player_num)
 	
 	var hud = player_hud_scene.instantiate()
+	hud.modulate = player_color(player_num)
 	player_huds.add_child(hud)
 
 func spawn_players(pnum):
@@ -50,7 +54,9 @@ func spawn_players(pnum):
 	for player in player_count:
 		new_player(player)
 	update_lives_indicator()
-	player_huds.visible = true
+
+func start_game():
+	player_huds.get_parent().visible = true
 
 func finish_game():
 	print("finished game")
@@ -70,8 +76,7 @@ func _process(delta):
 		var bigfella_won = (bigfella_health > 0)
 		if bigfella_won:
 			if time >= 1:
-				for obj in bigfella_sprites:
-					obj.get_parent().motion_offset.y = abs(sin(time * 3))*-3
+				$"../ParallaxBackground/FellaAnim".play("laugh")
 		else:
 			for player in players:
 				player._celebrate()
@@ -104,6 +109,14 @@ func _player_died(player_num: int):
 		# Big fella won
 		playing = false
 		time = 0
+	kill_sfx()
 	if lives_left[player_num] > 0:
 		await get_tree().create_timer(RESPAWN_TIME).timeout
 		spawn_player(player_num)
+
+func kill_sfx():
+	get_viewport().get_camera_2d().apply_shake(0.5)
+	await get_tree().create_timer(0.1).timeout
+	get_tree().paused = true
+	await get_tree().create_timer(0.2).timeout
+	get_tree().paused = false

@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1wot0vec8veb"]
+[gd_scene load_steps=3 format=3 uid="uid://b1wot0vec8veb"]
 
+[ext_resource type="Material" uid="uid://bj6frp71d3qvo" path="res://player_material.tres" id="1_txtoe"]
 [ext_resource type="Script" path="res://PlayerLifeIndicator.gd" id="1_yql87"]
 
 [node name="PlayerLifeIndicator" type="TextureRect"]
+material = ExtResource("1_txtoe")
 custom_minimum_size = Vector2(8, 8)
 expand_mode = 1
 stretch_mode = 3
