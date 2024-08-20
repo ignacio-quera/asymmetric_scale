@@ -89,8 +89,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var idle_anim := true
+	time += delta
 	if follow_curve != null:
-		time += delta
 		if time < 0:
 			position = follow_curve.sample(0, 1 + time / setup_time)
 			if not recovering and doing_action == Action.FLICK:
@@ -146,6 +146,7 @@ func _process(delta):
 			if recovering:
 				follow_curve = null
 				recovering = false
+				time = 0
 			else:
 				match doing_action:
 					Action.FIST:
@@ -169,6 +170,8 @@ func _process(delta):
 	if idle_anim:
 		$AnimatedSprite2D.play('fist_%s' % color)
 		$AnimatedSprite2D.offset = Vector2(24, 0)
+		if not recovering:
+			$AnimatedSprite2D.offset.y = sin(time*1.6) * 5
 
 
 func _on_body_entered(body):
