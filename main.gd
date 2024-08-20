@@ -15,6 +15,7 @@ var time := 0.0
 var last_t := 0.0
 var big_fella_head_ready := true
 var player_count: int
+var difficulty: float = 1
 
 var og_camera_offset: float
 
@@ -39,7 +40,7 @@ func start_game():
 	for hand in hand_spawners:
 		remove_child(hand)
 	var hand_controller = hand_controller_scene.instantiate()
-	hand_controller._enable_ai(player_count == 1)
+	hand_controller._enable_ai(player_count == 1, difficulty)
 	add_child(hand_controller)
 	$GameMaster.process_mode = Node.PROCESS_MODE_INHERIT
 	$GameMaster.start_game()
@@ -137,4 +138,11 @@ func _on_settings_set_lives():
 	$GameMaster.player_default_lives = $Settings/GuyLives.value
 	$Settings.visible = false
 	$Settings/CanvasLayer.visible = false
+	match $Settings/Difficulty.selected:
+		0:
+			difficulty = 1.5
+		1:
+			difficulty = 1
+		2:
+			difficulty = 0.5
 	pass # Replace with function body.
