@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://jsp2qogxc2ry"]
+[gd_scene load_steps=11 format=3 uid="uid://jsp2qogxc2ry"]
 
 [ext_resource type="Script" path="res://GameMaster.gd" id="1_ysuk8"]
 [ext_resource type="Script" path="res://tasks/task_controller.gd" id="2_lvv2n"]

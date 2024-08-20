@@ -1,6 +1,7 @@
 extends CanvasLayer
 
 signal start_game
+signal set_settings
 
 var number_of_players: int
 
@@ -20,3 +21,8 @@ func _set_player_count(player_count: int):
 	number_of_players = player_count
 	for btn: Button in $PlayerCount.get_children():
 		btn.disabled = (btn.text == str(player_count))
+
+
+func _on_settings_pressed():
+	set_settings.emit()
+	pass # Replace with function body.

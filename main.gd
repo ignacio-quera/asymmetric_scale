@@ -122,3 +122,15 @@ func pause():
 func unpause():
 	get_tree().paused = false
 
+func _on_set_settings():
+	$Settings.visible = true
+	$Settings/CanvasLayer.visible = true
+	pass # Replace with function body.
+
+
+func _on_settings_set_lives():
+	$GameMaster.bigfella_health = $Settings/FellaLives.value
+	$GameMaster.player_default_lives = $Settings/GuyLives.value
+	$Settings.visible = false
+	$Settings/CanvasLayer.visible = false
+	pass # Replace with function body.

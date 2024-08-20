@@ -1,3 +1,102 @@
-[gd_scene format=3 uid="uid://crxyuplklpwdh"]
+[gd_scene load_steps=3 format=3 uid="uid://crxyuplklpwdh"]
+
+[ext_resource type="Texture2D" uid="uid://dwctoyc50esv3" path="res://assets/black.png" id="1_mnooj"]
+[ext_resource type="Script" path="res://settings.gd" id="1_psgek"]
 
 [node name="Settings" type="CanvasLayer"]
+layer = 3
+visible = false
+script = ExtResource("1_psgek")
+
+[node name="FellaLives" type="SpinBox" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = -178.0
+offset_right = 73.25
+offset_bottom = -153.0
+grow_horizontal = 2
+grow_vertical = 0
+min_value = 1.0
+max_value = 21.0
+value = 2.0
+update_on_text_changed = true
+
+[node name="GuyLives" type="SpinBox" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = -114.0
+offset_right = 73.25
+offset_bottom = -89.0
+grow_horizontal = 2
+grow_vertical = 0
+min_value = 1.0
+max_value = 21.0
+value = 5.0
+
+[node name="Fella" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -74.5
+offset_top = -174.0
+offset_right = -7.5
+offset_bottom = -157.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Giant Lives:"
+
+[node name="Guy" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -73.0
+offset_top = -110.0
+offset_right = -9.0
+offset_bottom = -93.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Gnat Lives:"
+
+[node name="Button" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -64.0
+offset_right = 20.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "OK"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -256.0
+offset_top = -304.0
+offset_right = 256.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("1_mnooj")
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
