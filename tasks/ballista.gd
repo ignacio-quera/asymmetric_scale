@@ -87,6 +87,7 @@ func _process(delta):
 				launching._kill()
 				launching = null
 			$shooter/Line2D.hide()
+	$shooter/InteractableGlow.visible = cranked and not aiming and not launching and not leaving
 
 func _physics_process(delta):
 	if arriving:

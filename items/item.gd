@@ -3,6 +3,8 @@ extends StaticBody2D
 signal picked_signal
 signal deposited
 
+@export var interactable_glow: Sprite2D
+
 var t:float = 0
 var type:String
 var shape:String
@@ -33,7 +35,7 @@ func _process(delta):
 		if Input.is_action_just_pressed("action%s" % last_entered) or Input.is_action_just_pressed("up%s" % last_entered):
 			rotation += 15 * delta
 			$"..".crank()
-		
+			interactable_glow.visible = not $"..".cranked
 
 func player_interact(player_area):
 	if not picked_by.get_ref() and not crankable:
@@ -75,6 +77,7 @@ func _on_interactive_area_area_entered(area):
 				$Shadow.hide()
 				$"..".deposit_item()
 				$"InsertSound".play()
+				interactable_glow.hide()
 
 
 func _on_interactive_area_area_exited(area):
