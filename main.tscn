@@ -331,7 +331,7 @@ position = Vector2(13.5, 94.686)
 shape = SubResource("RectangleShape2D_a1mpo")
 
 [node name="DownWall" parent="Walls" instance=ExtResource("13_rmgko")]
-z_index = 4
+z_index = 7
 position = Vector2(0, 256)
 scale = Vector2(0.99, 1.015)
 
