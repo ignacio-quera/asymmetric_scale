@@ -43,8 +43,9 @@ size = Vector2(11, 9)
 radius = 7.0
 height = 44.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_uabxb"]
-radius = 17.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2yilk"]
+radius = 24.22
+height = 84.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vkhjh"]
 radius = 14.0
@@ -56,7 +57,7 @@ size = Vector2(12, 25)
 height = 25.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_22vti"]
-size = Vector2(315.893, 127.895)
+size = Vector2(368, 127.895)
 
 [node name="ballista" type="StaticBody2D"]
 z_index = -2
@@ -141,8 +142,8 @@ collision_layer = 8
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="shooter/LoadingArea"]
-position = Vector2(0, -39)
-shape = SubResource("CircleShape2D_uabxb")
+position = Vector2(0, -13)
+shape = SubResource("CapsuleShape2D_2yilk")
 
 [node name="LaunchingNode" type="Node2D" parent="shooter"]
 position = Vector2(0, -9)
@@ -226,13 +227,15 @@ one_shot = true
 [node name="item_spawn_area" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="item_spawn_area"]
-position = Vector2(240, 176)
+position = Vector2(236.22, 176)
 shape = SubResource("RectangleShape2D_22vti")
 
 [node name="CrankSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_fd0e8")
+volume_db = -10.0
 
 [node name="FireSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_65qh7")
+volume_db = -8.0
 
 [connection signal="timeout" from="CrankSpawnTimer" to="." method="spawn_crank"]

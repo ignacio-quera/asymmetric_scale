@@ -30,7 +30,7 @@ func _process(delta):
 	if crankable:
 		global_position = $"../CrankSlot".global_position
 	if crankable and interactable:
-		if Input.is_action_just_pressed("action%s" % last_entered):
+		if Input.is_action_just_pressed("action%s" % last_entered) or Input.is_action_just_pressed("up%s" % last_entered):
 			rotation += 15 * delta
 			$"..".crank()
 		
@@ -46,6 +46,9 @@ func player_interact(player_area):
 		picked_by.get_ref().unencumber()
 		$CollisionShape2D.disabled = false
 		z_index = 0
+
+
+
 
 func _on_interactive_area_area_entered(area):
 	var slot = area
@@ -64,14 +67,19 @@ func _on_interactive_area_area_entered(area):
 				$SpritePath/SpritePathFollow.progress_ratio = 0
 				$SpritePath/SpritePathFollow/Sprite2D.reparent(self)
 			return
-		if "Magic" in name and slot.shape == shape:
-			if picked_by.get_ref():
-				picked_by.get_ref().unencumber()
-			position = slot.position
-			$Shadow.hide()
-			$"..".deposit_item()
+		if "Magic" in name:
+			if slot.shape == shape:
+				if picked_by.get_ref():
+					picked_by.get_ref().unencumber()
+				position = slot.position
+				$Shadow.hide()
+				$"..".deposit_item()
 
 
 func _on_interactive_area_area_exited(area):
 	interactable = false
 	pass
+
+
+func _on_area_2d_body_entered(body):
+	print("test")

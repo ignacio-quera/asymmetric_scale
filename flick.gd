@@ -2,7 +2,7 @@ extends Area2D
 
 
 var time: float = 0
-var deadly := 2
+var deadly := 5
 
 
 func start(pos):

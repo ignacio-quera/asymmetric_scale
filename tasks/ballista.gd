@@ -18,6 +18,8 @@ var aiming: Player = null
 var raycast: RayCast2D
 var launch_curve: Curve2D
 var time: float = 0
+var arrival_pos
+var arriving = true;
 var leaving = false;
 var holder
 var rope_state = 2
@@ -27,8 +29,9 @@ var dead = false
 
 # Called when the node enters the scene tree for the first time.
 func start():
+	arrival_pos = position
+	position = Vector2(600,position.y)
 	raycast = $"shooter/RayCast2D"
-	$CrankSpawnTimer.start()
 	
 func _process(delta):
 	if aiming != null:
@@ -86,12 +89,23 @@ func _process(delta):
 			$shooter/Line2D.hide()
 
 func _physics_process(delta):
+	if arriving:
+		position.x -= 1
+		$"Wheel".rotation -= 0.05
+		$"Wheel2".rotation -= 0.05
+		$"Wheel3".rotation -= 0.05
+		$"Wheel4".rotation -= 0.05
+	if floor(position.x) == floor(arrival_pos.x):
+		arriving = false
+		spawn_crank()
+		arrival_pos = Vector2(0,0)
 	if picked_by.get_ref():
 		global_position = picked_by.get_ref().position - holder.position
 	if leaving:
 		if position.x > -100:
 			position.x -= 1
 			$"CrankItem".position.x -= 1
+			$"CrankItem".z_index = 1
 			$"Wheel".rotation -= 0.05
 			$"Wheel2".rotation -= 0.05
 			$"Wheel3".rotation -= 0.05
@@ -118,17 +132,20 @@ func get_item_spawn_position():
 	var position_in_area = Vector2()
 	position_in_area.x = (randf() * size.x) - (size.x/2) + centerpos.x 
 	position_in_area.y = (randf() * size.y) - (size.y/2) + centerpos.y
+	while (abs(position_in_area.x - position.x) < 65):
+		position_in_area.x = (randf() * size.x) - (size.x/2) + centerpos.x 
+		##position_in_area.y = (randf() * size.y) - (size.y/2) + centerpos.y
 	return position_in_area
 
 func crank():
 	if rope_state < 8:
 		var cranky = floor(rope_state)
 		$shooter/String.texture = load("res://assets/images/tasks/strings/string%s.png" % cranky)
-		rope_state += 0.2
+		rope_state += 0.5
 		if !$CrankSound.playing:
 			$CrankSound.play()
 	else:
+		$CrankItem/CollisionShape2D.disabled = true
 		$CrankItem.interactable = false
 		cranked = true
 		$shooter/String.texture = load("res://assets/images/tasks/strings/string8.png")
-		$FireSound.play()

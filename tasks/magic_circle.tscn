@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://daux8l3mlpo1b"]
 
-[ext_resource type="PackedScene" path="res://tasks/magic_circle_slot.tscn" id="1_h7ug1"]
+[ext_resource type="PackedScene" uid="uid://bw7bdc13pmlbj" path="res://tasks/magic_circle_slot.tscn" id="1_h7ug1"]
 [ext_resource type="Texture2D" uid="uid://bshdqwyj10j3v" path="res://assets/images/tasks/magic_circle.png" id="1_ompek"]
 [ext_resource type="PackedScene" uid="uid://cmb3q44xx1byi" path="res://items/item.tscn" id="2_cdf5b"]
 
@@ -97,31 +97,35 @@ func spawn_slot():
 		slot.name = \"%s Slot\" % shape
 		slot.get_child(1).texture = load(\"res://assets/images/tasks/magic_circle_%s_slot.png\" % shape)
 		slot.shape = shape
-		print(shape)
-		print(slot.position)
 		add_child(slot)
 		
 		
 func spawn_items():
 	if not item_order:
 		completed = true
+		$Sprite2D.texture = load(\"res://assets/images/tasks/magic_circle_complete.png\")
 		return
-	var shape = shapes[item_order.pop_front()]
+	var shape = shapes[item_order.pop_front()]	
 	var item = item_scene.instantiate()
 	item.compatible_slot = shape
 	item.name = \"%sItem Magic\" % shape
 	item.get_node(\"SpritePath/SpritePathFollow/Sprite2D\").texture = load(\"res://assets/images/tasks/magic_%s.png\" % shape)
 	item.shape = shape_dir[shape]
 	add_child(item)
-	item.position = get_item_spawn_position()
+	item.position = get_item_spawn_position()	
+	
 	
 func get_item_spawn_position():
-	var centerpos = $item_spawn_area/CollisionShape2D.position + $item_spawn_area.position
-	var size = $item_spawn_area/CollisionShape2D.shape.size
+	var centerpos =$\"../item_spawn_area/CollisionShape2D\".global_position
+	var size = $\"../item_spawn_area/CollisionShape2D\".shape.size
+	
 	var position_in_area = Vector2()
 	position_in_area.x = (randf() * size.x) - (size.x/2) + centerpos.x 
 	position_in_area.y = (randf() * size.y) - (size.y/2) + centerpos.y
-	return position_in_area
+	while (abs(position_in_area.x - position.x) < 65) :
+		position_in_area.x = (randf() * size.x) - (size.x/2) + centerpos.x 
+		##position_in_area.y = (randf() * size.y) - (size.y/2) + centerpos.y
+	return position_in_area - position
 	
 func deposit_item():
 	$ItemSpawnerTimer.start()

@@ -11,6 +11,7 @@ func _process(delta):
 	pass
 
 func player_interact(player):
+	print("test")
 	if $"..".cranked:
 		$Line2D.show()
 		$"..".aiming = player

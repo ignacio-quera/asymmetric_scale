@@ -5,7 +5,7 @@ const STUN_TIME: float = 1
 
 
 var radius: float
-var deadly: int = 2
+var deadly: int = 5
 var pushed: Dictionary = {}
 
 
