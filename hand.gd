@@ -133,10 +133,13 @@ func _process(delta):
 					$AnimatedSprite2D.offset = Vector2(0, round(sin(time*100)*0.5+0.5)*2 - 20)
 					$ClawParticles.emitting = true
 					idle_anim = false
+					if not $ScratchSound.playing:
+						$ScratchSound.play()
 				else:
 					$AnimatedSprite2D.offset = Vector2(0, -20)
 					$ClawParticles.emitting = false
 					idle_anim = false
+					# $ScratchSound.stop()
 		if time >= max_time:
 			if shake_hit > 0:
 				get_viewport().get_camera_2d().apply_shake(shake_hit)
@@ -150,6 +153,7 @@ func _process(delta):
 			else:
 				match doing_action:
 					Action.FIST:
+						$SlamSound.play()
 						var shockwave = shockwave_scene.instantiate()
 						shockwave.start(position)
 						$/root/Main.add_child(shockwave)
