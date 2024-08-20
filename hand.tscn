@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bt27d6qh4in8a"]
+[gd_scene load_steps=27 format=3 uid="uid://bt27d6qh4in8a"]
 
 [ext_resource type="Script" path="res://hand.gd" id="1_lnp1f"]
 [ext_resource type="PackedScene" uid="uid://b58dyadq4olip" path="res://shockwave.tscn" id="2_asv7a"]
@@ -16,6 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://chvlrsm56yfi4" path="res://assets/images/bigfellasprites/hand_flick_red_3.png" id="13_jf5qn"]
 [ext_resource type="Texture2D" uid="uid://bo32a708fihh0" path="res://assets/images/bigfellasprites/hand_swab_blue.png" id="14_iyx8l"]
 [ext_resource type="Texture2D" uid="uid://cr4bxnioya3v" path="res://assets/images/bigfellasprites/hand_swab_red.png" id="15_vxjpd"]
+[ext_resource type="AudioStream" uid="uid://ddt8svnbrkhdc" path="res://assets/sound_effects/slam.ogg" id="17_ie4l2"]
+[ext_resource type="AudioStream" uid="uid://clcphwqx0207c" path="res://assets/sound_effects/scratch.ogg" id="18_lgq1x"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nhcnw"]
 radius = 1.0
@@ -191,6 +193,7 @@ metadata/_edit_lock_ = true
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_lo327")
 animation = &"swab_blue"
+offset = Vector2(24, 0)
 
 [node name="SwabParticles1" type="GPUParticles2D" parent="."]
 emitting = false
@@ -211,5 +214,13 @@ process_material = SubResource("ParticleProcessMaterial_0nda3")
 emitting = false
 amount = 150
 process_material = SubResource("ParticleProcessMaterial_052l3")
+
+[node name="SlamSound" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("17_ie4l2")
+
+[node name="ScratchSound" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("18_lgq1x")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

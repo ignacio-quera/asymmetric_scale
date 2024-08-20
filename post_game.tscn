@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqiob0oqg0jao"]
+[gd_scene load_steps=4 format=3 uid="uid://cqiob0oqg0jao"]
 
 [ext_resource type="Script" path="res://spawn_on_timer.gd" id="1_57pb4"]
 [ext_resource type="Script" path="res://post_game.gd" id="1_u7vlv"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_rc7lj"]
+font_size = 24
 
 [node name="PostGame" type="Node2D"]
 script = ExtResource("1_u7vlv")
@@ -25,6 +28,7 @@ anchor_bottom = 0.9
 grow_horizontal = 0
 grow_vertical = 2
 text = "Game Over"
+label_settings = SubResource("LabelSettings_rc7lj")
 horizontal_alignment = 1
 script = ExtResource("1_57pb4")
 delay = 1.0

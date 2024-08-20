@@ -74,6 +74,7 @@ func _on_interactive_area_area_entered(area):
 				position = slot.position
 				$Shadow.hide()
 				$"..".deposit_item()
+				$"InsertSound".play()
 
 
 func _on_interactive_area_area_exited(area):

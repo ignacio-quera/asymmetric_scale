@@ -89,8 +89,8 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var idle_anim := true
+	time += delta
 	if follow_curve != null:
-		time += delta
 		if time < 0:
 			position = follow_curve.sample(0, 1 + time / setup_time)
 			if not recovering and doing_action == Action.FLICK:
@@ -133,10 +133,13 @@ func _process(delta):
 					$AnimatedSprite2D.offset = Vector2(0, round(sin(time*100)*0.5+0.5)*2 - 20)
 					$ClawParticles.emitting = true
 					idle_anim = false
+					if not $ScratchSound.playing:
+						$ScratchSound.play()
 				else:
 					$AnimatedSprite2D.offset = Vector2(0, -20)
 					$ClawParticles.emitting = false
 					idle_anim = false
+					# $ScratchSound.stop()
 		if time >= max_time:
 			if shake_hit > 0:
 				get_viewport().get_camera_2d().apply_shake(shake_hit)
@@ -146,9 +149,11 @@ func _process(delta):
 			if recovering:
 				follow_curve = null
 				recovering = false
+				time = 0
 			else:
 				match doing_action:
 					Action.FIST:
+						$SlamSound.play()
 						var shockwave = shockwave_scene.instantiate()
 						shockwave.start(position)
 						$/root/Main.add_child(shockwave)
@@ -169,6 +174,8 @@ func _process(delta):
 	if idle_anim:
 		$AnimatedSprite2D.play('fist_%s' % color)
 		$AnimatedSprite2D.offset = Vector2(24, 0)
+		if not recovering:
+			$AnimatedSprite2D.offset.y = sin(time*1.6) * 5
 
 
 func _on_body_entered(body):

@@ -4,9 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://4ej8qga1tafm" path="res://hud.tscn" id="3_0co1d"]
 [ext_resource type="PackedScene" uid="uid://dgh4u0trlvmpf" path="res://hand_controller.tscn" id="4_j51c6"]
 [ext_resource type="Texture2D" uid="uid://lbuet6fobe71" path="res://assets/images/stage/background.png" id="5_pq2fe"]
-[ext_resource type="Texture2D" uid="uid://urny1m1c0yqf" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
+[ext_resource type="Texture2D" uid="uid://bs8e0f68g2odq" path="res://assets/images/bigfellasprites/head.png" id="6_8f447"]
 [ext_resource type="Texture2D" uid="uid://n4ay8np85bry" path="res://assets/images/stage/mountains.png" id="6_osgxv"]
-[ext_resource type="Texture2D" uid="uid://w7opisttso2t" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
+[ext_resource type="Texture2D" uid="uid://b6guu7hftkdt0" path="res://assets/images/bigfellasprites/helm.png" id="7_t25bi"]
 [ext_resource type="PackedScene" uid="uid://5ntd5j1j5o3k" path="res://side_wall.tscn" id="9_a4p07"]
 [ext_resource type="Texture2D" uid="uid://j2yegkj8bi4u" path="res://assets/images/bigfellasprites/hand_fist_red.png" id="9_a5dsx"]
 [ext_resource type="Texture2D" uid="uid://ber8xj2amlj32" path="res://assets/images/stage/arena.png" id="9_dsp7g"]
@@ -239,6 +239,7 @@ scale = Vector2(-1, 1)
 visible = false
 texture_filter = 1
 texture = ExtResource("9_a5dsx")
+offset = Vector2(24, 0)
 
 [node name="Path" type="Path2D" parent="ParallaxBackground/HandSpawnL"]
 position = Vector2(100, 0)
@@ -250,6 +251,7 @@ curve = SubResource("Curve2D_iiqsw")
 visible = false
 texture_filter = 1
 texture = ExtResource("10_fme4l")
+offset = Vector2(24, 0)
 
 [node name="Path" type="Path2D" parent="ParallaxBackground/HandSpawnR"]
 position = Vector2(380, 0)
@@ -299,6 +301,9 @@ z_index = -4
 position = Vector2(0, 82)
 scale = Vector2(0.99, 1.035)
 
+[node name="StaticBody2D" parent="Walls/UpWall" index="2"]
+collision_layer = 4097
+
 [node name="CollisionShape2D" parent="Walls/UpWall/StaticBody2D" index="0"]
 position = Vector2(242.929, 5.31401)
 shape = SubResource("RectangleShape2D_4gllt")
@@ -306,6 +311,9 @@ shape = SubResource("RectangleShape2D_4gllt")
 [node name="LeftWall" parent="Walls" instance=ExtResource("9_a4p07")]
 position = Vector2(0, 84)
 scale = Vector2(1, 1.035)
+
+[node name="StaticBody2D" parent="Walls/LeftWall" index="1"]
+collision_layer = 4097
 
 [node name="CollisionShape2D" parent="Walls/LeftWall/StaticBody2D" index="0"]
 position = Vector2(-7.25, 94.2029)
@@ -315,6 +323,9 @@ shape = SubResource("RectangleShape2D_5pm45")
 position = Vector2(474, 84)
 scale = Vector2(1, 1.035)
 
+[node name="StaticBody2D" parent="Walls/RightWall" index="1"]
+collision_layer = 4097
+
 [node name="CollisionShape2D" parent="Walls/RightWall/StaticBody2D" index="0"]
 position = Vector2(13.5, 94.686)
 shape = SubResource("RectangleShape2D_a1mpo")
@@ -323,6 +334,9 @@ shape = SubResource("RectangleShape2D_a1mpo")
 z_index = 4
 position = Vector2(0, 256)
 scale = Vector2(0.99, 1.015)
+
+[node name="StaticBody2D" parent="Walls/DownWall" index="2"]
+collision_layer = 4097
 
 [node name="CollisionShape2D" parent="Walls/DownWall/StaticBody2D" index="0"]
 position = Vector2(242.929, 19.2118)

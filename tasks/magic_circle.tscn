@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://daux8l3mlpo1b"]
+[gd_scene load_steps=9 format=3 uid="uid://daux8l3mlpo1b"]
 
-[ext_resource type="PackedScene" uid="uid://bw7bdc13pmlbj" path="res://tasks/magic_circle_slot.tscn" id="1_h7ug1"]
+[ext_resource type="PackedScene" uid="uid://c5lnq3ah3fth3" path="res://tasks/magic_circle_slot.tscn" id="1_h7ug1"]
 [ext_resource type="Texture2D" uid="uid://bshdqwyj10j3v" path="res://assets/images/tasks/magic_circle.png" id="1_ompek"]
 [ext_resource type="PackedScene" uid="uid://cmb3q44xx1byi" path="res://items/item.tscn" id="2_cdf5b"]
+[ext_resource type="AudioStream" uid="uid://clmlhdatg0uts" path="res://assets/sound_effects/magic_cast.ogg" id="4_2hue3"]
 
 [sub_resource type="GDScript" id="GDScript_f36f7"]
 script/source = "extends Node2D
@@ -74,6 +75,8 @@ func player_interact(player):
 		launch_curve.add_point(guy)
 		launch_curve.add_point(endpos, guy-endpos)
 		time = -SETUP_TIME
+		$CastSound.play()
+		$CastSound.reparent($\"..\")
 
 func player_interact_enter(player):
 	# print(\"player can activate \", player)
@@ -175,5 +178,8 @@ one_shot = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="item_spawn_area"]
 position = Vector2(-3.72204, 0.583305)
 shape = SubResource("RectangleShape2D_t5hka")
+
+[node name="CastSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_2hue3")
 
 [connection signal="timeout" from="ItemSpawnerTimer" to="." method="spawn_items"]

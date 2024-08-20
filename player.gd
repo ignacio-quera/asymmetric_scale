@@ -11,6 +11,7 @@ const MAX_PUSH = 500
 var player_id: int
 var dash_from: Vector2
 var dash_to: Vector2
+var dash_until: float
 var time: float = 0
 var screen_size
 var dashing = false
@@ -24,6 +25,7 @@ var dragging: bool = false
 var iframes: float = 0
 var passive_vel: Vector2
 var push_iframes: float = 0
+var last_vel: Vector2
 
 func _ready():
 	# Set the initial velocity to zero.
@@ -78,8 +80,8 @@ func _physics_process(delta):
 		else:
 			$AnimatedSprite2D.play("idle")
 
-		if Input.is_action_just_pressed("action%s" % [player_id]) and vel.length() > 0:
-			if not has_dashed:
+		if Input.is_action_just_pressed("action%s" % [player_id]):
+			if vel.length() > 0 and not has_dashed:
 				$DashingResetTimer.start()
 				$DashStatus.hide()
 				dashing_stretch(vel)
@@ -87,24 +89,31 @@ func _physics_process(delta):
 				$AnimatedStamina.play()
 				dash_from = position
 				dash_to = position + vel * 0.5
+				var phys = get_world_2d().direct_space_state
+				var query = PhysicsRayQueryParameters2D.create(dash_from, dash_to, 1 << 12)
+				var ray_collide = phys.intersect_ray(query)
+				if ray_collide:
+					dash_until = ((ray_collide.position - dash_from).length() - 5) / (dash_to - dash_from).length()
+				else:
+					dash_until = 1
 				has_dashed = true
 				dashing = true
 				time = 0
-		elif Input.is_action_just_pressed("action%s" % [player_id]) and vel.length() <= 0:
-			var max_dist = INF
-			var closest = null
-			for id in objects_in_contact:
-				var obj = objects_in_contact[id]
-				if not obj.has_method("player_interact"):
-					obj = obj.get_parent()
-				if not obj.has_method("player_interact"):
-					continue
-				var d = (obj.global_position - global_position).length()
-				if d < max_dist:
-					max_dist = d
-					closest = obj
-			if closest != null:
-				closest.player_interact(self)
+			else:
+				var max_dist = INF
+				var closest = null
+				for id in objects_in_contact:
+					var obj = objects_in_contact[id]
+					if not obj.has_method("player_interact"):
+						obj = obj.get_parent()
+					if not obj.has_method("player_interact"):
+						continue
+					var d = (obj.global_position - global_position).length()
+					if d < max_dist:
+						max_dist = d
+						closest = obj
+				if closest != null:
+					closest.player_interact(self)
 
 		if carrying.get_ref() != null:
 			vel /= 2
@@ -119,6 +128,7 @@ func _physics_process(delta):
 	vel += push_vel
 
 	# Move the player.
+	last_vel = vel
 	position += vel * delta
 	move_and_slide()
 
@@ -131,7 +141,7 @@ func _process(delta):
 
 	if dashing:
 		time += delta
-		if time >= DASH_INVUL:
+		if time >= DASH_INVUL * dash_until:
 			time = 0
 			dashing = false
 			reset_scale()
