@@ -79,16 +79,19 @@ text = "N° players:"
 
 [node name="TextureRect" type="TextureRect" parent="."]
 texture_filter = 1
-anchors_preset = -1
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -185.0
-offset_top = -284.0
+offset_top = -265.0
 offset_right = 189.0
-offset_bottom = -97.0
+offset_bottom = -78.0
+grow_horizontal = 2
+grow_vertical = 0
 texture = ExtResource("2_3i05j")
+stretch_mode = 3
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="PlayerCount/Button1" to="." method="_set_player_count" binds= [1]]
