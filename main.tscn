@@ -300,6 +300,9 @@ z_index = -4
 position = Vector2(0, 82)
 scale = Vector2(0.99, 1.035)
 
+[node name="StaticBody2D" parent="Walls/UpWall" index="2"]
+collision_layer = 4097
+
 [node name="CollisionShape2D" parent="Walls/UpWall/StaticBody2D" index="0"]
 position = Vector2(242.929, 5.31401)
 shape = SubResource("RectangleShape2D_4gllt")
@@ -307,6 +310,9 @@ shape = SubResource("RectangleShape2D_4gllt")
 [node name="LeftWall" parent="Walls" instance=ExtResource("9_a4p07")]
 position = Vector2(0, 84)
 scale = Vector2(1, 1.035)
+
+[node name="StaticBody2D" parent="Walls/LeftWall" index="1"]
+collision_layer = 4097
 
 [node name="CollisionShape2D" parent="Walls/LeftWall/StaticBody2D" index="0"]
 position = Vector2(-7.25, 94.2029)
@@ -316,6 +322,9 @@ shape = SubResource("RectangleShape2D_5pm45")
 position = Vector2(474, 84)
 scale = Vector2(1, 1.035)
 
+[node name="StaticBody2D" parent="Walls/RightWall" index="1"]
+collision_layer = 4097
+
 [node name="CollisionShape2D" parent="Walls/RightWall/StaticBody2D" index="0"]
 position = Vector2(13.5, 94.686)
 shape = SubResource("RectangleShape2D_a1mpo")
@@ -324,6 +333,9 @@ shape = SubResource("RectangleShape2D_a1mpo")
 z_index = 4
 position = Vector2(0, 256)
 scale = Vector2(0.99, 1.015)
+
+[node name="StaticBody2D" parent="Walls/DownWall" index="2"]
+collision_layer = 4097
 
 [node name="CollisionShape2D" parent="Walls/DownWall/StaticBody2D" index="0"]
 position = Vector2(242.929, 19.2118)
