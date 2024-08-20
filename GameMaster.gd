@@ -102,8 +102,8 @@ func _hurt_bigfella(amount: int = 1):
 		return
 	bigfella_health -= amount
 	get_viewport().get_camera_2d().apply_shake(1)
-	if fella_hud.get_child_count() > 0:
-		fella_hud.remove_child(fella_hud.get_child(fella_hud.get_child_count() - 1))
+	for i in fella_hud.get_child_count():
+		fella_hud.get_child(i)._set_alive(i < bigfella_health)
 	if bigfella_health <= 0:
 		playing = false
 		time = 0
