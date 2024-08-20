@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://csqw15p821o13"]
+
+[ext_resource type="Texture2D" uid="uid://c3cxs1tyhaqpc" path="res://assets/images/tasks/crank.png" id="1_fiffj"]
+
+[sub_resource type="Curve2D" id="Curve2D_vnus3"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0)
+}
+point_count = 4
+
+[node name="CrankItem" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+
+[node name="Shadow" type="Sprite2D" parent="."]
+
+[node name="SpritePath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_vnus3")
+
+[node name="SpritePathFollow" type="PathFollow2D" parent="SpritePath"]
+rotation = -1.5708
+rotates = false
+
+[node name="Sprite2D" type="Sprite2D" parent="SpritePath/SpritePathFollow"]
+texture_filter = 1
+position = Vector2(-1.19209e-07, 0)
+rotation = 1.5708
+texture = ExtResource("1_fiffj")

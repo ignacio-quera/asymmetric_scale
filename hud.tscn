@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://4ej8qga1tafm"]
+[gd_scene load_steps=3 format=3 uid="uid://4ej8qga1tafm"]
 
 [ext_resource type="Script" path="res://hud.gd" id="1_vhgnj"]
+[ext_resource type="Texture2D" uid="uid://c02vx6rm1obgc" path="res://assets/images/title_placeholder.png" id="2_3i05j"]
 
 [node name="StartMenu" type="CanvasLayer"]
 script = ExtResource("1_vhgnj")
@@ -75,6 +76,19 @@ offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "N° players:"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+texture_filter = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -185.0
+offset_top = -284.0
+offset_right = 189.0
+offset_bottom = -97.0
+texture = ExtResource("2_3i05j")
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="PlayerCount/Button1" to="." method="_set_player_count" binds= [1]]
