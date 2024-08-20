@@ -6,7 +6,7 @@ var bigfella_wins: bool
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	time = 0
-	$CanvasLayer/Winner.text = ("Knight Wins" if bigfella_wins else "Critters Win")
+	$CanvasLayer/Winner.text = ("Knight Wins" if bigfella_wins else "Gnats Win")
 
 func back_to_main_menu():
 	var maingame = ResourceLoader.load("res://main.tscn").instantiate()

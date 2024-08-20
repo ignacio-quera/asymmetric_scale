@@ -5,7 +5,7 @@ const Hand := preload("res://hand.gd")
 
 @export var move_curve: Curve
 
-var wait_time: float = 4
+var wait_time: float = 3
 var queue_wait: Array[float] = [0, 0]
 
 var moving_from: Vector2
