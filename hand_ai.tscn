@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdbepgnbw208p"]
+
+[ext_resource type="Script" path="res://hand_ai.gd" id="1_kkx1j"]
+
+[sub_resource type="Curve" id="Curve_i4rf6"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.108911, 0.10989), 1.43212, 1.43212, 0, 0, Vector2(0.920792, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[node name="HandAI" type="Node"]
+script = ExtResource("1_kkx1j")
+move_curve = SubResource("Curve_i4rf6")

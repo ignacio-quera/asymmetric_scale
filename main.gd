@@ -14,11 +14,13 @@ var stage := Stage.MENU
 var time := 0.0
 var last_t := 0.0
 var big_fella_head_ready := true
+var player_count: int
 
 var og_camera_offset: float
 
-func new_game(num):
-	$GameMaster.spawn_players(num)
+func new_game(num_of_players: int):
+	player_count = num_of_players
+	$GameMaster.spawn_players(max(1, player_count - 1))
 	$StartMenu.visible = false
 	stage = Stage.LOWERING
 	$GameMusic.play()
@@ -36,7 +38,9 @@ func start_game():
 	# $ParallaxBackground/Stage.motion_scale = Vector2.ONE
 	for hand in hand_spawners:
 		remove_child(hand)
-	add_child(hand_controller_scene.instantiate())
+	var hand_controller = hand_controller_scene.instantiate()
+	hand_controller._enable_ai(player_count == 1)
+	add_child(hand_controller)
 	$GameMaster.process_mode = Node.PROCESS_MODE_INHERIT
 	$GameMaster.start_game()
 	$ParallaxBackground/FellaAnim.play("bobbing")

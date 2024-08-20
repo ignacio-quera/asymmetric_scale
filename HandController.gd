@@ -1,6 +1,7 @@
 extends Node
 
 const Hand = preload("res://hand.gd")
+const Player = preload("res://player.gd")
 
 const HOVER_GRADIENT = [preload("res://assets/gradients/lefthover.tres"), preload("res://assets/gradients/righthover.tres")]
 var SINGLE_GRADIENT = []
@@ -13,12 +14,15 @@ const DELAY: float = 1
 const COOLDOWN_DURATION: float = 0.5
 const SWAB_COOLDOWN: float = 6
 
+const HandAi := preload("res://hand_ai.gd")
 enum Dir {LEFT, RIGHT}
 
 var choosing: bool = false
 var choose_dir: Dir = Dir.LEFT
 
 var swab_cooldown: float = 0
+
+var use_ai: bool
 
 func _init():
 	for grad in HOVER_GRADIENT:
@@ -31,12 +35,31 @@ func _ready():
 	pass
 
 
+func _enable_ai(enable: bool):
+	use_ai = enable
+	$AiHandSprite.visible = enable
+
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	var scr = get_viewport().get_visible_rect().size
-	var pos = get_viewport().get_mouse_position()
-	var want_l = Input.is_action_pressed("drag_left")
-	var want_r = Input.is_action_pressed("drag_right")
+	var pos: Vector2
+	var want_l: bool
+	var want_r: bool
+	if use_ai:
+		var area: Array[Vector2] = [Vector2(0, 90), Vector2(480, 270)]
+		var players: Array[Player] = []
+		for player in get_tree().get_nodes_in_group("littleguy"):
+			players.append(player)
+		var ai_choice = $HandAI._run(area, delta, players)
+		pos = ai_choice.pos
+		want_l = ai_choice.want_l
+		want_r = ai_choice.want_r
+	else:
+		pos = get_viewport().get_mouse_position()
+		want_l = Input.is_action_pressed("drag_left")
+		want_r = Input.is_action_pressed("drag_right")
+
 	var want_choose = want_l or want_r
 	if want_choose and not choosing:
 		$Anchor.position = pos
@@ -111,8 +134,17 @@ func _process(delta):
 				$ActionPreview.add_point(Vector2(anchor.x, scr.y))
 				$ActionPreview.add_point(Vector2(anchor.x, 0))
 				icon = preload("res://assets/images/bigfellasprites/icon_up.png")
-	if icon == null:
-		Input.set_custom_mouse_cursor(null)
+	if use_ai:
+		if icon == null:
+			$AiHandSprite.texture = preload("res://assets/images/bigfellasprites/icon_ai.png")
+			$AiHandSprite.centered = false
+		else:
+			$AiHandSprite.texture = icon
+			$AiHandSprite.centered = true
+		$AiHandSprite.position = pos
 	else:
-		Input.set_custom_mouse_cursor(icon, 0, icon.get_size()/2)
+		if icon == null:
+			Input.set_custom_mouse_cursor(null)
+		else:
+			Input.set_custom_mouse_cursor(icon, 0, icon.get_size()/2)
 	swab_cooldown = max(0, swab_cooldown - delta)

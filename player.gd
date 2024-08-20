@@ -25,6 +25,7 @@ var dragging: bool = false
 var iframes: float = 0
 var passive_vel: Vector2
 var push_iframes: float = 0
+var last_vel: Vector2
 
 func _ready():
 	# Set the initial velocity to zero.
@@ -127,6 +128,7 @@ func _physics_process(delta):
 	vel += push_vel
 
 	# Move the player.
+	last_vel = vel
 	position += vel * delta
 	move_and_slide()
 
