@@ -95,7 +95,7 @@ func _physics_process(delta):
 		$"Wheel2".rotation -= 0.05
 		$"Wheel3".rotation -= 0.05
 		$"Wheel4".rotation -= 0.05
-	if floor(position.x) == floor(arrival_pos.x):
+	if floor(position.x) == floor(arrival_pos.x) and arriving:
 		arriving = false
 		spawn_crank()
 		arrival_pos = Vector2(0,0)

@@ -35,8 +35,10 @@ func _ready():
 	pass
 
 
-func _enable_ai(enable: bool):
+func _enable_ai(enable: bool, diff: float):
 	use_ai = enable
+	$HandAI.difficulty = diff
+	$HandAI.wait_time *= diff
 	$AiHandSprite.visible = enable
 
 

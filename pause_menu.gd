@@ -19,7 +19,7 @@ func _input(event):
 
 func _on_pause():
 	$UnpauseButton.show()
-	$ExitButton.show()
+	#$ExitButton.show()
 	$ResetButton.show()
 
 func _on_unpause_button_pressed():
@@ -37,5 +37,5 @@ func _on_reset_button_pressed():
 
 func hide_buttons():
 	$UnpauseButton.hide()
-	$ExitButton.hide()
+	#$ExitButton.hide()
 	$ResetButton.hide()

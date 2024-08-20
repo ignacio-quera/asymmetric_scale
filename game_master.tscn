@@ -46,6 +46,7 @@ script = ExtResource("2_lvv2n")
 task_scenes = Array[PackedScene]([ExtResource("6_0wmms"), ExtResource("7_tlrda")])
 
 [node name="task_spawn_timer" type="Timer" parent="task_controller"]
+wait_time = 4.0
 one_shot = true
 
 [node name="Marker2D" type="Marker2D" parent="task_controller"]

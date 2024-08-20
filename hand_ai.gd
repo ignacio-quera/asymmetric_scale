@@ -20,6 +20,7 @@ var hold_mouse := false
 
 var first_frame := true
 var cur_hand := 0
+var difficulty: float = 1
 
 var rng := RandomNumberGenerator.new()
 
@@ -73,8 +74,8 @@ func choose_target(scr: Array[Vector2], players: Array[Player]):
 		return
 	var atk: Hand.Action = randw(ATTACK_WEIGHTS) as Hand.Action
 	moving_time = 0
-	move_delay = 1
-	swipe_delay = 0.4 if atk == Hand.Action.FIST else 0.7
+	move_delay = 1 * difficulty
+	swipe_delay = 0.4 * difficulty if atk == Hand.Action.FIST else 0.7 * difficulty
 	var pos := player.position
 	var predict_delay := move_delay + swipe_delay
 	if atk == Hand.Action.FLICK:
